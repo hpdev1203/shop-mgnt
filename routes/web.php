@@ -8,7 +8,7 @@ use App\Http\Middleware\CheckAdminLogin;
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin', function () {
-        return 'dasboard';
+        return view('admin.dashboard.dashboard');
     })->name('admin');
 });
 
