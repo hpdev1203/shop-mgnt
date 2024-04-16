@@ -11,18 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_detail', function (Blueprint $table) {
+        Schema::create('inventory_detail', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('inventory_id');
+            $table->foreign('inventory_id')->references('id')->on('inventory');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->string('short_description')->nullable();
-            $table->string('uom')->nullable();
-            $table->string('size')->nullable();
-            $table->string('color')->default('none');
-            $table->string('color_code')->default('none');
-            $table->string('image')->nullable();
-            $table->decimal('retail_price', 10, 2);
-            $table->decimal('wholesale_price', 10, 2);
+            $table->unsignedBigInteger('product_detail_id');
+            $table->foreign('product_detail_id')->references('id')->on('product_detail');
+            $table->integer('quantity');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_detail');
+        Schema::dropIfExists('inventory_detail');
     }
 };
