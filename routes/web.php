@@ -13,5 +13,7 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
 });
 
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
+Route::post('/admin/logout', Login::class)->name('admin.logout');
+Route::get('/admin/method', [Login::class, 'handleLogout'])->name('admin.logout');
 Route::get('/admin/setup', Setup::class)->middleware([CheckSetup::class])->name('admin.setup');
 

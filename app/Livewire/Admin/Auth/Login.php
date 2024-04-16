@@ -32,9 +32,13 @@ class Login extends Component
         }else{
             session()->flash('error', 'Thông tin đăng nhập không chính xác.');
         }
-
-
     }
+
+    public function handleLogout()
+    {
+        auth()->logout();
+        return redirect()->route('admin.login');
+    }   
 
     public function render()
     {
