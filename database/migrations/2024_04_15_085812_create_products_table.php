@@ -16,13 +16,13 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->unsignedBigInteger('brand_id');
+            $table->unsignedBigInteger('brand_id')->nullable();
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->decimal('retail_price', 10, 2);
             $table->decimal('wholesale_price', 10, 2);
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

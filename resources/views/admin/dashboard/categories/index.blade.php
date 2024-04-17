@@ -27,26 +27,26 @@
                     </a>
                 </div>
             </div>
-
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-20 text-center">STT</th>
-                            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Tên Danh Mục</th>
-                            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Slug</th>
-                            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Danh Mục Cha</th>
-                            <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-64 text-center">Hành Động</th>
+                            <th scope="col" class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-20 text-center">STT</th>
+                            <th scope="col" class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Tên Danh Mục</th>
+                            <th scope="col" class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Slug</th>
+                            <th scope="col" class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider text-left">Danh Mục Cha</th>
+                            <th scope="col" class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-64 text-center">Hành Động</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="bg-white divide-y divide-gray-200 text-sm	">
+                        @foreach ($categories as $index => $category)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-center">1</td>
-                            <td class="px-6 py-4 whitespace-nowrap">adada</td>
-                            <td class="px-6 py-4 whitespace-nowrap">adad</td>
-                            <td class="px-6 py-4 whitespace-nowrap">adad</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <a href="#" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
+                            <td class="px-6 py-2 whitespace-nowrap text-center">{{$index+1}}</td>
+                            <td class="px-6 py-2 whitespace-nowrap">{{$category->name}}</td>
+                            <td class="px-6 py-2 whitespace-nowrap">{{$category->slug}}</td>
+                            <td class="px-6 py-2 whitespace-nowrap">{{$category->parent ? $category->parent->name : '-'}}</td>
+                            <td class="px-6 py-2 whitespace-nowrap text-center">
+                                <a href="{{route('admin.categories.edit', $category->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
                                     <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                         <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
@@ -66,9 +66,16 @@
                                 </a>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
+                
             </div>
+
+            <div class="px-4 py-6 md:px-6 xl:px-7.5">
+                {{$categories->links('admin.layouts.custom-pagination')}}
+            </div>
+
         </div>
     </div>
 @endsection

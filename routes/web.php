@@ -15,6 +15,7 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     /* Categories  */
     Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories');
     Route::get('/admin/categories/add', [CategoryController::class, 'add'])->name('admin.categories.add');
+    Route::get('/admin/categories/edit/{id}', [CategoryController::class, 'edit'])->name('admin.categories.edit');
 });
 
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');

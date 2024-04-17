@@ -22,6 +22,8 @@ return new class extends Migration
             $table->unsignedBigInteger('warehouse_id');
             $table->foreign('warehouse_id')->references('id')->on('warehouse');
             $table->integer('quantity');
+            $table->unsignedBigInteger('size_id')->nullable();
+            $table->foreign('size_id')->references('id')->on('product_size');
             $table->string('uom');
             $table->decimal('unit_price_at_time', 10, 2);
             $table->decimal('total_amount', 10, 2);

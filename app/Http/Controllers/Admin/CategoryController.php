@@ -4,12 +4,14 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard.categories.index');
+        $categories = Category::paginate(10);
+        return view('admin.dashboard.categories.index', ['categories' => $categories]);
     }
 
     public function add()
@@ -17,18 +19,9 @@ class CategoryController extends Controller
         return view('admin.dashboard.categories.add_category');
     }
 
-    public function handleAdd(Request $request)
+    public function edit($id)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
-
-        $category = new Category();
-        $category->name = $request->name;
-        $category->description = $request->description;
-        $category->save();
-
-        return redirect()->route('admin.categories');
+        $category = Category::find($id);
+        return view('admin.dashboard.categories.edit_category', ['category' => $category]);
     }
 }

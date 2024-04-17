@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit='storeCategory'>
+    <form wire:submit='updateCategory'>
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-6">

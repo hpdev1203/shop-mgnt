@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->string('short_description')->nullable();
             $table->string('uom')->nullable();
-            $table->string('size')->nullable();
             $table->string('color')->default('none');
             $table->string('color_code')->default('none');
             $table->string('image')->nullable();
