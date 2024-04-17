@@ -26,7 +26,7 @@ class AddCategory extends Component
         $category->save();
 
         session()->flash('message', 'Category has been created successfully!');
-        $this->reset('category_name');
+        return redirect()->route('admin.categories');
     }
     public function render()
     {
