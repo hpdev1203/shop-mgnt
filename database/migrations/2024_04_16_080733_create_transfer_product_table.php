@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transfer', function (Blueprint $table) {
+        Schema::create('transfer_product', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
