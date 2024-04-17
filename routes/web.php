@@ -6,6 +6,7 @@ use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\CheckSetup;
 use App\Http\Middleware\CheckAdminLogin;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\WarehouseController;
 
@@ -18,9 +19,12 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories');
     Route::get('/admin/categories/add', [CategoryController::class, 'add'])->name('admin.categories.add');
     Route::get('/admin/categories/edit/{id}', [CategoryController::class, 'edit'])->name('admin.categories.edit');
-    Route::get('/admin/categories/delete/{id}', [CategoryController::class, 'delete'])->name('admin.categories.delete');
+     /* User  */
+     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
+     Route::get('/admin/users/add', [UserController::class, 'add'])->name('admin.users.add');
+     Route::get('/admin/users/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
 
-    /* Brands  */
+     /* Brands  */
     Route::get('/admin/brands', [BrandController::class, 'index'])->name('admin.brands');
     Route::get('/admin/brands/add', [BrandController::class, 'add'])->name('admin.brands.add');
     Route::get('/admin/brands/edit/{id}', [BrandController::class, 'edit'])->name('admin.brands.edit');
