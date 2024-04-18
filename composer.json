@@ -8,7 +8,9 @@
         "php": "^8.2",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.4"
+        "livewire/livewire": "^3.4",
+        "spatie/laravel-image-optimizer": "^1.8",
+        "tinify/tinify": "^1.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

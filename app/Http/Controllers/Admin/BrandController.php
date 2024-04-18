@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 
-
 class BrandController extends Controller
 {
     public function index()
     {
-        $brands = Brand::paginate(10);
-        return view('admin.dashboard.brands.index', ['brands' => $brands]);
+        return view('admin.dashboard.brands.index');
     }
 
     public function add()

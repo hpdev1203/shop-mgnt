@@ -43,4 +43,12 @@ Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->
 Route::post('/admin/logout', Login::class)->name('admin.logout');
 Route::get('/admin/method', [Login::class, 'handleLogout'])->name('admin.logout');
 Route::get('/admin/setup', Setup::class)->middleware([CheckSetup::class])->name('admin.setup');
+Route::get('/images/{filename}', function ($filename) {
+    $path = storage_path('app/public/images/' . $filename);
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    $file = file_get_contents($path);
+    return response($file, 200)->header('Content-Type', 'image/jpeg');
+})->name('image');
 

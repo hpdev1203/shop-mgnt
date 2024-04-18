@@ -6,6 +6,7 @@
 		<title>@yield('title')</title>
 		<link rel="stylesheet" href="{{asset('library/css/style.css')}}">
 		@vite(['resources/css/app.css','resources/js/app.js'])
+		@livewireStyles
 	</head>
 	<body 	x-data="{ page: '@yield("menu")', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     		x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
@@ -41,7 +42,8 @@
 			<!-- ===== Content Area End ===== -->
 		</div>
 		<!-- ===== Page Wrapper End ===== -->
-
+		
 		<script src="{{asset('library/js/bundle.js')}}"></script>
+		@livewireScripts
 	</body>
 </html>
