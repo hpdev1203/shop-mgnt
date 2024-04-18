@@ -10,8 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::paginate(10);
-        return view('admin.dashboard.categories.index', ['categories' => $categories]);
+        return view('admin.dashboard.categories.index');
     }
 
     public function add()

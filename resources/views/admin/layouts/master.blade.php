@@ -4,8 +4,8 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>@yield('title')</title>
-		@vite('resources/css/app.css')
 		<link rel="stylesheet" href="{{asset('library/css/style.css')}}">
+		@vite(['resources/css/app.css','resources/js/app.js'])
 	</head>
 	<body 	x-data="{ page: '@yield("menu")', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     		x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));

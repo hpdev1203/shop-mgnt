@@ -19,10 +19,12 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories');
     Route::get('/admin/categories/add', [CategoryController::class, 'add'])->name('admin.categories.add');
     Route::get('/admin/categories/edit/{id}', [CategoryController::class, 'edit'])->name('admin.categories.edit');
-     /* User  */
-     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
-     Route::get('/admin/users/add', [UserController::class, 'add'])->name('admin.users.add');
-     Route::get('/admin/users/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::get('/admin/categories/delete/{id}', [CategoryController::class, 'delete'])->name('admin.categories.delete');
+
+    /* User  */
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
+    Route::get('/admin/users/add', [UserController::class, 'add'])->name('admin.users.add');
+    Route::get('/admin/users/edit/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
 
      /* Brands  */
     Route::get('/admin/brands', [BrandController::class, 'index'])->name('admin.brands');

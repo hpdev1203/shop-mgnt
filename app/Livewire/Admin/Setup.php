@@ -75,6 +75,9 @@ class Setup extends Component
         $user->password = Hash::make($this->password);
         $user->role = 'system';
         $user->save();
+
+        session()->flash('success', 'Cài đặt hệ thống thành công.');
+        return redirect()->route('admin.dashboard');
     }
 
     public function render()
