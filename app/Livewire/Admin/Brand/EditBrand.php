@@ -70,7 +70,9 @@ class EditBrand extends Component
         $this->brand_code = $brand->code;
         $this->brand_name = $brand->name;
         $this->description = $brand->description;
-        $this->existedPhoto = "images/brands/" . $brand->logo;
+        if($brand->logo) {
+            $this->existedPhoto = "images/brands/" . $brand->logo;
+        }
         return view('livewire.admin.brand.edit-brand', ['categories' => $categories]);
     }
 }

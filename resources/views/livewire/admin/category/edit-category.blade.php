@@ -30,6 +30,15 @@
                         </div>
                     </div>
                     <div class="col-span-1 sm:col-span-2 md:col-span-3">
+                        <label for="brand_id" class="block text-sm font-medium leading-6 text-gray-900">Nhãn hàng</label>
+                        <div class="mt-2">
+                            <select wire:model="brand_id" id="brand_id" name="brand_id" autocomplete="brand_id" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                <option value="">-</option>
+                                @foreach ($brands as $brand)
+                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="col-span-1 sm:col-span-2 md:col-span-3">
                         <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Thumbnail</label>

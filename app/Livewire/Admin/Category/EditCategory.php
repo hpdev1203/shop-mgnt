@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
+use App\Models\Brand;
 
 class EditCategory extends Component
 {
@@ -16,6 +17,7 @@ class EditCategory extends Component
     public $category_name = '';
     public $description = '';
     public $parent_category_id = '';
+    public $brand_id = '';
     public $id;
     public $photo;
     public $existedPhoto;
@@ -48,6 +50,7 @@ class EditCategory extends Component
         $category->description = $this->description;
         $category->slug = Str::of($this->category_name)->slug('-');
         $category->parent_id = $this->parent_category_id;
+        $category->brand_id = $this->brand_id;
         if ($this->photo) {
             $category->image = $photo_name;
         }
@@ -65,12 +68,16 @@ class EditCategory extends Component
     public function render()
     {
         $categories = Category::all();
+        $brands = Brand::all();
         $category = Category::find($this->id);
         $this->category_name = $category->name;
         $this->description = $category->description;
         $this->parent_category_id = $category->parent_id;
-        $this->existedPhoto = "images/categories/" . $category->image;
+        if($category->image) {
+            $this->existedPhoto = "images/categories/" . $category->image;
+        }
+        $this->brand_id = $category->brand_id;
 
-        return view('livewire.admin.category.edit-category', ['categories' => $categories]);
+        return view('livewire.admin.category.edit-category', ['categories' => $categories, 'brands' => $brands]);
     }
 }

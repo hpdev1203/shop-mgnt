@@ -77,7 +77,7 @@ class Setup extends Component
         $user->save();
 
         session()->flash('success', 'Cài đặt hệ thống thành công.');
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.dashboard.dashboard');
     }
 
     public function render()
