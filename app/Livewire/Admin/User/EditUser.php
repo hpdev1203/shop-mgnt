@@ -6,12 +6,13 @@ use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\WithFileUploads;
-use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\Storage;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
-class AddUser extends Component
-{   
+class EditUser extends Component
+{
     use WithFileUploads;
+    public $id;
     public $user_name = '';
     public $user_email = '';
     public $user_phone = '';
@@ -22,14 +23,14 @@ class AddUser extends Component
     public $photo;
     public $existedPhoto;
 
-    public function storeUser()
+    public function updateUser()
     {
         $this->validate([
             'user_name' => 'required',
-            'user_email' => 'required|email|unique:users,email',
+            'user_email' => 'required|email|unique:users,email,' . $this->id,
             'user_phone' => 'required|numeric',
-            'user_username' => 'required|unique:users,username',
-            'user_password' => 'required|min:6',
+            'user_username' => 'required|unique:users,username,' . $this->id,
+            'user_password' => 'min:6',
             'user_address' => 'required',
         ], [
             'user_name.required' => 'Vui lòng nhập tên khách hàng.',
@@ -40,7 +41,6 @@ class AddUser extends Component
             'user_phone.numeric' => 'Vui lòng nhập đúng định dạng số điện thoại.',
             'user_username.required' => 'Vui lòng nhập tên đăng nhập khách hàng',
             'user_username.unique' => 'Tên đăng nhập đã tồn tại.',
-            'user_password.required' => 'Vui lòng nhập mật khẩu khách hàng.',
             'user_password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'user_address.required' => 'Vui lòng nhập địa chỉ khách hàng.',
         ]);
@@ -59,23 +59,40 @@ class AddUser extends Component
             $this->photo->storeAs(path: "public\images\users", name: $photo_name);
         }
 
-        $user = new User();
+        $user = User::find($this->id);
         $user->name = $this->user_name;
         $user->email = $this->user_email;
         $user->phone = $this->user_phone;
         $user->gender = $this->user_gender;
         $user->username = $this->user_username;
-        $user->password = Hash::make($this->user_password);
-        $user->address = $this->user_address;
+        if ($this->user_password) {
+            $user->password = Hash::make($this->user_password);
+        }
         if ($this->photo) {
             $user->avatar_user = $photo_name;
         }
+        $user->address = $this->user_address;
         $user->save();
         return redirect()->route('admin.users');
     }
+
+    public function mount($id)
+    {
+        $this->id = $id;
+    }
+
     public function render()
     {
         $users = User::all();
-        return view('livewire.admin.user.add-user', ['user' => $users]);
+        $user = User::find($this->id);
+        $this->user_name = $user->name;
+        $this->user_email = $user->email;
+        $this->user_phone = $user->phone;
+        $this->user_gender = $user->gender;
+        $this->user_username = $user->username;
+        $this->user_password = "";
+        $this->user_address = $user->address;
+        $this->existedPhoto = "images/users/" . $user->avatar_user;
+        return view('livewire.admin.user.edit-user', ['users' => $users]);
     }
 }
