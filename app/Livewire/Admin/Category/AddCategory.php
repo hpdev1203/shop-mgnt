@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Brand;
 
 class AddCategory extends Component
 {
@@ -16,6 +17,7 @@ class AddCategory extends Component
     public $category_name = '';
     public $description = '';
     public $parent_category_id = '';
+    public $brand_id = '';
     public $photo;
     public $existedPhoto;
 
@@ -45,6 +47,7 @@ class AddCategory extends Component
         $category->description = $this->description;
         $category->slug = Str::of($this->category_name)->slug('-');
         $category->parent_id = $this->parent_category_id;
+        $category->brand_id = $this->brand_id;
         if ($this->photo) {
             $category->image = $photo_name;
         }
@@ -56,6 +59,7 @@ class AddCategory extends Component
     public function render()
     {
         $categories = Category::all();
-        return view('livewire.admin.category.add-category', ['categories' => $categories]);
+        $brands = Brand::all();
+        return view('livewire.admin.category.add-category', ['categories' => $categories, 'brands' => $brands]);
     }
 }
