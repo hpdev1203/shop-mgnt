@@ -10,12 +10,12 @@ class WarehouseController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard.warehouses.index');
+        return view('admin.dashboard.warehouse.index');
     }
 
     public function add()
     {
-        return view('admin.dashboard.warehouses.add_warehouses');
+        return view('admin.dashboard.warehouse.add_warehouses');
     }
 
     public function delete($id){
@@ -27,6 +27,6 @@ class WarehouseController extends Controller
     public function edit($id)
     {
         $warehouses = Warehouses::find($id);
-        return view('admin.dashboard.warehouses.edit_warehouses', ['warehouses' => $warehouses]);
+        return view('admin.dashboard.warehouse.edit_warehouses', ['warehouses' => $warehouses]);
     }
 }

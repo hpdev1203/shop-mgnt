@@ -10,12 +10,12 @@ class BrandController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard.brands.index');
+        return view('admin.dashboard.brand.index');
     }
 
     public function add()
     {
-        return view('admin.dashboard.brands.add_brand');
+        return view('admin.dashboard.brand.add_brand');
     }
 
     public function delete($id){
@@ -27,6 +27,6 @@ class BrandController extends Controller
     public function edit($id)
     {
         $brand = Brand::find($id);
-        return view('admin.dashboard.brands.edit_brand', ['brand' => $brand]);
+        return view('admin.dashboard.brand.edit_brand', ['brand' => $brand]);
     }
 }

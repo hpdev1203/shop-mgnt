@@ -10,17 +10,17 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard.users.list_user');
+        return view('admin.dashboard.user.list_user');
     }
 
     public function add()
     {
-        return view('admin.dashboard.users.add_user');
+        return view('admin.dashboard.user.add_user');
     }
 
     public function edit($id)
     {
         $users = User::find($id);
-        return view('admin.dashboard.users.edit_user', ['users' => $users]);
+        return view('admin.dashboard.user.edit_user', ['users' => $users]);
     }
 }
