@@ -35,6 +35,11 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/warehouses', [WarehouseController::class, 'index'])->name('admin.warehouses');
     Route::get('/admin/warehouses/add', [WarehouseController::class, 'add'])->name('admin.warehouses.add');
     Route::get('/admin/warehouses/edit/{id}', [WarehouseController::class, 'edit'])->name('admin.warehouses.edit');
+
+    /* Prouduct  */
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products');
+    Route::get('/admin/products/add', [ProductController::class, 'add'])->name('admin.products.add');
+    Route::get('/admin/products/edit/{id}', [ProductController::class, 'edit'])->name('admin.products.edit');
 });
 
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
