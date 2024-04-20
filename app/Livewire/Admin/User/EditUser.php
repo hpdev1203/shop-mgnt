@@ -92,7 +92,9 @@ class EditUser extends Component
         $this->user_username = $user->username;
         $this->user_password = "";
         $this->user_address = $user->address;
-        $this->existedPhoto = "images/users/" . $user->avatar_user;
+        if($user->avatar_user){
+            $this->existedPhoto = "images/users/" . $user->avatar_user;
+        }
         return view('livewire.admin.user.edit-user', ['users' => $users]);
     }
 }

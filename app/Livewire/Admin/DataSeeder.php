@@ -48,6 +48,8 @@ class DataSeeder extends Component
                 'email' => $faker->email,
                 'phone' => $faker->phoneNumber,
                 'address' => $faker->address,
+                'city' => $faker->city,
+                'state' => $faker->state,
                 'username' => $faker->userName,
                 'password' => Hash::make('pass@word1')
             ]);
@@ -59,7 +61,8 @@ class DataSeeder extends Component
         $faker = Faker::create();
 
         for ($i = 0; $i < 20; $i++) {
-            $brand_name = $faker->company;
+            $random = $faker->randomElement([1, 2]);
+            $brand_name = ucfirst($faker->unique()->words($random, true));
             Brand::create([
                 'code' => 'BR' . $faker->unique()->randomNumber(5),
                 'name' => $brand_name,
@@ -74,7 +77,8 @@ class DataSeeder extends Component
         $faker = Faker::create();
 
         for ($i = 0; $i < 20; $i++) {
-            $category_name = $faker->unique()->word;
+            $random = $faker->randomElement([1, 2]);
+            $category_name = ucfirst($faker->unique()->words($random, true));
             Category::create([
                 'name' => $category_name,
                 'description' => $faker->sentence,
