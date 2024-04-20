@@ -14,18 +14,12 @@ class ProductController extends Controller
 
     public function add()
     {
-        return view('admin.dashboard.category.add_category');
-    }
-
-    public function delete($id){
-        $category = Category::find($id);
-        $category->delete();
-        return redirect()->route('admin.categories');
+        return view('admin.dashboard.product.add_product');
     }
 
     public function edit($id)
     {
-        $category = Category::find($id);
-        return view('admin.dashboard.category.edit_category', ['category' => $category]);
+        $product = Category::find($id);
+        return view('admin.dashboard.product.edit_product', ['product' => $product]);
     }
 }

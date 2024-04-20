@@ -7,6 +7,12 @@
 		<link rel="stylesheet" href="{{asset('library/css/style.css')}}">
 		@vite(['resources/css/app.css','resources/js/app.js'])
 		@livewireStyles
+		<style>
+			.ck-editor__editable_inline {
+				min-height: 200px;
+			}
+		</style>
+		<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
 	</head>
 	<body 	x-data="{ page: '@yield("menu")', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     		x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
@@ -42,8 +48,6 @@
 			<!-- ===== Content Area End ===== -->
 		</div>
 		<!-- ===== Page Wrapper End ===== -->
-		
-		<script src="{{asset('library/js/bundle.js')}}"></script>
 		@livewireScripts
 	</body>
 </html>

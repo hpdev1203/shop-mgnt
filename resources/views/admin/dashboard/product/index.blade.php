@@ -17,6 +17,6 @@
                 </li>
             </ol>
         </nav>
-        {{-- @livewire('admin.product.product', ['function' => 'renderList']) --}}
+        @livewire('admin.product.list-product')
     </div>
 @endsection

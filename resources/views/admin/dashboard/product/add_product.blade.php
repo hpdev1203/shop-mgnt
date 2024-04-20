@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Thêm danh mục')
-@section('menu', 'categories')
+@section('title', 'Thêm sản phẩm')
+@section('menu', 'products')
 
 @section('content')
     <div class="container mx-auto px-2 py-8 sm:px-6 md:px-8">
-        <h3 class="text-xl font-bold">THÊM DANH MỤC</h3>
+        <h3 class="text-xl font-bold">THÊM SẢN PHẨM</h3>
         <nav class="text-sm font-medium text-gray-500 py-4" aria-label="breadcrumb">
             <ol class="list-none p-0 inline-flex">
                 <li class="flex items-center">
@@ -13,11 +13,11 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <a href="{{ route('admin.categories') }}" class="text-blue-500 hover:text-blue-700">Danh mục</a>
+                    <a href="{{ route('admin.products') }}" class="text-blue-500 hover:text-blue-700">Sản phẩm</a>
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">Thêm danh mục</span>
+                    <span class="text-gray-700">Thêm sản phẩm</span>
                 </li>
             </ol>
         </nav>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
-                @livewire('admin.category.add-category')
+                @livewire('admin.product.add-product')
             </div>
         </div>
     </div>
