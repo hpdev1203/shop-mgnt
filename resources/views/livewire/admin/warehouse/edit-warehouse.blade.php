@@ -1,42 +1,40 @@
 <div>
-    <form wire:submit='storeWarehouses'>
+    <form wire:submit='updateWarehouse'>
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-6">
                     <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                        <label for="warehouses_code" class="block text-sm font-medium leading-6 text-gray-900">Mã Kho hàng</label>
+                        <label for="warehouse_code" class="block text-sm font-medium leading-6 text-gray-900">Mã kho hàng</label>
                         <div class="mt-2">
-                            <input wire:model="warehouses_code" type="text" name="warehouses_code" id="warehouses_code" autocomplete="warehouses_code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <input wire:model="warehouse_code" type="text" name="warehouse_code" id="warehouse_code" autocomplete="warehouse_code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </div>
-                        @error('warehouses_code')
+                        @error('warehouse_code')
                             <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="col-span-1 sm:col-span-2 md:col-span-2">
-                        <label for="warehouses_name" class="block text-sm font-medium leading-6 text-gray-900">Tên Kho hàng</label>
+                        <label for="warehouse_name" class="block text-sm font-medium leading-6 text-gray-900">Tên kho hàng</label>
                         <div class="mt-2">
-                            <input wire:model="warehouses_name" type="text" name="warehouses_name" id="warehouses_name" autocomplete="warehouses_name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <input wire:model="warehouse_name" type="text" name="warehouse_name" id="warehouse_name" autocomplete="warehouse_name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </div>
-                        @error('warehouses_name')
+                        @error('warehouse_name')
                             <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                         @enderror
                     </div>
-                    
                     <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                     <div class="col-span-1 sm:col-span-2 md:col-span-3">
-                        <label for="description" class="block text-sm font-medium leading-6 text-gray-900">SĐT</label>
+                        <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">SĐT</label>
                         <div class="mt-2">
-                            <input wire:model="warehouses_phone" type="text" name="warehouses_phone" id="warehouses_phone" autocomplete="warehouses_phone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <input wire:model="warehouse_phone" type="text" name="warehouse_phone" id="warehouse_phone" autocomplete="warehouse_phone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </div>
                     </div>
                     <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                     <div class="col-span-1 sm:col-span-2 md:col-span-3">
-                        <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Địa Chỉ</label>
+                        <label for="address" class="block text-sm font-medium leading-6 text-gray-900">Địa chỉ</label>
                         <div class="mt-2">
-                            <textarea wire:model="warehouses_address" id="warehouses_address" name="warehouses_address" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                            <textarea wire:model="warehouse_address" id="warehouse_address" name="warehouse_address" autocomplete="warehouse_phone"  rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                         </div>
                     </div>
-               
                     <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                     <div class="col-span-1 sm:col-span-2 md:col-span-3">
                         <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Logo</label>

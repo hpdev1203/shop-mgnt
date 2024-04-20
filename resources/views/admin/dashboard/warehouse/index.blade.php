@@ -17,6 +17,6 @@
                 </li>
             </ol>
         </nav>
-        @livewire('admin.warehouses.list-warehouses')
+        @livewire('admin.warehouse.list-warehouse')
     </div>
 @endsection
