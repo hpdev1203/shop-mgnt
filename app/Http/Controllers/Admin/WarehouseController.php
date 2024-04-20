@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Warehouses;
+use App\Models\Warehouse;
 
 class WarehouseController extends Controller
 {
@@ -15,18 +15,18 @@ class WarehouseController extends Controller
 
     public function add()
     {
-        return view('admin.dashboard.warehouse.add_warehouses');
+        return view('admin.dashboard.warehouse.add_warehouse');
     }
 
     public function delete($id){
-        $warehouses = Warehouses::find($id);
-        $warehouses->delete();
-        return redirect()->route('admin.warehouses');
+        $warehouse = Warehouse::find($id);
+        $warehouse->delete();
+        return redirect()->route('admin.warehouse');
     }
 
     public function edit($id)
     {
-        $warehouses = Warehouses::find($id);
-        return view('admin.dashboard.warehouse.edit_warehouses', ['warehouses' => $warehouses]);
+        $warehouse = Warehouse::find($id);
+        return view('admin.dashboard.warehouse.edit_warehouse', ['warehouse' => $warehouse]);
     }
 }

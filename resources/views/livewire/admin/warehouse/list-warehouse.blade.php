@@ -25,27 +25,27 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 text-sm	">
-                @foreach ($warehouses as $index => $itemWarehouses)
+                @foreach ($warehouses as $index => $warehouse)
                 <tr>
                     <td class="px-6 py-2 whitespace-nowrap text-center">{{ $warehouses->perPage() * ($warehouses->currentPage() - 1) + $loop->iteration }}</td>
                     <td class="px-6 py-2 whitespace-nowrap text-center">
-                        @if ($itemWarehouses->logo)
-                            <img src="{{ asset('storage/images/warehouses/' . $itemWarehouses->logo) }}" alt="Warehouses Logo" class="w-10 h-10 shadow-md">
+                        @if ($warehouse->logo)
+                            <img src="{{ asset('storage/images/warehouse/' . $warehouse->logo) }}" alt="Warehouse Logo" class="w-10 h-10 shadow-md">
                         @else
-                            <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Warehouses Logo" class="w-10 h-10 shadow-md">
+                            <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Warehouse Logo" class="w-10 h-10 shadow-md">
                         @endif
                     </td>
-                    <td class="px-6 py-2 whitespace-nowrap">{{$itemWarehouses->name}}</td>
-                    <td class="px-6 py-2 whitespace-nowrap">{{$itemWarehouses->phone}}</td>
-                    <td class="px-4 py-2 whitespace-nowrap" title="{{$itemWarehouses->address}}">
-                        @if (strlen($itemWarehouses->address) > 50)
-                            {{ substr($itemWarehouses->address, 0, 50) }}...
+                    <td class="px-6 py-2 whitespace-nowrap">{{$warehouse->name}}</td>
+                    <td class="px-6 py-2 whitespace-nowrap">{{$warehouse->phone}}</td>
+                    <td class="px-4 py-2 whitespace-nowrap" title="{{$warehouse->address}}">
+                        @if (strlen($warehouse->address) > 50)
+                            {{ substr($warehouse->address, 0, 50) }}...
                         @else
-                            {{ $itemWarehouses->address ? $itemWarehouses->address : '-'}}
+                            {{ $warehouse->address ? $warehouse->address : '-'}}
                         @endif
                     </td>
                     <td class="px-6 py-2 whitespace-nowrap text-center">
-                        <a href="{{route('admin.warehouses.edit', $itemWarehouses->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
+                        <a href="{{route('admin.warehouses.edit', $warehouse->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
                             <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
@@ -53,7 +53,7 @@
                                 <path d="M16 5l3 3"></path>
                             </svg>
                         </a>
-                        <a data-modal-target="static-modal" data-modal-toggle="static-modal" onclick="parseDataDelete('{{$itemWarehouses->id}}', '{{$itemWarehouses->name}}')" class="inline-flex items-center text-red-600 hover:text-red-900 cursor-pointer">
+                        <a data-modal-target="static-modal" data-modal-toggle="static-modal" onclick="parseDataDelete('{{$warehouse->id}}', '{{$warehouse->name}}')" class="inline-flex items-center text-red-600 hover:text-red-900 cursor-pointer">
                             <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Delete" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M4 7l16 0"></path>

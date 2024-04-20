@@ -25,12 +25,12 @@
         <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div class="px-4 py-6 md:px-6 xl:px-7.5">
                 <div class="flex justify-between items-center">
-                    <h4 class="text-xl font-bold text-black dark:text-white inline">CHỈNH SỬA - <span class="uppercase font-bold text-sky-400">{{$warehouses->name}}</span></h4>
+                    <h4 class="text-xl font-bold text-black dark:text-white inline">CHỈNH SỬA - <span class="uppercase font-bold text-sky-400">{{$warehouse->name}}</span></h4>
                 </div>
             </div>
 
             <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
-                @livewire('admin.warehouses.edit-warehouses', ['id' => $warehouses->id])
+                @livewire('admin.warehouse.edit-warehouse', ['id' => $warehouse->id])
             </div>
         </div>
     </div>
