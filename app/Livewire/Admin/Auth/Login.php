@@ -28,6 +28,16 @@ class Login extends Component
         }
 
         if (auth()->attempt($credentials)) {
+            if(auth()->user()->is_active == false){
+                auth()->logout();
+                session()->flash('error', 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.');
+                return;
+            }
+            if(auth()->user()->role == 'customer'){
+                auth()->logout();
+                session()->flash('error', 'Tài khoản của bạn không có quyền truy cập.');
+                return;
+            }
             return redirect()->route('admin');
         }else{
             session()->flash('error', 'Thông tin đăng nhập không chính xác.');
@@ -42,6 +52,6 @@ class Login extends Component
 
     public function render()
     {
-        return view('livewire.admin.auth.login');
+        return view('livewire.admin.auth.login')->title('Đăng nhập hệ thống');
     }
 }

@@ -19,7 +19,9 @@ class Setup extends Component
     public $system_name = '';
     public $system_email = '';
     public $system_phone = '';
-    public $address = '';
+    public $system_address = '';
+    public $system_city = '';
+    public $system_state = '';
     public $website = '';
 
     public function handleSubmit()
@@ -33,8 +35,9 @@ class Setup extends Component
             'system_name' => 'required',
             'system_email' => 'required|email',
             'system_phone' => 'required',
-            'address' => 'required',
-            'website' => 'required',
+            'system_address' => 'required',
+            'system_city' => 'required',
+            'system_state' => 'required',
         ], [
             'name.required' => 'Vui lòng nhập tên.',
             'email.required' => 'Vui lòng nhập email.',
@@ -48,10 +51,30 @@ class Setup extends Component
             'system_email.required' => 'Vui lòng nhập email hệ thống.',
             'system_email.email' => 'Vui lòng nhập đúng định dạng email hệ thống.',
             'system_phone.required' => 'Vui lòng nhập số điện thoại hệ thống.',
-            'address.required' => 'Vui lòng nhập địa chỉ.',
-            'website.required' => 'Vui lòng nhập địa chỉ website.',
+            'system_address.required' => 'Vui lòng nhập địa chỉ.',
+            'system_city.required' => 'Vui lòng nhập thành phố.',
+            'system_state.required' => 'Vui lòng nhập Tỉnh thành.',
         ]);
 
+        $user = new User();
+        $user->code = 'SUPERADMIN';
+        $user->name = $this->name;
+        $user->email = $this->email;
+        $user->username = $this->username;
+        $user->password = Hash::make($this->password);
+        $user->role = 'system';
+        $user->is_super_admin = true;
+        $user->save();
+
+        $system_info = new SystemInfo();
+        $system_info->name = $this->system_name;
+        $system_info->email = $this->system_email;
+        $system_info->phone = $this->system_phone;
+        $system_info->address = $this->system_address;
+        $system_info->city = $this->system_city;
+        $system_info->state = $this->system_state;
+        $system_info->website = $this->website;
+        $system_info->save();
 
         $setup = SetupModel::first();
         if(!$setup) {
@@ -60,24 +83,8 @@ class Setup extends Component
         $setup->is_completed = true;
         $setup->save();
 
-        $system_info = new SystemInfo();
-        $system_info->name = $this->system_name;
-        $system_info->email = $this->system_email;
-        $system_info->phone = $this->system_phone;
-        $system_info->address = $this->address;
-        $system_info->website = $this->website;
-        $system_info->save();
-
-        $user = new User();
-        $user->name = $this->name;
-        $user->email = $this->email;
-        $user->username = $this->username;
-        $user->password = Hash::make($this->password);
-        $user->role = 'system';
-        $user->save();
-
         session()->flash('success', 'Cài đặt hệ thống thành công.');
-        return redirect()->route('admin.dashboard.dashboard');
+        return redirect()->route('admin');
     }
 
     public function render()

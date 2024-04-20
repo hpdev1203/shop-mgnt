@@ -29,10 +29,10 @@ class ListUser extends Component
     public function render()
     {
         if($this->search_input == ''){
-            $users = User::where('role','user')->paginate(10);
+            $users = User::where('role','customer')->paginate(10);
         }else{
             $users = User::where([
-                ['role', '=', 'user'],
+                ['role', '=', 'customer'],
                 ['name', 'like', '%'.$this->search_input.'%'],
             ])->paginate(10);
         }

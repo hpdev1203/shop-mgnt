@@ -18,12 +18,6 @@ class CategoryController extends Controller
         return view('admin.dashboard.category.add_category');
     }
 
-    public function delete($id){
-        $category = Category::find($id);
-        $category->delete();
-        return redirect()->route('admin.categories');
-    }
-
     public function edit($id)
     {
         $category = Category::find($id);
