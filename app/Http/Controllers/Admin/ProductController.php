@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard.category.index');
+        return view('admin.dashboard.product.index');
     }
 
     public function add()
