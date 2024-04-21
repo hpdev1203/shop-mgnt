@@ -244,7 +244,7 @@
                                     </clipPath>
                                 </defs>
                             </svg>
-                            Cài đặt
+                            Hệ thống
                         </a>
                     </li>
                     <!-- Menu Item Settings -->
