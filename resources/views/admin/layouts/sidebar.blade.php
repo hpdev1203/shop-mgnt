@@ -210,7 +210,7 @@
                     <li>
                         <a
                             class="group relative flex items-center gap-2 rounded-sm py-1 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                            href="settings.html"
+                            href="#"
                             @click="selected = (selected === 'Settings' ? '':'Settings')"
                             :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Settings') && (page === 'settings') }"
                             :class="page === 'settings' && 'bg-graydark'"
@@ -245,7 +245,45 @@
                                 </defs>
                             </svg>
                             Hệ thống
+                            <svg
+                                class="absolute right-4 top-1/2 -translate-y-1/2 fill-current"
+                                :class="{ 'rotate-180': (selected === 'Settings') }"
+                                width="15"
+                                height="15"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                >
+                                <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                                    fill=""
+                                    />
+                            </svg>
                         </a>
+                        <div
+                            class="translate transform overflow-hidden"
+                            :class="(selected === 'Settings') ? 'block' :'hidden'"
+                            >
+                            <ul class="mt-2 flex flex-col gap-2 pl-6">
+                                <li>
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{route('admin.administrators')}}"
+                                        :class="page === 'formElements' && '!text-white'">
+                                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
+                                            <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
+                                            <path d="M9 17v-5"></path>
+                                            <path d="M12 17v-1"></path>
+                                            <path d="M15 17v-3"></path>
+                                        </svg>
+                                        Quản Trị Viên
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <!-- Menu Item Settings -->
                 </ul>
