@@ -22,16 +22,6 @@
             </ol>
         </nav>
         
-        <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div class="px-4 py-6 md:px-6 xl:px-7.5">
-                <div class="flex justify-between items-center">
-                    <h4 class="text-xl font-bold text-black dark:text-white inline">THÊM MỚI</h4>
-                </div>
-            </div>
-
-            <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
-                @livewire('admin.product.add-product')
-            </div>
-        </div>
+        @livewire('admin.product.add-product')
     </div>
 @endsection

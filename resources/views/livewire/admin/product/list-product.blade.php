@@ -20,11 +20,10 @@
                     <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-16 text-center">STT</th>
                     <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center"></th>
                     <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Mã sản phẩm</th>
-                    <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-left">Tên Sản phẩm</th>
+                    <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Sản phẩm</th>
                     <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-right">Giá lẽ (VND)</th>
                     <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-right">Giá sỉ (VND)</th>
                     <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Tồn kho</th>
-                    <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Mô tả</th>
                     <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Hành Động</th>
                 </tr>
             </thead>
@@ -37,8 +36,8 @@
                     <td class="px-4 py-2 whitespace-nowrap text-center">{{ $products->perPage() * ($products->currentPage() - 1) + $loop->iteration }}</td>
                     <td class="px-6 py-2 whitespace-nowrap text-center">
                         <div class="flex justify-center">
-                            @if ($product->image)
-                                <img src="{{ asset('storage/images/products/' . $product->image) }}" alt="Hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
+                            @if (count($product->productDetails) > 0 && $product->productDetails[0] && $product->productDetails[0]->image)
+                                <img src="{{ asset('storage/images/products/' . $product->productDetails[0]->image) }}" alt="Hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
                             @else
                                 <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
                             @endif
@@ -46,16 +45,9 @@
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-center">{{$product->code}}</td>
                     <td class="px-4 py-2 whitespace-nowrap">{{$product->name}}</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-right">{{number_format($product->retail_price, 2, ',', '.')}}</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-right">{{number_format($product->wholesale_price, 2, ',', '.')}}</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-center">{{$product->stock}}</td>       
-                    <td class="px-4 py-2 whitespace-nowrap" title="{{$product->description}}">
-                        @if (strlen($product->description) > 50)
-                            {{ substr($product->description, 0, 50) }}...
-                        @else
-                            {{ $product->description ? $product->description : '-'}}
-                        @endif
-                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap text-right">{{number_format($product->retail_price, 0, ',', '.')}}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-right">{{number_format($product->wholesale_price, 0, ',', '.')}}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-center">{{$product->stock}}</td>
                     <td class="px-4 py-2 whitespace-nowrap text-center">
                         <a href="{{route('admin.products.edit', $product->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
                             <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
