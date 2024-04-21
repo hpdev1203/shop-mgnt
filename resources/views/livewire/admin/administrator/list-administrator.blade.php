@@ -29,8 +29,8 @@
                 <tr>
                     <td class="px-6 py-2 whitespace-nowrap text-center">{{$administrators->perPage() * ($administrators->currentPage() - 1) + $loop->iteration }}</td>
                     <td class="px-6 py-2 whitespace-nowrap">
-                        @if ($administrator->avatar_administrator)
-                            <img src="{{ asset('storage/images/administrators/' . $administrator->avatar_administrator) }}" alt="Ảnh đại diện" class="w-10 h-10 shadow-md">
+                        @if ($administrator->avatar_user)
+                            <img src="{{ asset('storage/images/administrators/' . $administrator->avatar_user) }}" alt="Ảnh đại diện" class="w-10 h-10 shadow-md">
                         @else
                             <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Ảnh đại diện" class="w-10 h-10 shadow-md">
                         @endif

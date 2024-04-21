@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Administrator;
+use App\Models\User as Administrator;
 
 class AdministratorController extends Controller
 {

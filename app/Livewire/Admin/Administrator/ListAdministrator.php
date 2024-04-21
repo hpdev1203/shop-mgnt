@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Administrator;
 
 use Livewire\Component;
-use App\Models\Administrator;
+use App\Models\User as Administrator;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 

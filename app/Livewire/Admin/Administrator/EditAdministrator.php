@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Administrator;
 
 use Livewire\Component;
-use App\Models\Administrator;
+use App\Models\User as Administrator;
 use Illuminate\Support\Facades\Hash;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -27,9 +27,9 @@ class EditAdministrator extends Component
     {
         $this->validate([
             'administrator_name' => 'required',
-            'administrator_email' => 'required|email|unique:administrators,email,' . $this->id,
+            'administrator_email' => 'required|email|unique:users,email,' . $this->id,
             'administrator_phone' => 'required|numeric',
-            'administrator_administratorname' => 'required|unique:administrators,administratorname,' . $this->id,
+            'administrator_administratorname' => 'required|unique:users,username,' . $this->id,
             'administrator_password' => 'min:6',
             'administrator_address' => 'required',
         ], [
@@ -64,12 +64,12 @@ class EditAdministrator extends Component
         $administrator->email = $this->administrator_email;
         $administrator->phone = $this->administrator_phone;
         $administrator->gender = $this->administrator_gender;
-        $administrator->administratorname = $this->administrator_administratorname;
+        $administrator->username = $this->administrator_administratorname;
         if ($this->administrator_password) {
             $administrator->password = Hash::make($this->administrator_password);
         }
         if ($this->photo) {
-            $administrator->avatar_administrator = $photo_name;
+            $administrator->avatar_user = $photo_name;
         }
         $administrator->address = $this->administrator_address;
         $administrator->save();
@@ -89,12 +89,12 @@ class EditAdministrator extends Component
         $this->administrator_email = $administrator->email;
         $this->administrator_phone = $administrator->phone;
         $this->administrator_gender = $administrator->gender;
-        $this->administrator_administratorname = $administrator->administratorname;
+        $this->administrator_administratorname = $administrator->username;
         $this->administrator_password = "";
         $this->administrator_address = $administrator->address;
         if($administrator->avatar_administrator){
             $this->existedPhoto = "images/administrators/" . $administrator->avatar_administrator;
         }
-        return view('livewire.admin.administrator.edit-administrator', ['administrators' => $administrators]);
+        return view('livewire.admin.administrator.edit-administrator', ['administrator' => $administrators]);
     }
 }

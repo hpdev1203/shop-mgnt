@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Administrator;
 
 use Livewire\Component;
-use App\Models\Administrator;
+use App\Models\User as Administrator;
 use Illuminate\Support\Facades\Hash;
 use Livewire\WithFileUploads;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -27,9 +27,9 @@ class AddAdministrator extends Component
     {
         $this->validate([
             'administrator_name' => 'required',
-            'administrator_email' => 'required|email|unique:administrators,email',
+            'administrator_email' => 'required|email|unique:users,email',
             'administrator_phone' => 'required|numeric',
-            'administrator_administratorname' => 'required|unique:administrators,administratorname',
+            'administrator_administratorname' => 'required|unique:users,username',
             'administrator_password' => 'required|min:6',
             'administrator_address' => 'required',
         ], [
@@ -65,19 +65,19 @@ class AddAdministrator extends Component
         $administrator->email = $this->administrator_email;
         $administrator->phone = $this->administrator_phone;
         $administrator->gender = $this->administrator_gender;
-        $administrator->administratorname = $this->administrator_administratorname;
+        $administrator->username = $this->administrator_administratorname;
         $administrator->password = Hash::make($this->administrator_password);
         $administrator->address = $this->administrator_address;
         $administrator->role = $this->administrator_role;
         if ($this->photo) {
-            $administrator->avatar_administrator = $photo_name;
+            $administrator->avatar_user = $photo_name;
         }
         $administrator->save();
         return redirect()->route('admin.administrators');
     }
     public function render()
     {
-        $administrators = Administrator::all();
-        return view('livewire.admin.administrator.add-administrator', ['administrator' => $administrators]);
+        $Administrators = Administrator::all();
+        return view('livewire.admin.administrator.add-administrator', ['administrator' => $Administrators]);
     }
 }
