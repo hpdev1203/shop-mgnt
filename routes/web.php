@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CKController;
+use App\Http\Controllers\Admin\AdministratorController;
 
 
 
@@ -49,6 +50,11 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/products/edit/{id}', [ProductController::class, 'edit'])->name('admin.products.edit');
 
     Route::post('/admin/ck-upload-image', [CKController::class, 'uploadImage'])->name('admin.ck-upload-image');
+
+    /* Administrator  */
+    Route::get('/admin/administrators', [AdministratorController::class, 'index'])->name('admin.administrators');
+    Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
+    Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 });
 
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
