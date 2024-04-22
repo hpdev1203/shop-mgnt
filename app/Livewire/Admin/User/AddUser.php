@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class AddUser extends Component
 {   
     use WithFileUploads;
+    public $user_code = '';
     public $user_name = '';
     public $user_email = '';
     public $user_phone = '';
@@ -19,19 +20,27 @@ class AddUser extends Component
     public $user_username = '';
     public $user_password = '';
     public $user_address = '';
+    public $user_state = '';
+    public $user_city = '';
+    public $user_active = 1;
     public $photo;
     public $existedPhoto;
 
     public function storeUser()
     {
         $this->validate([
+            'user_code' => 'required|unique:users,code',
             'user_name' => 'required',
             'user_email' => 'required|email|unique:users,email',
             'user_phone' => 'required|numeric',
             'user_username' => 'required|unique:users,username',
             'user_password' => 'required|min:6',
             'user_address' => 'required',
+            'user_state' => 'required',
+            'user_city' => 'required',
         ], [
+            'user_code.required' => 'Vui lòng nhập mã khách hàng.',
+            'user_code.unique' => 'Mã khách hàng đã tồn tại.',
             'user_name.required' => 'Vui lòng nhập tên khách hàng.',
             'user_email.required' => 'Vui lòng nhập email khách hàng.',
             'user_email.email' => 'Vui lòng nhập đúng định dạng email.',
@@ -42,7 +51,8 @@ class AddUser extends Component
             'user_username.unique' => 'Tên đăng nhập đã tồn tại.',
             'user_password.required' => 'Vui lòng nhập mật khẩu khách hàng.',
             'user_password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
-            'user_address.required' => 'Vui lòng nhập địa chỉ khách hàng.',
+            'user_state.required' => 'Vui lòng nhập quận/huyện khách hàng.',
+            'user_city.required' => 'Vui lòng nhập tỉnh/thành phố khách hàng.',
         ]);
 
         if ($this->photo) {
@@ -60,6 +70,7 @@ class AddUser extends Component
         }
 
         $user = new User();
+        $user->code = $this->user_code;
         $user->name = $this->user_name;
         $user->email = $this->user_email;
         $user->phone = $this->user_phone;
@@ -67,15 +78,27 @@ class AddUser extends Component
         $user->username = $this->user_username;
         $user->password = Hash::make($this->user_password);
         $user->address = $this->user_address;
+        $user->state = $this->user_state;
+        $user->city = $this->user_city;
         if ($this->photo) {
             $user->avatar_user = $photo_name;
         }
+        if($this->user_active == false){
+            $this->user_active = 0;
+        }else{
+            $this->user_active = 1;
+        }
+        $user->is_active = $this->user_active;
         $user->save();
         return redirect()->route('admin.users');
     }
     public function render()
     {
-        $users = User::all();
-        return view('livewire.admin.user.add-user', ['user' => $users]);
+        $id_latest = User::where('role','customer')->latest('id')->first();
+        if($id_latest == null){
+            $id_latest = (object) ['id' => 0];
+        }   
+        $this->user_code = 'CUS-'.str_pad($id_latest->id + 1, 4, '0', STR_PAD_LEFT);
+        return view('livewire.admin.user.add-user');
     }
 }

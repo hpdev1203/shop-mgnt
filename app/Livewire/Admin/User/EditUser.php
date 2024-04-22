@@ -13,6 +13,7 @@ class EditUser extends Component
 {
     use WithFileUploads;
     public $id;
+    public $user_code = '';
     public $user_name = '';
     public $user_email = '';
     public $user_phone = '';
@@ -20,19 +21,27 @@ class EditUser extends Component
     public $user_username = '';
     public $user_password = '';
     public $user_address = '';
+    public $user_state = '';
+    public $user_city = '';
+    public $user_active = 1;
     public $photo;
     public $existedPhoto;
 
     public function updateUser()
     {
         $this->validate([
+            'user_code' => 'required|unique:users,code,' . $this->id,
             'user_name' => 'required',
             'user_email' => 'required|email|unique:users,email,' . $this->id,
             'user_phone' => 'required|numeric',
             'user_username' => 'required|unique:users,username,' . $this->id,
             'user_password' => 'min:6',
             'user_address' => 'required',
+            'user_state' => 'required',
+            'user_city' => 'required',
         ], [
+            'user_code.required' => 'Vui lòng nhập mã khách hàng.',
+            'user_code.unique' => 'Mã khách hàng đã tồn tại.',
             'user_name.required' => 'Vui lòng nhập tên khách hàng.',
             'user_email.required' => 'Vui lòng nhập email khách hàng.',
             'user_email.email' => 'Vui lòng nhập đúng định dạng email.',
@@ -43,6 +52,8 @@ class EditUser extends Component
             'user_username.unique' => 'Tên đăng nhập đã tồn tại.',
             'user_password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'user_address.required' => 'Vui lòng nhập địa chỉ khách hàng.',
+            'user_state.required' => 'Vui lòng nhập quận/huyện khách hàng.',
+            'user_city.required' => 'Vui lòng nhập tỉnh/thành phố khách hàng.',
         ]);
 
         if ($this->photo) {
@@ -60,6 +71,7 @@ class EditUser extends Component
         }
 
         $user = User::find($this->id);
+        $user->code = $this->user_code;
         $user->name = $this->user_name;
         $user->email = $this->user_email;
         $user->phone = $this->user_phone;
@@ -72,6 +84,14 @@ class EditUser extends Component
             $user->avatar_user = $photo_name;
         }
         $user->address = $this->user_address;
+        $user->state = $this->user_state;
+        $user->city = $this->user_city;
+        if($this->user_active == false){
+            $this->user_active = 0;
+        }else{
+            $this->user_active = 1;
+        }
+        $user->is_active = $this->user_active;
         $user->save();
         return redirect()->route('admin.users');
     }
@@ -83,8 +103,8 @@ class EditUser extends Component
 
     public function render()
     {
-        $users = User::all();
         $user = User::find($this->id);
+        $this->user_code = $user->code;
         $this->user_name = $user->name;
         $this->user_email = $user->email;
         $this->user_phone = $user->phone;
@@ -92,9 +112,12 @@ class EditUser extends Component
         $this->user_username = $user->username;
         $this->user_password = "";
         $this->user_address = $user->address;
+        $this->user_state = $user->state;
+        $this->user_city = $user->city;
+        $this->user_active = $user->is_active;
         if($user->avatar_user){
             $this->existedPhoto = "images/users/" . $user->avatar_user;
         }
-        return view('livewire.admin.user.edit-user', ['users' => $users]);
+        return view('livewire.admin.user.edit-user');
     }
 }
