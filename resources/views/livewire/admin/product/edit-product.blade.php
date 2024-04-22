@@ -128,7 +128,11 @@
                                                 <div class="text-center mx-auto inline">
                                                     @if (isset($product_detail_image_list[$index]) && $product_detail_image_list[$index])
                                                         <div class="flex justify-center">
-                                                            <img src="{{ asset('storage/images/products/' . $product_detail_image_list[$index]) }}" alt="Photo Preview" class="rounded-lg shadow-md w-40 h-40">
+                                                            @if (!is_string($product_detail_image_list[$index]))
+                                                                <img src="{{ $product_detail_image_list[$index]->temporaryUrl() }}" alt="Photo Preview" class="rounded-lg shadow-md w-64 h-64">
+                                                            @else
+                                                                <img src="{{ asset('storage/images/products/' . $product_detail_image_list[$index]) }}" alt="Photo Preview" class="rounded-lg shadow-md w-64 h-64">
+                                                            @endif
                                                         </div>
                                                     @endif
                                                     <div class="mt-4 text-sm leading-6 text-gray-600">
