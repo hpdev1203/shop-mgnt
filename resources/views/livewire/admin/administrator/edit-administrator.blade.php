@@ -81,11 +81,11 @@
                 </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="administrator_administratorname" class="block text-sm font-medium leading-6 text-gray-900">Tên đăng nhập</label>
+                    <label for="administrator_username" class="block text-sm font-medium leading-6 text-gray-900">Tên đăng nhập</label>
                     <div class="mt-2">
-                        <input wire:model="administrator_administratorname" type="text" name="administrator_administratorname" id="administrator_administratorname" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <input wire:model="administrator_username" type="text" name="administrator_username" id="administrator_username" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
-                    @error('administrator_administratorname')
+                    @error('administrator_username')
                         <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                     @enderror
                 </div>
@@ -99,6 +99,12 @@
                     @enderror
                 </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-2">
+                    <div class="mt-2 inline">
+                        <input type="checkbox" @checked(old('active', $administrator->is_active)) class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:model="administrator_active" name="administrator_active" id="administrator_active" value="{{$administrator->is_active}}">
+                    </div>
+                    <label for="administrator_address" class="inline text-sm font-medium leading-6 text-gray-900">Hoạt động/Không hoạt động</label>
+                </div>
         </div>
     </div>
     <div class="mt-6 flex flex-col sm:flex-row items-center justify-end gap-x-6">

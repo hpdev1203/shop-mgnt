@@ -29,12 +29,27 @@ class ListAdministrator extends Component
     public function render()
     {
         if($this->search_input == ''){
-            $administrators = Administrator::where('role','administrator')->paginate(10);
+            $administrators = Administrator::where([
+                ['role', '=', 'system'],
+                ['is_super_admin', '=', '0'],
+            ])->paginate(10);
         }else{
             $administrators = Administrator::where([
-                ['role', '=', 'administrator'],
+                ['role', '=', 'system'],
                 ['name', 'like', '%'.$this->search_input.'%'],
-            ])->paginate(10);
+                ['is_super_admin', '=', '0'],
+            ])
+            ->orWhere([
+                ['role', '=', 'system'],
+                ['email', 'like', '%'.$this->search_input.'%'],
+                ['is_super_admin', '=', '0'],
+            ])
+            ->orWhere([
+                ['role', '=', 'system'],
+                ['phone', 'like', '%'.$this->search_input.'%'],
+                ['is_super_admin', '=', '0'],
+            ])
+            ->paginate(10);
         }
         return view('livewire.admin.administrator.list-administrator', ['administrators' => $administrators]);
     }

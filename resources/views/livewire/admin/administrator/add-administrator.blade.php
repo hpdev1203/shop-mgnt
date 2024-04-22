@@ -3,6 +3,17 @@
         <div class="border-b border-gray-900/10 pb-12">
             <div class="grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
+                        <label for="administrator_code" class="block text-sm font-medium leading-6 text-gray-900">Mã quản trị viên</label>
+                        <div class="mt-2">
+                            <input wire:model="administrator_code" type="text" name="administrator_code" id="administrator_code" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                        @error('administrator_code')
+                            <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
+                        @enderror
+                </div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-1"></div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-1">
                     <label for="administrator_name" class="block text-sm font-medium leading-6 text-gray-900">Tên quản trị viên</label>
                     <div class="mt-2">
                         <input wire:model="administrator_name" type="text" name="administrator_name" id="administrator_name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -81,11 +92,11 @@
                 </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="administrator_administratorname" class="block text-sm font-medium leading-6 text-gray-900">Tên đăng nhập</label>
+                    <label for="administrator_username" class="block text-sm font-medium leading-6 text-gray-900">Tên đăng nhập</label>
                     <div class="mt-2">
-                        <input wire:model="administrator_administratorname" type="text" name="administrator_administratorname" id="administrator_administratorname" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <input wire:model="administrator_username" type="text" name="administrator_username" id="administrator_username" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
-                    @error('administrator_administratorname')
+                    @error('administrator_username')
                         <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                     @enderror
                 </div>
@@ -99,6 +110,13 @@
                     @enderror
                 </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+
+                <div class="col-span-1 sm:col-span-2 md:col-span-2">
+                        <div class="mt-2 inline">
+                                <input type="checkbox" checked class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:model="administrator_active" name="administrator_active" id="administrator_active" value="1">
+                        </div>
+                    <label for="administrator_address" class="inline text-sm font-medium leading-6 text-gray-900">Hoạt động/Không hoạt động</label>
+                </div>
         </div>
     </div>
     <div class="mt-6 flex flex-col sm:flex-row items-center justify-end gap-x-6">

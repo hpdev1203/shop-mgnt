@@ -16,12 +16,13 @@ class AddAdministrator extends Component
     public $administrator_email = '';
     public $administrator_phone = '';
     public $administrator_gender = '1';
-    public $administrator_administratorname = '';
+    public $administrator_username = '';
     public $administrator_password = '';
     public $administrator_address = '';
     public $photo;
     public $existedPhoto;
-    public $administrator_role = 'administrator';
+    public $administrator_role = 'system';
+    public $administrator_active = '1';
 
     public function storeAdministrator()
     {
@@ -29,7 +30,7 @@ class AddAdministrator extends Component
             'administrator_name' => 'required',
             'administrator_email' => 'required|email|unique:users,email',
             'administrator_phone' => 'required|numeric',
-            'administrator_administratorname' => 'required|unique:users,username',
+            'administrator_username' => 'required|unique:users,username',
             'administrator_password' => 'required|min:6',
             'administrator_address' => 'required',
         ], [
@@ -39,8 +40,8 @@ class AddAdministrator extends Component
             'administrator_email.unique' => 'Email đã tồn tại.',
             'administrator_phone.required' => 'Vui lòng nhập số điện thoại quản trị viên.',
             'administrator_phone.numeric' => 'Vui lòng nhập đúng định dạng số điện thoại.',
-            'administrator_administratorname.required' => 'Vui lòng nhập tên đăng nhập quản trị viên',
-            'administrator_administratorname.unique' => 'Tên đăng nhập đã tồn tại.',
+            'administrator_username.required' => 'Vui lòng nhập tên đăng nhập quản trị viên',
+            'administrator_username.unique' => 'Tên đăng nhập đã tồn tại.',
             'administrator_password.required' => 'Vui lòng nhập mật khẩu quản trị viên.',
             'administrator_password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'administrator_address.required' => 'Vui lòng nhập địa chỉ quản trị viên.',
@@ -65,10 +66,11 @@ class AddAdministrator extends Component
         $administrator->email = $this->administrator_email;
         $administrator->phone = $this->administrator_phone;
         $administrator->gender = $this->administrator_gender;
-        $administrator->username = $this->administrator_administratorname;
+        $administrator->username = $this->administrator_username;
         $administrator->password = Hash::make($this->administrator_password);
         $administrator->address = $this->administrator_address;
         $administrator->role = $this->administrator_role;
+        $administrator->is_active = $this->administrator_active;
         if ($this->photo) {
             $administrator->avatar_user = $photo_name;
         }
@@ -78,6 +80,9 @@ class AddAdministrator extends Component
     public function render()
     {
         $Administrators = Administrator::all();
+        $id_latest = Administrator::latest('id')->first();
+        $this->administrator_code = 'PROD-'.str_pad($id_latest->id + 1, 4, '0', STR_PAD_LEFT);
+        //$this->product_code = 'ADM-'.str_pad($id_latest->id + 1, 4, '0', STR_PAD_LEFT);
         return view('livewire.admin.administrator.add-administrator', ['administrator' => $Administrators]);
     }
 }
