@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class AddAdministrator extends Component
 {   
     use WithFileUploads;
+    public $administrator_code = '';
     public $administrator_name = '';
     public $administrator_email = '';
     public $administrator_phone = '';
@@ -27,6 +28,7 @@ class AddAdministrator extends Component
     public function storeAdministrator()
     {
         $this->validate([
+            'administrator_code' => 'required|unique:users,code',
             'administrator_name' => 'required',
             'administrator_email' => 'required|email|unique:users,email',
             'administrator_phone' => 'required|numeric',
@@ -34,6 +36,8 @@ class AddAdministrator extends Component
             'administrator_password' => 'required|min:6',
             'administrator_address' => 'required',
         ], [
+            'administrator_code.required' => 'Mã quản trị viên là bắt buộc.',
+            'administrator_code.unique' => 'Mã quản trị viên đã tồn tại.',
             'administrator_name.required' => 'Vui lòng nhập tên quản trị viên.',
             'administrator_email.required' => 'Vui lòng nhập email quản trị viên.',
             'administrator_email.email' => 'Vui lòng nhập đúng định dạng email.',
@@ -62,6 +66,7 @@ class AddAdministrator extends Component
         }
 
         $administrator = new Administrator();
+        $administrator->code = $this->administrator_code;
         $administrator->name = $this->administrator_name;
         $administrator->email = $this->administrator_email;
         $administrator->phone = $this->administrator_phone;
@@ -81,8 +86,11 @@ class AddAdministrator extends Component
     {
         $Administrators = Administrator::all();
         $id_latest = Administrator::latest('id')->first();
-        $this->administrator_code = 'PROD-'.str_pad($id_latest->id + 1, 4, '0', STR_PAD_LEFT);
-        //$this->product_code = 'ADM-'.str_pad($id_latest->id + 1, 4, '0', STR_PAD_LEFT);
+        if($id_latest == null){
+            $id_latest = (object) ['id' => 0];
+        }   
+        $this->administrator_code = 'ADM-'.str_pad($id_latest->id + 1, 4, '0', STR_PAD_LEFT);
+
         return view('livewire.admin.administrator.add-administrator', ['administrator' => $Administrators]);
     }
 }

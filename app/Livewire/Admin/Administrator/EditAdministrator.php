@@ -13,6 +13,7 @@ class EditAdministrator extends Component
 {
     use WithFileUploads;
     public $id;
+    public $administrator_code = '';
     public $administrator_name = '';
     public $administrator_email = '';
     public $administrator_phone = '';
@@ -27,6 +28,7 @@ class EditAdministrator extends Component
     public function updateAdministrator()
     {
         $this->validate([
+            'administrator_code' => 'required|unique:users,code,' . $this->id,
             'administrator_name' => 'required',
             'administrator_email' => 'required|email|unique:users,email,' . $this->id,
             'administrator_phone' => 'required|numeric',
@@ -34,6 +36,8 @@ class EditAdministrator extends Component
             'administrator_password' => 'min:6',
             'administrator_address' => 'required',
         ], [
+            'product_code.required' => 'Mã quản trị viên là bắt buộc.',
+            'product_code.unique' => 'Mã quản trị viên đã tồn tại.',
             'administrator_name.required' => 'Vui lòng nhập tên quản trị viên.',
             'administrator_email.required' => 'Vui lòng nhập email quản trị viên.',
             'administrator_email.email' => 'Vui lòng nhập đúng định dạng email.',
@@ -87,6 +91,7 @@ class EditAdministrator extends Component
     {
         $administrators = Administrator::all();
         $administrator = Administrator::find($this->id);
+        $this->administrator_code = $administrator->code;
         $this->administrator_name = $administrator->name;
         $this->administrator_email = $administrator->email;
         $this->administrator_phone = $administrator->phone;
@@ -95,8 +100,8 @@ class EditAdministrator extends Component
         $this->administrator_password = "";
         $this->administrator_address = $administrator->address;
         $this->administrator_active = $administrator->is_active;
-        if($administrator->avatar_administrator){
-            $this->existedPhoto = "images/administrators/" . $administrator->avatar_administrator;
+        if($administrator->avatar_user){
+            $this->existedPhoto = "images/administrators/" . $administrator->avatar_user;
         }
         return view('livewire.admin.administrator.edit-administrator', ['administrator' => $administrator]);
     }

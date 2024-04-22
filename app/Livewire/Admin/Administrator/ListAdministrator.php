@@ -6,12 +6,14 @@ use Livewire\Component;
 use App\Models\User as Administrator;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class ListAdministrator extends Component
 {
     use WithPagination, WithoutUrlPagination; 
 
     public $search_input = '';
+    public $isAdmin = 'n';
 
     public function search()
     {
@@ -28,6 +30,7 @@ class ListAdministrator extends Component
     
     public function render()
     {
+       
         if($this->search_input == ''){
             $administrators = Administrator::where([
                 ['role', '=', 'system'],
