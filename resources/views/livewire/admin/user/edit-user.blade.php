@@ -3,7 +3,16 @@
         <div class="border-b border-gray-900/10 pb-12">
             <div class="grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="user_name" class="block text-sm font-medium leading-6 text-gray-900">Tên khách hàng</label>
+                    <label for="user_code" class="block text-sm font-medium leading-6 text-gray-900">Mã khách hàng <span class="text-red-700">*</span></label>
+                    <div class="mt-2">
+                        <input wire:model="user_code" type="text" name="user_code" id="user_code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                    @error('user_code')
+                        <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-1">
+                    <label for="user_name" class="block text-sm font-medium leading-6 text-gray-900">Tên khách hàng <span class="text-red-700">*</span></label>
                     <div class="mt-2">
                         <input wire:model="user_name" type="text" name="user_name" id="user_name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
@@ -11,8 +20,9 @@
                         <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="user_email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
+                    <label for="user_email" class="block text-sm font-medium leading-6 text-gray-900">Email <span class="text-red-700">*</span></label>
                     <div class="mt-2">
                         <input wire:model="user_email" type="email" name="user_email" id="user_email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
@@ -20,24 +30,14 @@
                         <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="user_phone" class="block text-sm font-medium leading-6 text-gray-900">Số điện thoại</label>
+                    <label for="user_phone" class="block text-sm font-medium leading-6 text-gray-900">Số điện thoại <span class="text-red-700">*</span></label>
                     <div class="mt-2">
                         <input wire:model="user_phone" type="text" name="user_phone" id="user_phone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
                     @error('user_phone')
                         <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                     @enderror
-                </div>
-                <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="user_gender" class="block text-sm font-medium leading-6 text-gray-900">Giới tính</label>
-                    <div class="mt-2">
-                        <select wire:model="user_gender" id="user_gender" name="user_gender" autocomplete="user_gender" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                            <option value="1">Nam</option>
-                            <option value="0">Nữ</option>
-                        </select>
-                    </div>
                 </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
@@ -69,11 +69,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-span-1 sm:col-span-2 md:col-span-3"></div>
-                <div class="col-span-1 sm:col-span-2 md:col-span-2">
-                    <label for="user_address" class="block text-sm font-medium leading-6 text-gray-900">Địa chỉ</label>
+                <div class="col-span-1 sm:col-span-2 md:col-span-1">
+                    <label for="user_gender" class="block text-sm font-medium leading-6 text-gray-900">Giới tính</label>
                     <div class="mt-2">
-                        <textarea wire:model="user_address" id="user_address" name="user_address" rows="3" class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                        <select wire:model="user_gender" id="user_gender" name="user_gender" autocomplete="user_gender" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                            <option value="1">Nam</option>
+                            <option value="0">Nữ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-2">
+                    <label for="user_address" class="block text-sm font-medium leading-6 text-gray-900">Địa chỉ <span class="text-red-700">*</span> <i>(Số nhà, tên đường, phường/xã)</i></label>
+                    <div class="mt-2">
+                        <input wire:model="user_address" type="text" name="user_address" id="user_address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
                     @error('user_address')
                         <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
@@ -81,7 +90,26 @@
                 </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="user_username" class="block text-sm font-medium leading-6 text-gray-900">Tên đăng nhập</label>
+                    <label for="user_state" class="block text-sm font-medium leading-6 text-gray-900">Quận/Huyện <span class="text-red-700">*</span></label>
+                    <div class="mt-2">
+                        <input wire:model="user_state" type="text" name="user_state" id="user_state" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                    @error('user_state')
+                        <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-1">
+                    <label for="user_city" class="block text-sm font-medium leading-6 text-gray-900">Tỉnh/Thành Phố <span class="text-red-700">*</span></label>
+                    <div class="mt-2">
+                        <input wire:model="user_city" type="text" name="user_city" id="user_city" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                    @error('user_city')
+                        <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-1">
+                    <label for="user_username" class="block text-sm font-medium leading-6 text-gray-900">Tên đăng nhập <span class="text-red-700">*</span></label>
                     <div class="mt-2">
                         <input wire:model="user_username" type="text" name="user_username" id="user_username" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
@@ -90,7 +118,7 @@
                     @enderror
                 </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="user_password" class="block text-sm font-medium leading-6 text-gray-900">Mật khẩu</label>
+                    <label for="user_password" class="block text-sm font-medium leading-6 text-gray-900">Mật khẩu <span class="text-red-700">*</span></label>
                     <div class="mt-2">
                         <input wire:model="user_password" type="password" name="user_password" id="user_password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
@@ -99,6 +127,10 @@
                     @enderror
                 </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-4">
+                    <input wire:model="user_active" type="checkbox" name="user_active" id="user_active" @if ($user_active == 1) checked @endif>
+                    <label for="user_active" class="px-2 text-sm font-medium leading-6 text-gray-900">Hoạt động/ Không hoạt động</label>
+                </div>
         </div>
     </div>
     <div class="mt-6 flex flex-col sm:flex-row items-center justify-end gap-x-6">

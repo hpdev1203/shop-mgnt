@@ -31,10 +31,9 @@ class ListUser extends Component
         if($this->search_input == ''){
             $users = User::where('role','customer')->paginate(10);
         }else{
-            $users = User::where([
-                ['role', '=', 'customer'],
-                ['name', 'like', '%'.$this->search_input.'%'],
-            ])->paginate(10);
+            $users = User::where('role', '=', 'customer')->where(function ($query) {
+                $query->where('name', 'like', '%'.$this->search_input.'%')->orWhere('email', 'like', '%'.$this->search_input.'%')->orWhere('phone', 'like', '%'.$this->search_input.'%');
+            })->paginate(10);
         }
         return view('livewire.admin.user.list-user', ['users' => $users]);
     }
