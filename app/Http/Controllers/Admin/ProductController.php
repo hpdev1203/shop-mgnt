@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = Category::find($id);
+        $product = Product::find($id);
         return view('admin.dashboard.product.edit_product', ['product' => $product]);
     }
 }
