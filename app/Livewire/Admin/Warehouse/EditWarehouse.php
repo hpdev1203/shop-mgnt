@@ -74,6 +74,9 @@ class EditWarehouse extends Component
         $this->warehouse_name = $warehouse->name;
         $this->warehouse_address = $warehouse->address;
         $this->warehouse_phone = $warehouse->phone;
+       
+        $audit = $warehouse->audits()->latest()->first();
+        //dd($audit->getModified());
 
         //$this->description = $warehouse->description;
         if($warehouse->logo) {

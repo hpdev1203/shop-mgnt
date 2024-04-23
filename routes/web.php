@@ -13,7 +13,9 @@ use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CKController;
 use App\Http\Controllers\Admin\AdministratorController;
+use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\ImportProductController;
+
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin', function () {
@@ -50,11 +52,6 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
 
     Route::post('/admin/ck-upload-image', [CKController::class, 'uploadImage'])->name('admin.ck-upload-image');
 
-    /* Administrator  */
-    Route::get('/admin/administrators', [AdministratorController::class, 'index'])->name('admin.administrators');
-    Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
-    Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
-
     /* Inventory */
     Route::prefix('admin/inventories')->group(function () {
         Route::get('/', function () {
@@ -68,6 +65,14 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
             return 'Trang luân chuyển';
         })->name('admin.inventories.goods-rotation');
     });
+    /* Audit  */
+    Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits');
+    Route::get('/admin/audits/detail/{id}', [AuditController::class, 'detail'])->name('admin.audits.detail');
+
+    /* Administrator  */
+    Route::get('/admin/administrators', [AdministratorController::class, 'index'])->name('admin.administrators');
+    Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
+    Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 });
 
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
