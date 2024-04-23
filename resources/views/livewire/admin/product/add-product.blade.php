@@ -75,6 +75,12 @@
                                         <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="col-span-1 sm:col-span-4">
+                                    <label for="product_wholesale_price" class="block text-sm font-medium leading-6 text-gray-900">Size</label>
+                                    <div class="mt-2">
+                                        <input wire:model="product_wholesale_price" type="text" name="product_wholesale_price" id="product_wholesale_price" autocomplete="product_wholesale_price" class="text-right block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
                                 <div class="col-span-1 sm:col-span-2 md:col-span-8">
                                     <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Mô tả sản phẩm</label>
                                     <div class="mt-2">
@@ -101,7 +107,12 @@
                                     </button>
                                 </div>
                             </div>
+                         
                             @foreach ($product_detail_list as $index => $product_detail)
+                                @if(array_key_exists($index,$product_detail_image_temp))
+                                {{var_dump(count($product_detail_image_temp[$index]))}}
+                                @endif
+                                
                                 <div class="bg-gray-300">
                                     <div class="flex justify-between items-center bg-slate-400 text-slate-950 px-3 py-1.5 mb-2">
                                         <h4 class="font-semibold ">MẪU {{$index+1}}</h4>
@@ -116,25 +127,43 @@
                                         </div>
                                     </div>
                                     <div class="grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-8 px-6">
+                                        <div class="col-span-8">
+                                            <label for="product_detail_title" class="block text-sm font-medium leading-6 text-gray-900">Tiêu đề</label>
+                                            <div class="mt-2">
+                                                <input wire:model="product_detail_title.{{$index}}" type="text" name="product_detail_title" id="product_detail_title" autocomplete="product_detail_title" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            </div>
+                                            @error('product_detail_title.' . $index)
+                                                <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                         <div class="col-span-1 sm:col-span-8">
                                             <label for="product_detail_short_description" class="block text-sm font-medium leading-6 text-gray-900">Mô tả ngắn</label>
                                             <div class="mt-2">
                                                 <textarea wire:model="product_detail_short_description.{{$index}}" id="product_detail_short_description" name="product_detail_short_description" rows="2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                                             </div>
                                         </div>
-                                        <div class="col-span-1 sm:col-span-2 md:col-span-4 mb-4">
+                                        <div class="col-span-8 mb-4">
                                             <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Hình ảnh</label>
-                                            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-6">
+                                            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-3 py-3">
                                                 <div class="text-center mx-auto inline">
-                                                    @if (isset($product_detail_image_list[$index]) && $product_detail_image_list[$index])
-                                                        <div class="flex justify-center">
-                                                            <img src="{{ $product_detail_image_list[$index]->temporaryUrl() }}" alt="Photo Preview" class="rounded-lg shadow-md w-40 h-40">
+                                                    @if (isset($product_detail_image_list[$index]))
+                                                        <div class="flex justify-center flex-wrap">
+                                                            @foreach ($product_detail_image_list[$index] as $image)
+                                                                <div class="relative">
+                                                                    <img src="{{ $image->temporaryUrl() }}" alt="Photo Preview" class="rounded-lg shadow-md p-3 m-2 w-24 h-24">
+                                                                    <button type="button" wire:click="removeProductDetailImage({{ $index }}, {{ $loop->index }})" class="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                            <path d="M3 3L21 21M21 3L3 21"></path>
+                                                                        </svg>
+                                                                    </button>
+                                                                </div>
+                                                            @endforeach
                                                         </div>
                                                     @endif
                                                     <div class="mt-4 text-sm leading-6 text-gray-600">
                                                         <label for="product_detail_image.{{ $index }}" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                                             Tải hình ảnh lên
-                                                            <input id="product_detail_image.{{ $index }}" name="product_detail_image.{{ $index }}" wire:model="product_detail_image.{{ $index }}" type="file" class="sr-only">
+                                                            <input id="product_detail_image.{{ $index }}" name="product_detail_image.{{ $index }}" wire:model="product_detail_image.{{ $index }}" type="file" multiple class="sr-only">
                                                         </label>
                                                     </div>
                                                     <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF nhỏ hơn hoặc bằng 2MB</p>
@@ -142,13 +171,6 @@
                                                         <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-span-1 sm:col-span-4">
-                                            <label for="product_detail_color" class="block text-sm font-medium leading-6 text-gray-900">Màu sắc</label>
-                                            <div class="mt-2">
-                                                <input wire:model="product_detail_color.{{$index}}" type="text" name="product_detail_color" id="product_detail_color" autocomplete="product_detail_color" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                             </div>
                                         </div>
                                     </div>

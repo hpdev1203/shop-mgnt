@@ -23,6 +23,7 @@ class AddProduct extends Component
     public $product_detail_number = 1;
     public $product_detail_list;
     public $product_detail_image = [];
+    public $product_detail_image_temp = [];
     public $product_detail_color = []; 
     public $product_detail_short_description = [];
 
@@ -30,6 +31,10 @@ class AddProduct extends Component
         $new_product_detail = new ProductDetail();
         $this->product_detail_list->push($new_product_detail);
         $this->product_detail_number++;
+    }
+
+    public function uploadProductDetailImage($index){
+
     }
 
     public function removeProductDetail($index){
@@ -76,9 +81,23 @@ class AddProduct extends Component
         $product->description = $this->product_description;
         $product->slug = \Illuminate\Support\Str::of($this->product_name)->slug('-');
         $product->save();
-        
+        dd($this->product_detail_image);
         for($i = 0; $i < $this->product_detail_number; $i++){
+            $this->validate([
+                'product_detail_color.'.$i => 'required',
+                'product_detail_short_description.'.$i => 'required',
+            ], [
+                'product_detail_color.'.$i.'.required' => 'Màu sắc là bắt buộc.',
+                'product_detail_short_description.'.$i.'.required' => 'Mô tả ngắn là bắt buộc.',
+            ]);
             if(array_key_exists($i, $this->product_detail_image)){
+                $this->validate([
+                    'product_detail_image.'.$i => 'required|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
+                ], [
+                    'product_detail_image.'.$i.'.required' => 'Hình ảnh là bắt buộc.',
+                    'product_detail_image.'.$i.'.mimes' => 'Hình ảnh phải có định dạng jpeg, png, jpg, gif, svg.',
+                    'product_detail_image.'.$i.'.max' => 'Hình ảnh không được lớn hơn 2MB.'
+                ]);
                 $image = $this->product_detail_image[$i];
                 $image_name = time() . '.' . $image->extension();
                 $this->product_detail_list[$i]->image = $image_name;
@@ -98,6 +117,10 @@ class AddProduct extends Component
         return redirect()->route('admin.products');
     }
 
+    public function mergeProductDetailImage($index){
+        $this->product_detail_image_temp[$index] = $this->product_detail_image[$index];
+    }
+
     public function render()
     {
         $id_latest = Product::latest('id')->first();
@@ -111,6 +134,17 @@ class AddProduct extends Component
             $new_product_detail = new ProductDetail();
             $this->product_detail_list = collect([$new_product_detail]);
         }
-        return view('livewire.admin.product.add-product', ['brands' => $brands, 'categories' => $categories, 'product_detail_list' => $this->product_detail_list, 'product_detail_image_list' => $this->product_detail_image]);
+        for($i = 0; $i < count($this->product_detail_image); $i++){
+            if(array_key_exists($i,$this->product_detail_image)){
+                if(array_key_exists($i,$this->product_detail_image_temp)){
+                    $this->product_detail_image_temp[$i] = array_merge($this->product_detail_image_temp[$i], $this->product_detail_image[$i]);
+                }else{
+                    $this->product_detail_image_temp[$i] = $this->product_detail_image[$i];
+                }
+                
+            }
+            
+        }
+        return view('livewire.admin.product.add-product', ['brands' => $brands, 'categories' => $categories, 'product_detail_list' => $this->product_detail_list, 'product_detail_image_list' => $this->product_detail_image_temp]);
     }
 }

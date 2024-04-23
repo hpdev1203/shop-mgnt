@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CKController;
 use App\Http\Controllers\Admin\AdministratorController;
 use App\Http\Controllers\Admin\AuditController;
-
+use App\Http\Controllers\Admin\ImportProductController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -52,14 +52,27 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
 
     Route::post('/admin/ck-upload-image', [CKController::class, 'uploadImage'])->name('admin.ck-upload-image');
 
+    /* Inventory */
+    Route::prefix('admin/inventories')->group(function () {
+        Route::get('/', function () {
+            return view('admin.dashboard.inventory.index');
+        })->name('admin.inventories');
+
+        Route::get('/import-product', [ImportProductController::class, 'index'])->name('admin.import-product');
+        Route::get('/import-product/add', [ImportProductController::class, 'add'])->name('admin.import-product.add');
+
+        Route::get('/goods-rotation', function () {
+            return 'Trang luân chuyển';
+        })->name('admin.inventories.goods-rotation');
+    });
+    /* Audit  */
+    Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits');
+    Route::get('/admin/audits/detail/{id}', [AuditController::class, 'detail'])->name('admin.audits.detail');
+
     /* Administrator  */
     Route::get('/admin/administrators', [AdministratorController::class, 'index'])->name('admin.administrators');
     Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
-
-    /* Audit  */
-    Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits');
-    Route::get('/admin/audits/detail/{id}', [AuditController::class, 'detail'])->name('admin.audits.detail');
 });
 
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
