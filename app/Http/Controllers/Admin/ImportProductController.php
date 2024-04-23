@@ -18,4 +18,10 @@ class ImportProductController extends Controller
     {
         return view('admin.dashboard.inventory.add_import_product');
     }
+
+    public function edit($id)
+    {
+        $import_products = ImportProduct::find($id);
+        return view('admin.dashboard.inventory.edit_import_product', ['import_products' => $import_products]);
+    }
 }
