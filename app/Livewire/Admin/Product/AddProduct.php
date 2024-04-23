@@ -114,6 +114,13 @@ class AddProduct extends Component
         $product->slug = Str::of($this->product_name)->slug('-');
         $product->save();
 
+        foreach($this->product_size_list as $size){
+            $product_size = new ProductSize();
+            $product_size->product_id = $product->id;
+            $product_size->size = $size;
+            $product_size->save();
+        }
+
         for($i = 0; $i < $this->product_detail_number; $i++){
             $image_list = $this->product_detail_image_list[$i];
             
