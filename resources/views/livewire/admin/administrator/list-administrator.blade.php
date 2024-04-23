@@ -85,7 +85,7 @@
                                     <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
                                 </svg>
                             </a>
-                        @endif
+                        @endif    
                     </td>
                 </tr>
                 @endforeach

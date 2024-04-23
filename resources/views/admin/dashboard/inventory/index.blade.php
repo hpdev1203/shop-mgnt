@@ -28,7 +28,7 @@
                     </div>
                     <div class="mt-4 flex items-end justify-between">
                         <div>
-                            <h4 class="text-title-md font-bold text-black dark:text-white"><a href="{{ route('admin.inventories.import-of-goods') }}" class="text-blue-500 hover:text-blue-700">NHẬP HÀNG</a></h4>
+                            <h4 class="text-title-md font-bold text-black dark:text-white"><a href="{{ route('admin.import-product') }}" class="text-blue-500 hover:text-blue-700">NHẬP HÀNG</a></h4>
                         </div>
                     </div>
                 </div>
