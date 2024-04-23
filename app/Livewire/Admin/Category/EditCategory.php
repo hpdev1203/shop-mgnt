@@ -16,8 +16,7 @@ class EditCategory extends Component
 
     public $category_name = '';
     public $description = '';
-    public $parent_category_id = '';
-    public $brand_id = '';
+    public $parent_category_id = null;
     public $id;
     public $photo;
     public $existedPhoto;
@@ -50,7 +49,6 @@ class EditCategory extends Component
         $category->description = $this->description;
         $category->slug = Str::of($this->category_name)->slug('-');
         $category->parent_id = $this->parent_category_id;
-        $category->brand_id = $this->brand_id;
         if ($this->photo) {
             $category->image = $photo_name;
         }

@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
-    <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+    <div class="flex flex-col sm:flex-row items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+        <div class="flex flex-col sm:flex-row sm:flex-1 sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm text-gray-700">
                     Đang hiển thị
