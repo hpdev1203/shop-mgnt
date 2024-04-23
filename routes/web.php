@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CKController;
 use App\Http\Controllers\Admin\AdministratorController;
+use App\Http\Controllers\Admin\AuditController;
 
 
 
@@ -55,6 +56,10 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators', [AdministratorController::class, 'index'])->name('admin.administrators');
     Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
+
+    /* Audit  */
+    Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits');
+    Route::get('/admin/audits/detail/{id}', [AuditController::class, 'detail'])->name('admin.audits.detail');
 });
 
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
