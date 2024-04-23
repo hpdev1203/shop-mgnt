@@ -60,6 +60,7 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
 
         Route::get('/import-product', [ImportProductController::class, 'index'])->name('admin.import-product');
         Route::get('/import-product/add', [ImportProductController::class, 'add'])->name('admin.import-product.add');
+        Route::get('/import-product/edit/{id}', [ImportProductController::class, 'edit'])->name('admin.import-product.edit');
 
         Route::get('/goods-rotation', function () {
             return 'Trang luân chuyển';
