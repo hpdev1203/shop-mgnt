@@ -24,7 +24,9 @@ class ProductController extends Controller
 
     public function edit($id)
     {
+        $brands = Brand::all();
+        $categories = Category::all();
         $product = Product::find($id);
-        return view('admin.dashboard.product.edit_product', ['product' => $product]);
+        return view('admin.dashboard.product.edit_product', ['product' => $product, 'brands' => $brands, 'categories' => $categories]);
     }
 }

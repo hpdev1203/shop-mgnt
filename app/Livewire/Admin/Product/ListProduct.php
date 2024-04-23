@@ -46,6 +46,7 @@ class ListProduct extends Component
                 $query->where('image', '!=', null)->take(1);
             }])->paginate(10);
         }
+        
         return view('livewire.admin.product.list-product', ['products' => $products]);
     }
 

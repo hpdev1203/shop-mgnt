@@ -37,7 +37,11 @@
                         <td class="px-2 py-2 whitespace-nowrap text-center">
                             <div class="flex justify-center">
                                 @if (count($product->productDetails) > 0 && $product->productDetails[0] && $product->productDetails[0]->image)
-                                    <img src="{{ asset('storage/images/products/' . $product->productDetails[0]->image) }}" alt="Hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
+                                    @php
+                                        $imageThumbnailCheck = json_decode($product->productDetails[0]->image);   
+                                        $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $product->productDetails[0]->image;
+                                    @endphp
+                                    <img src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="Hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
                                 @else
                                     <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
                                 @endif
