@@ -13,8 +13,7 @@ use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CKController;
 use App\Http\Controllers\Admin\AdministratorController;
-
-
+use App\Http\Controllers\Admin\ImportProductController;
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin', function () {
@@ -56,23 +55,19 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 
-    /* Administrator  */
+    /* Inventory */
     Route::prefix('admin/inventories')->group(function () {
         Route::get('/', function () {
             return view('admin.dashboard.inventory.index');
         })->name('admin.inventories');
 
-        Route::get('/import-of-goods', function () {
-            return 'Trang nhập hàng hóa';
-        })->name('admin.inventories.import-of-goods');
+        Route::get('/import-product', [ImportProductController::class, 'index'])->name('admin.import-product');
+        Route::get('/import-product/add', [ImportProductController::class, 'add'])->name('admin.import-product.add');
 
         Route::get('/goods-rotation', function () {
             return 'Trang luân chuyển';
         })->name('admin.inventories.goods-rotation');
     });
-    Route::get('/admin/administrators', [AdministratorController::class, 'index'])->name('admin.administrators');
-    Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
-    Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 });
 
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
