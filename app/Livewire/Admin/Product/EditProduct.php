@@ -4,10 +4,10 @@ namespace App\Livewire\Admin\Product;
 
 use Livewire\Component;
 use App\Models\Product;
-use App\Models\Brand;
-use App\Models\Category;
+use App\Models\ProductSize;
 use App\Models\ProductDetail;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class EditProduct extends Component
@@ -21,35 +21,68 @@ class EditProduct extends Component
     public $product_retail_price = 0;
     public $product_wholesale_price = 0;
     public $product_description;
+    public $product_size = '';
+    public $product_size_list = [];
     public $product_detail_number = 0;
-    public $product_detail_list;
+    public $product_detail_list = [];
     public $product_detail_image = [];
-    public $product_detail_color = []; 
+    public $product_detail_image_list = [];
+    public $product_detail_title = []; 
     public $product_detail_short_description = [];
     public $id;
+    public $brands;
+    public $categories;
+
+    public function mount($id, $brands, $categories)
+    {
+        $this->id = $id;
+        $this->brands = $brands;
+        $this->categories = $categories;
+    }
+
+    public function addProductSize(){
+        $this->product_size_list[] = $this->product_size;
+        $this->product_size = '';
+    }
+
+    public function removeProductSize($index){
+        unset($this->product_size_list[$index]);
+        $this->product_size_list = array_values($this->product_size_list);
+    }
 
     public function addProductDetail(){
         $new_product_detail = new ProductDetail();
-        $this->product_detail_list->push($new_product_detail);
+        $this->product_detail_list[] = $new_product_detail;
         $this->product_detail_number++;
     }
 
     public function removeProductDetail($index){
-        $this->product_detail_list->forget($index);
-        if(array_key_exists($index, $this->product_detail_image)){
-            unset($this->product_detail_image[$index]);
-        }
-        if(array_key_exists($index, $this->product_detail_color)){
-            unset($this->product_detail_color[$index]);
+        unset($this->product_detail_list[$index]);
+        $this->product_detail_list = array_values($this->product_detail_list);
+
+        if(array_key_exists($index, $this->product_detail_image_list)){
+            unset($this->product_detail_image_list[$index]);
+            $this->product_detail_image_list = array_values($this->product_detail_image_list);
         }
         if(array_key_exists($index, $this->product_detail_short_description)){
             unset($this->product_detail_short_description[$index]);
+            $this->product_detail_short_description = array_values($this->product_detail_short_description);
         }
-        $this->product_detail_list = $this->product_detail_list->values();
-        $this->product_detail_image = array_values($this->product_detail_image);
-        $this->product_detail_color = array_values($this->product_detail_color);
-        $this->product_detail_short_description = array_values($this->product_detail_short_description);
+
+        if(array_key_exists($index, $this->product_detail_title)){
+            unset($this->product_detail_title[$index]);
+            $this->product_detail_title = array_values($this->product_detail_title);
+        }
+        
         $this->product_detail_number--;
+    }
+
+    public function removeProductDetailImage($index, $image_index){
+        if(is_string($this->product_detail_image_list[$index])){
+            $this->product_detail_image_list[$index] = json_decode($this->product_detail_image_list[$index]);
+        }
+        unset($this->product_detail_image_list[$index][$image_index]);
+        $this->product_detail_image_list[$index] = array_values($this->product_detail_image_list[$index]);
     }
 
     public function storeProduct(){
@@ -68,6 +101,14 @@ class EditProduct extends Component
             'product_wholesale_price.numeric' => 'Giá bán sỉ phải là số.',
         ]);
 
+        for($i = 0; $i < $this->product_detail_number; $i++){
+            $this->validate([
+                'product_detail_title.'.$i => 'required'
+            ], [
+                'product_detail_title.'.$i.'.required' => 'Tiêu đề là bắt buộc.'
+            ]);
+        }
+
         $product = Product::find($this->id);
         $product->code = $this->product_code;
         $product->name = $this->product_name;
@@ -76,51 +117,38 @@ class EditProduct extends Component
         $product->retail_price = $this->product_retail_price;
         $product->wholesale_price = $this->product_wholesale_price;
         $product->description = $this->product_description;
-        $product->slug = \Illuminate\Support\Str::of($this->product_name)->slug('-');
+        $product->slug = Str::of($this->product_name)->slug('-');
         $product->save();
-        for($i = 0; $i < $this->product_detail_number; $i++){
-            $this->validate([
-                'product_detail_color.'.$i => 'required',
-                'product_detail_short_description.'.$i => 'required',
-            ], [
-                'product_detail_color.'.$i.'.required' => 'Màu sắc là bắt buộc.',
-                'product_detail_short_description.'.$i.'.required' => 'Mô tả ngắn là bắt buộc.',
-            ]);
 
-            if(array_key_exists($i, $this->product_detail_image) && $this->product_detail_image[$i] != ''){
-                if(!is_string($this->product_detail_image[$i])){
-                    $this->validate([
-                        'product_detail_image.'.$i => 'required|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
-                    ], [
-                        'product_detail_image.'.$i.'.required' => 'Hình ảnh là bắt buộc.',
-                        'product_detail_image.'.$i.'.mimes' => 'Hình ảnh phải có định dạng jpeg, png, jpg, gif, svg.',
-                        'product_detail_image.'.$i.'.max' => 'Hình ảnh không được lớn hơn 2MB.'
-                    ]);
-                }
-                if($this->product_detail_list[$i]->id != null && !is_string($this->product_detail_image[$i])){
-                    if($this->product_detail_list[$i]->image != null){
-                        Storage::delete('public/images/products/' . $this->product_detail_list[$i]->image);
-                    }
-                }
-                if(!is_string($this->product_detail_image[$i])){
-                    $image = $this->product_detail_image[$i];
-                    $image_name = time() . '.' . $image->extension();
-                    $this->product_detail_list[$i]->image = $image_name;
-                    $image->storeAs(path: "public\images\products", name: $image_name);
-                }
+        for($i = 0; $i < $this->product_detail_number; $i++){
+            $image_list = $this->product_detail_image_list[$i];
+
+            $this->product_detail_list[$i]->title = $this->product_detail_title[$i];
+            if(array_key_exists($i, $this->product_detail_short_description)){
+                $this->product_detail_list[$i]->short_description = $this->product_detail_short_description[$i];
             }
-            $product_detail = ProductDetail::where('product_id', $this->id)->skip($i)->first();
-            if(!$product_detail){
-                $product_detail = new ProductDetail();
-                $product_detail->product_id = $this->id;
-            }
-            
-            $this->product_detail_list[$i]->color = $this->product_detail_color[$i];
-            $this->product_detail_list[$i]->color_code = $this->product_detail_color[$i];
-            $this->product_detail_list[$i]->short_description = $this->product_detail_short_description[$i];
             $this->product_detail_list[$i]->product_id = $product->id;
             $this->product_detail_list[$i]->retail_price = $product->retail_price;
             $this->product_detail_list[$i]->wholesale_price = $product->wholesale_price;
+
+            $images_store = [];
+            if(is_string($image_list)){
+                $image_list = json_decode($image_list);
+            }
+            if(count($image_list) > 0){
+                foreach($image_list as $image){
+                    if(is_string($image)){
+                        $images_store[] = $image;
+                        continue;
+                    }
+                    $image_name = time() . uniqid() . '.' . $image->extension();
+
+                    $this->product_detail_list[$i]->image = $image_name;
+                    $image->storeAs(path: "public\images\products", name: $image_name);
+                    $images_store[] = $image_name;
+                }
+                $this->product_detail_list[$i]->image = json_encode($images_store);
+            }
             $this->product_detail_list[$i]->save();
         }
 
@@ -128,17 +156,8 @@ class EditProduct extends Component
         return redirect()->route('admin.products');
     }
 
-    public function mount($id)
-    {
-        $this->id = $id;
-    }
-
-    public function render()
-    {
+    public function initinalRender(){
         $product = Product::find($this->id);
-        $brands = Brand::all();
-        $categories = Category::all();
-
         $this->product_code = $product->code;
         $this->product_name = $product->name;
         $this->category_id = $product->category_id;
@@ -146,6 +165,27 @@ class EditProduct extends Component
         $this->product_retail_price = $product->retail_price;
         $this->product_wholesale_price = $product->wholesale_price;
         $this->product_description = $product->description;
+
+        for($i = 0; $i < count($this->product_detail_image); $i++){
+            if(array_key_exists($i,$this->product_detail_image)){
+                if(array_key_exists($i,$this->product_detail_image_list)){
+                    if(is_string($this->product_detail_image_list[$i])){
+                        $this->product_detail_image_list[$i] = json_decode($this->product_detail_image_list[$i]);
+                    }
+                    $this->product_detail_image_list[$i] = array_merge($this->product_detail_image_list[$i], $this->product_detail_image[$i]);
+                }else{
+                    $this->product_detail_image_list[$i] = $this->product_detail_image[$i];
+                }
+            }else{
+                $this->product_detail_image_list[$i] = [];
+            }
+            $this->product_detail_image[$i] = [];
+        }
+    }
+
+    public function render()
+    {
+        $this->initinalRender();
 
         
         $product_details = null;
@@ -155,12 +195,11 @@ class EditProduct extends Component
             $this->product_detail_list = collect($product_details);
             $this->product_detail_number = count($product_details);
             foreach ($product_details as $key => $product_detail) {
-                $this->product_detail_image[$key] = $product_detail->image;
-                $this->product_detail_color[$key] = $product_detail->color;
+                $this->product_detail_title[$key] = $product_detail->title;
+                $this->product_detail_image_list[$key] = $product_detail->image;
                 $this->product_detail_short_description[$key] = $product_detail->short_description;
             }
         }
-        
-        return view('livewire.admin.product.edit-product', ['brands' => $brands, 'categories' => $categories, 'product_detail_list' => $this->product_detail_list, 'product_detail_image_list' => $this->product_detail_image, 'product_description' => $this->product_description]);
+        return view('livewire.admin.product.edit-product', ['brands' => $this->brands, 'categories' => $this->categories, 'product_detail_list' => $this->product_detail_list, 'product_detail_image_list' => $this->product_detail_image_list, 'product_description' => $this->product_description]);
     }
 }

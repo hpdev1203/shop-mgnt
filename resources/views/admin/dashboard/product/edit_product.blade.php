@@ -22,6 +22,6 @@
             </ol>
         </nav>
         
-        @livewire('admin.product.edit-product', ['id' => $product->id])
+        @livewire('admin.product.edit-product', ['id' => $product->id, 'brands' => $brands, 'categories' => $categories])
     </div>
 @endsection
