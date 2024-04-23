@@ -40,6 +40,7 @@ class ListProduct extends Component
             $products = Product::with(['productDetails' => function ($query) {
                 $query->where('image', '!=', null)->take(1);
             }])->paginate(10);
+            
         } else {
             $products = Product::where('name', 'like', '%'.$this->search_input.'%')->orWhere('code', 'like', '%'.$this->search_input.'%')->with(['productDetails' => function ($query) {
                 $query->where('image', '!=', null)->take(1);
