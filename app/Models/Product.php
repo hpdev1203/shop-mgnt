@@ -15,4 +15,12 @@ class Product extends Model implements Auditable
     {
         return $this->hasMany(ProductDetail::class);
     }
+    public function productSizes()
+    {
+        return $this->hasMany(ProductSize::class);
+    }
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }
