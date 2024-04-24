@@ -2,9 +2,6 @@
         <div class="px-4 py-6 md:px-6 xl:px-7.5">
             <div class="flex justify-between items-center">
                 <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH CHỈNH SỬA</h4>
-                {{-- <a href="{{route('admin.audits.add')}}" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
-                    Thêm mới
-                </a> --}}
             </div>
         </div>
         <div class="overflow-x-auto">
@@ -25,11 +22,11 @@
                         </th>
                         <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">UserID</th>
                         <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Địa Chỉ IP</th>
-                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-center">Hành Động</th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-left">Hành Động</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 text-sm	">
-                      
+ 
                     @foreach ($audits as $index => $audit)
                     <tr>
                         @php
@@ -51,21 +48,21 @@
                         $user_name =  auth()->user($audit->user_id.PHP_EOL)->username;
                         $active = "Tạo mới";
                         $eventt = $audit->event.PHP_EOL;
-                   
+                  
                         @endphp
                        <td class="px-6 py-2 whitespace-nowrap text-center">{{$index + 1}}</td>
                        <td class="px-6 py-2 whitespace-nowrap">
                           
                        </td>
                        <td class="px-6 py-2 whitespace-nowrap">
-                        <a href="{{route('admin.audits.detail', $audit->id.PHP_EOL)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
+                        <a href="{{route('admin.audits.detail', [$audit->id,'view'=>request()->view])}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
                             {{$audit->updated_at->toDateTimeString().PHP_EOL;}}
                         </a>
                         </td>
                        <td class="px-6 py-2 whitespace-nowrap">{{$user_name}}</td>
                        <td class="px-6 py-2 whitespace-nowrap">{{$audit->ip_address.PHP_EOL;}}</td>
-                       <td class="px-6 py-2 whitespace-nowrap" style="display:flex;justify-content: center;">
-                                {{$audit->event.PHP_EOL }}
+                       <td class="px-6 py-2 whitespace-nowrap">
+                                @lang($audit->event)
                         </td>
                     </tr>
                     @endforeach
