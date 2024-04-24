@@ -23,8 +23,10 @@ class EditProduct extends Component
     public $product_description;
     public $product_size = '';
     public $product_size_list = [];
+    public $product_size_list_deleted = [];
     public $product_detail_number = 0;
     public $product_detail_list = [];
+    public $product_detail_list_deleted = [];
     public $product_detail_image = [];
     public $product_detail_image_list = [];
     public $product_detail_title = []; 
@@ -41,11 +43,19 @@ class EditProduct extends Component
     }
 
     public function addProductSize(){
-        $this->product_size_list[] = $this->product_size;
+        $this->validate([
+            'product_size' => 'required'
+        ], [
+            'product_size.required' => 'Kích thước không được để trống.'
+        ]);
+        $new_product_size = new ProductSize();
+        $new_product_size->size = $this->product_size;
+        $this->product_size_list[] = collect($new_product_size);
         $this->product_size = '';
     }
 
     public function removeProductSize($index){
+        $this->product_size_list_deleted[] = $this->product_size_list[$index];
         unset($this->product_size_list[$index]);
         $this->product_size_list = array_values($this->product_size_list);
     }
@@ -57,6 +67,7 @@ class EditProduct extends Component
     }
 
     public function removeProductDetail($index){
+        $this->product_detail_list_deleted[] = $this->product_detail_list[$index];
         unset($this->product_detail_list[$index]);
         $this->product_detail_list = array_values($this->product_detail_list);
 
@@ -120,34 +131,67 @@ class EditProduct extends Component
         $product->slug = Str::of($this->product_name)->slug('-');
         $product->save();
 
+        foreach($this->product_size_list_deleted as $size){
+            if(is_array($size) && array_key_exists('id', $size)){
+                ProductSize::find($size['id'])->delete();
+            }
+        }
+        foreach($this->product_size_list as $size){
+            if(is_array($size) && array_key_exists('id', $size)){
+                $product_size = ProductSize::find($size['id']);
+                $product_size->size = $size['size'];
+                $product_size->save();
+                continue;
+            }
+            $product_size = new ProductSize();
+            $product_size->product_id = $this->id;
+            $product_size->size = $size["size"];
+            $product_size->save();
+        }
+
+        foreach($this->product_detail_list_deleted as $product_detail){
+            if(is_array($product_detail) && array_key_exists('id', $product_detail)){
+                ProductDetail::find($product_detail['id'])->delete();
+            }
+        }
+
         for($i = 0; $i < $this->product_detail_number; $i++){
-            $image_list = $this->product_detail_image_list[$i];
+            
+
+            if(is_array($this->product_detail_list[$i])){
+                $this->product_detail_list[$i] = ProductDetail::find($this->product_detail_list[$i]['id']);
+            }
+            else{
+                $this->product_detail_list[$i]->product_id = $product->id;
+            }
 
             $this->product_detail_list[$i]->title = $this->product_detail_title[$i];
             if(array_key_exists($i, $this->product_detail_short_description)){
                 $this->product_detail_list[$i]->short_description = $this->product_detail_short_description[$i];
             }
-            $this->product_detail_list[$i]->product_id = $product->id;
             $this->product_detail_list[$i]->retail_price = $product->retail_price;
             $this->product_detail_list[$i]->wholesale_price = $product->wholesale_price;
 
-            $images_store = [];
-            if(is_string($image_list)){
-                $image_list = json_decode($image_list);
-            }
-            if(count($image_list) > 0){
-                foreach($image_list as $image){
-                    if(is_string($image)){
-                        $images_store[] = $image;
-                        continue;
-                    }
-                    $image_name = time() . uniqid() . '.' . $image->extension();
-
-                    $this->product_detail_list[$i]->image = $image_name;
-                    $image->storeAs(path: "public\images\products", name: $image_name);
-                    $images_store[] = $image_name;
+            if(array_key_exists($i, $this->product_detail_image_list)){
+                $image_list = $this->product_detail_image_list[$i];
+                $images_store = [];
+                if(is_string($image_list)){
+                    $image_list = json_decode($image_list);
                 }
-                $this->product_detail_list[$i]->image = json_encode($images_store);
+                if(count($image_list) > 0){
+                    foreach($image_list as $image){
+                        if(is_string($image)){
+                            $images_store[] = $image;
+                            continue;
+                        }
+                        $image_name = time() . uniqid() . '.' . $image->extension();
+
+                        $this->product_detail_list[$i]->image = $image_name;
+                        $image->storeAs(path: "public\images\products", name: $image_name);
+                        $images_store[] = $image_name;
+                    }
+                    $this->product_detail_list[$i]->image = json_encode($images_store);
+                }
             }
             $this->product_detail_list[$i]->save();
         }
@@ -166,18 +210,25 @@ class EditProduct extends Component
         $this->product_wholesale_price = $product->wholesale_price;
         $this->product_description = $product->description;
 
+        if(count($this->product_size_list) == 0 && count($this->product_size_list_deleted) == 0){
+            $product_size = ProductSize::where('product_id', $this->id)->get();
+            $this->product_size_list = collect($product_size)->toArray();
+        }
+
         for($i = 0; $i < count($this->product_detail_image); $i++){
             if(array_key_exists($i,$this->product_detail_image)){
                 if(array_key_exists($i,$this->product_detail_image_list)){
                     if(is_string($this->product_detail_image_list[$i])){
                         $this->product_detail_image_list[$i] = json_decode($this->product_detail_image_list[$i]);
                     }
-                    $this->product_detail_image_list[$i] = array_merge($this->product_detail_image_list[$i], $this->product_detail_image[$i]);
+                    if($this->product_detail_image_list[$i] != null && count($this->product_detail_image_list[$i]) > 0){
+                        $this->product_detail_image_list[$i] = array_merge($this->product_detail_image_list[$i], $this->product_detail_image[$i]);
+                    }else{
+                        $this->product_detail_image_list[$i] = $this->product_detail_image[$i];
+                    }
                 }else{
                     $this->product_detail_image_list[$i] = $this->product_detail_image[$i];
                 }
-            }else{
-                $this->product_detail_image_list[$i] = [];
             }
             $this->product_detail_image[$i] = [];
         }
@@ -192,7 +243,7 @@ class EditProduct extends Component
         
         if($this->product_detail_number == 0){
             $product_details = ProductDetail::where('product_id', $this->id)->get();
-            $this->product_detail_list = collect($product_details);
+            $this->product_detail_list = $product_details->toArray();
             $this->product_detail_number = count($product_details);
             foreach ($product_details as $key => $product_detail) {
                 $this->product_detail_title[$key] = $product_detail->title;
