@@ -59,12 +59,10 @@ class EditImportProduct extends Component
                         $this->validate([
                             'product_id.'.$i => 'required',
                             'product_detail_id.'.$i => 'required',
-                            'size_id.'.$i => 'required',
                             'import_product_detail_qnty.'.$i => 'required',
                         ], [
                             'product_id.'.$i => 'Vui lòng chọn sản phẩm',
                             'product_detail_id.'.$i => 'Vui lòng chọn mẫu sản phẩm',
-                            'size_id.'.$i => 'Vui lòng chọn size',
                             'import_product_detail_qnty.'.$i => 'Vui lòng nhập số lượng',
                         ]);
                     }
@@ -110,7 +108,7 @@ class EditImportProduct extends Component
                 $product_detail = ProductDetail::where('product_id',$this->product_id[$index])->get();
                 $this->product_detail_list[$index] = $product_detail;
                 $this->product_detail_id[$index] = $import_product_detail->product_detail_id;
-                $product_size = ProductDetail::where('product_id',$this->product_id[$index])->get();
+                $product_size = ProductSize::where('product_id',$this->product_id[$index])->get();
                 $this->product_size_list[$index] = $product_size;
                 $this->size_id[$index] = $import_product_detail->size_id;
                 $this->import_product_detail_qnty[$index] = $import_product_detail->quantity;

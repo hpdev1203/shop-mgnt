@@ -96,7 +96,7 @@
                                                 <option value="">-</option>
                                                 @if ($product_size_list && array_key_exists($index,$product_size_list))
                                                     @foreach($product_size_list[$index] as $product_size)
-                                                        <option value="{{$product_size->id}}">{{$product_size->title}}</option>
+                                                        <option value="{{$product_size->id}}">{{$product_size->size}}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
