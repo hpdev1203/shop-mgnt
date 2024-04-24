@@ -118,11 +118,11 @@ class AddProduct extends Component
         $product->description = $this->product_description;
         $product->slug = Str::of($this->product_name)->slug('-');
         $product->save();
-
+       
         foreach($this->product_size_list as $size){
             $product_size = new ProductSize();
             $product_size->product_id = $product->id;
-            $product_size->size = $size;
+            $product_size->size = $size['size'];
             $product_size->save();
         }
 

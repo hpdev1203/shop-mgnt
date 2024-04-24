@@ -7,38 +7,38 @@
             </a>
         </div>
     </div>
-    <div class="overflow-x-auto">
-        <div class="px-4 py-1 md:px-6 xl:px-7.5">
-            <div class="flex justify-between items-center">
-                <input wire:model='search_input' wire:keydown='search' type="text" name="search" placeholder="Tìm kiếm..." class="px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
-            </div>
+    <div class="px-4 py-1 mb-2 md:px-6 xl:px-7.5">
+        <div class="flex justify-between items-center">
+            <input wire:model='search_input' wire:keydown='search' type="text" name="search" placeholder="Tìm kiếm..." class="px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
         </div>
+    </div>
+    <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-20 text-center">STT</th>
-                    <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-left">Tên Danh Mục</th>
-                    <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-left">Slug</th>
-                    <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-left">Danh Mục Cha</th>
-                    <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Mô tả</th>
-                    <th scope="col" class="px-4 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Hành Động</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-20 text-center">STT</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-left">Tên Danh Mục</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-left">Slug</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-left">Danh Mục Cha</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Mô tả</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Hành Động</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 text-sm	">
                 @foreach ($categories as $index => $category)
                 <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-center">{{ $categories->perPage() * ($categories->currentPage() - 1) + $loop->iteration }}</td>
-                    <td class="px-4 py-2 whitespace-nowrap">{{$category->name}}</td>
-                    <td class="px-4 py-2 whitespace-nowrap">{{$category->slug}}</td>
-                    <td class="px-4 py-2 whitespace-nowrap">{{$category->parent ? $category->parent->name : '-'}}</td>
-                    <td class="px-4 py-2 whitespace-nowrap" title="{{$category->description}}">
+                    <td class="px-2 py-2 whitespace-nowrap text-center">{{ $categories->perPage() * ($categories->currentPage() - 1) + $loop->iteration }}</td>
+                    <td class="px-2 py-2 whitespace-nowrap">{{$category->name}}</td>
+                    <td class="px-2 py-2 whitespace-nowrap">{{$category->slug}}</td>
+                    <td class="px-2 py-2 whitespace-nowrap">{{$category->parent ? $category->parent->name : '-'}}</td>
+                    <td class="px-2 py-2 whitespace-nowrap" title="{{$category->description}}">
                         @if (strlen($category->description) > 50)
                             {{ substr($category->description, 0, 50) }}...
                         @else
                             {{ $category->description ? $category->description : '-'}}
                         @endif
                     </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-center">
+                    <td class="px-2 py-2 whitespace-nowrap text-center">
                         <a href="{{route('admin.categories.edit', $category->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
                             <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
