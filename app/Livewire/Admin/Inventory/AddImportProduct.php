@@ -57,12 +57,10 @@ class AddImportProduct extends Component
                 $this->validate([
                     'product_id.'.$i => 'required',
                     'product_detail_id.'.$i => 'required',
-                    'size_id.'.$i => 'required',
                     'import_product_detail_qnty.'.$i => 'required',
                 ], [
                     'product_id.'.$i => 'Vui lòng chọn sản phẩm',
                     'product_detail_id.'.$i => 'Vui lòng chọn mẫu sản phẩm',
-                    'size_id.'.$i => 'Vui lòng chọn size',
                     'import_product_detail_qnty.'.$i => 'Vui lòng nhập số lượng',
                 ]);
             }
