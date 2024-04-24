@@ -68,7 +68,7 @@
                                     <tr>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">{{{$index+1}}}</td>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">
-                                            <select wire:model="product_id.{{$index}}" id="product_id.{{$index}}" name="product_id.{{$index}}" autocomplete="product_id.{{$index}}" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <select wire:model="product_id.{{$index}}" wire:change="pullDropdown({{$index}})" id="product_id.{{$index}}" name="product_id.{{$index}}" autocomplete="product_id.{{$index}}" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                                 <option value="">-</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -81,12 +81,28 @@
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">
                                             <select wire:model="product_detail_id.{{$index}}" id="product_detail_id.{{$index}}" name="product_detail_id.{{$index}}" autocomplete="product_detail_id.{{$index}}" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                                 <option value="">-</option>
+                                                @if ($product_detail_list && array_key_exists($index,$product_detail_list))
+                                                    @foreach($product_detail_list[$index] as $product_detail)
+                                                        <option value="{{$product_detail->id}}">{{$product_detail->title}}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
+                                            @error('product_detail_id.' .$index)
+                                                <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
+                                            @enderror
                                         </td>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">
                                             <select wire:model="size_id.{{$index}}" id="size_id.{{$index}}" name="size_id.{{$index}}" autocomplete="size_id.{{$index}}" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                                 <option value="">-</option>
+                                                @if ($product_size_list && array_key_exists($index,$product_size_list))
+                                                    @foreach($product_size_list[$index] as $product_size)
+                                                        <option value="{{$product_size->id}}">{{$product_size->title}}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
+                                            @error('size_id.' .$index)
+                                                <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
+                                            @enderror
                                         </td>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">
                                             <input wire:model="import_product_detail_qnty.{{$index}}" type="number" name="import_product_detail_qnty.{{$index}}" id="import_product_detail_qnty.{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
