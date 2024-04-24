@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Inventory;
 
 use Livewire\Component;
 use App\Models\ImportProduct;
+use App\Models\ImportProductDetail;
 use App\Models\Warehouse;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
@@ -20,6 +21,10 @@ class ListImportProduct extends Component
 
     public function handleDetele($id)
     {
+        $import_product_detail = ImportProductDetail::where('import_product_id', $id)->get();
+        foreach ($import_product_detail as $item) {
+            $item->delete();
+        }
         $import_products = ImportProduct::find($id);
         $import_products->delete();
         session()->flash('success', 'Đã xóa thành công');

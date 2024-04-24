@@ -41,7 +41,7 @@
                     </div>
                     <div class="mt-4 flex items-end justify-between">
                         <div>
-                            <h4 class="text-title-md font-bold text-black dark:text-white"><a href="{{ route('admin.inventories.goods-rotation') }}" class="text-blue-500 hover:text-blue-700">LUÂN CHUYỂN KHO</a></h4>
+                            <h4 class="text-title-md font-bold text-black dark:text-white"><a href="{{ route('admin.transfer-warehouse') }}" class="text-blue-500 hover:text-blue-700">LUÂN CHUYỂN KHO</a></h4>
                         </div>
                     </div>
                 </div>

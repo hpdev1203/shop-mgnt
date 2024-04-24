@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\CKController;
 use App\Http\Controllers\Admin\AdministratorController;
 use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\ImportProductController;
+use App\Http\Controllers\Admin\TransferWarehouseController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -62,9 +63,9 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
         Route::get('/import-product/add', [ImportProductController::class, 'add'])->name('admin.import-product.add');
         Route::get('/import-product/edit/{id}', [ImportProductController::class, 'edit'])->name('admin.import-product.edit');
 
-        Route::get('/goods-rotation', function () {
-            return 'Trang luân chuyển';
-        })->name('admin.inventories.goods-rotation');
+        Route::get('/transfer-warehouse', [TransferWarehouseController::class, 'index'])->name('admin.transfer-warehouse');
+        Route::get('/transfer-warehouse/add', [TransferWarehouseController::class, 'add'])->name('admin.transfer-warehouse.add');
+        Route::get('/transfer-warehouse/edit/{id}', [TransferWarehouseController::class, 'edit'])->name('admin.transfer-warehouse.edit');
     });
     /* Audit  */
     Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits');
