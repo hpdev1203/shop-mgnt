@@ -85,13 +85,16 @@
                                             </button>
                                         </div>
                                     </div>
+                                    @error('product_size')
+                                        <div class="mt-1 text-sm text-red-600 text-center">{{ $message }}</div>
+                                    @enderror
                                     <div class="mt-2">
                                         <table class="text-sm w-full">
                                             <tbody>
                                                 @if (count($product_size_list) > 0)
                                                     @foreach ($product_size_list as $index => $size)
                                                         <tr>
-                                                            <td class="px-2 py-0.5 text-gray-900 border text-center w-32">{{ $size }}</td>
+                                                            <td class="px-2 py-0.5 text-gray-900 border text-center w-32">{{ $size["size"] }}</td>
                                                             <td class="px-2 py-0.5 text-gray-900 text-right">
                                                                 <button type="button" wire:click="removeProductSize('{{ $index }}')" class="text-red-700">Xóa</button>
                                                             </td>

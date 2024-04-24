@@ -47,7 +47,7 @@
                                 <path d="M16 5l3 3"></path>
                             </svg>
                         </a>
-                        <a data-modal-target="static-modal" data-modal-toggle="static-modal" onclick="parseDataDelete('{{$category->id}}', '{{$category->name}}')" class="cursor-pointer inline-flex items-center text-red-600 hover:text-red-900">
+                        <a data-modal-target="popup-delete-item" data-modal-toggle="popup-delete-item" onclick="parseDataDelete('{{$category->id}}', '{{$category->name}}')" class="cursor-pointer inline-flex items-center text-red-600 hover:text-red-900">
                             <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Delete" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M4 7l16 0"></path>

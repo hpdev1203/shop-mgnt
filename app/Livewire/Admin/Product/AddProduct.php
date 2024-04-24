@@ -38,7 +38,12 @@ class AddProduct extends Component
     }
 
     public function addProductSize(){
-        $this->product_size_list[] = $this->product_size;
+        $this->validate([
+            'product_size' => 'required'
+        ], [
+            'product_size.required' => 'Kích thước không được để trống.'
+        ]);
+        $this->product_size_list[] = ["size" => $this->product_size];
         $this->product_size = '';
     }
 
@@ -122,8 +127,6 @@ class AddProduct extends Component
         }
 
         for($i = 0; $i < $this->product_detail_number; $i++){
-            $image_list = $this->product_detail_image_list[$i];
-            
             $this->product_detail_list[$i]->title = $this->product_detail_title[$i];
             if(array_key_exists($i, $this->product_detail_short_description)){
                 $this->product_detail_list[$i]->short_description = $this->product_detail_short_description[$i];
@@ -132,16 +135,20 @@ class AddProduct extends Component
             $this->product_detail_list[$i]->retail_price = $product->retail_price;
             $this->product_detail_list[$i]->wholesale_price = $product->wholesale_price;
 
-            $images_store = [];
-            if(count($image_list) > 0){
-                foreach($image_list as $image){
-                    $image_name = time() . uniqid() . '.' . $image->extension();
-                    
-                    $image->storeAs(path: "public\images\products", name: $image_name);
-                    $images_store[] = $image_name;
+            if(array_key_exists($i, $this->product_detail_image_list)){
+                $image_list = $this->product_detail_image_list[$i];
+                $images_store = [];
+                if(count($image_list) > 0){
+                    foreach($image_list as $image){
+                        $image_name = time() . uniqid() . '.' . $image->extension();
+                        
+                        $image->storeAs(path: "public\images\products", name: $image_name);
+                        $images_store[] = $image_name;
+                    }
+                    $this->product_detail_list[$i]->image = json_encode($images_store);
                 }
-                $this->product_detail_list[$i]->image = json_encode($images_store);
             }
+
             $this->product_detail_list[$i]->save();
         }
         session()->flash('message', 'Product has been created successfully!');

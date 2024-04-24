@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\Storage;
+use OwenIt\Auditing\Models\Audit;
 
 class DetailAudit extends Component
 {
@@ -24,22 +25,17 @@ class DetailAudit extends Component
 
 
 
+    public function mount($id)
+    {
+        $this->id = $id;
+    }
 
     public function render()
     {
         
         $id = $this -> id;
-        $model = Warehouse::first();
-        $audits = $model->audits()->find($id);
-        
-        // $categories = Audit::all();
-        // $audit = Audit::find($this->id);
-        // $this->audit_code = $audit->code;
-        // $this->audit_name = $audit->name;
-        // $this->description = $audit->description;
-        // if($audit->logo) {
-        //     $this->existedPhoto = "images/audits/" . $audit->logo;
-        // }
-        return view('livewire.admin.audit.detail-audit', ['audits' => $audits]);
+        $audit = Audit::find($id);
+ 
+        return view('livewire.admin.audit.detail-audit', ['audit' => $audit]);
     }
 }

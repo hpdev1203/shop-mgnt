@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AdministratorController;
 use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\ImportProductController;
 use App\Http\Controllers\Admin\TransferWarehouseController;
+use App\Http\Controllers\Admin\LocaleController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -23,6 +24,8 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
         return view('admin.dashboard.dashboard');
     })->name('admin');
     
+
+
     /* Data Seeder  */
     Route::get('/admin/seeder', DataSeeder::class)->name('admin.seeder');
     
@@ -77,6 +80,7 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 });
 
+Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
 Route::get('/admin/logout', [Login::class, 'handleLogout'])->name('admin.logout');
 Route::get('/admin/setup', Setup::class)->middleware([CheckSetup::class])->name('admin.setup');
