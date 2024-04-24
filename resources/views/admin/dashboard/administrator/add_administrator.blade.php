@@ -13,7 +13,7 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <a href="{{ route('admin.administrators') }}" class="text-blue-500 hover:text-blue-700">Danh sách quản trị viên</a>
+                    <a href="{{ route('admin.administrators') }}" class="text-blue-500 hover:text-blue-700">Quản trị viên</a>
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
