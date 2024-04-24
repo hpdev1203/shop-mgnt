@@ -27,40 +27,34 @@ class ListProduct extends Component
         foreach ($this->selected_index as $key => $checked) {
             if($checked == true){
                 $product_id = $this->list_product[$key]['id'];
-                $product_size = ProductSize::where('product_id', $product_id)->get();
-                foreach ($product_size as $item) {
-                    $item->delete();
-                }
-                $product_detail = ProductDetail::where('product_id', $product_id)->get();
-                foreach ($product_detail as $item) {
-                    $item->delete();
-                }
-                $product = Product::find($product_id);
-                $product->delete();
+                $this->deleteProduct($product_id);
             }
         }
         $this->selected_index = [];
-        session()->flash('success', 'Brand deleted successfully');
         $this->render();
     }
 
-    public function handleDetele($id)
-    {
+    public function deleteProduct($id){
         $product = Product::find($id);
         $checkOrder = $product->orderDetails;
         if(count($checkOrder) > 0){
-            $this->dispatch('error', ['error' => 'Sản phẩm đã được đặt hàng, vì vậy không thể xóa. Ẩn nó là phương án tốt nhất.']);
+            $this->dispatch('error', ['error' => 'Sản phẩm '.$product->name.' đã được đặt hàng, vì vậy không thể xóa. Ẩn nó là phương án tốt nhất.']);
             return;
+        }
+        $product_size = ProductSize::where('product_id', $id)->get();
+        foreach ($product_size as $item) {
+            $item->delete();
         }
         $product_detail = ProductDetail::where('product_id', $id)->get();
         foreach ($product_detail as $item) {
             $item->delete();
         }
-       
         $product->delete();
+    }
 
-       
-        session()->flash('success', 'Brand deleted successfully');
+    public function handleDetele($id)
+    {
+        $this->deleteProduct($id);
         $this->render();
     }
 
