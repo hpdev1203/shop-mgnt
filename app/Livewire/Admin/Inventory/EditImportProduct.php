@@ -80,7 +80,13 @@ class EditImportProduct extends Component
                 $this->list_import_product_detail[$i]->import_product_id = $import_product->id;
                 $this->list_import_product_detail[$i]->product_id = $this->product_id[$i];
                 $this->list_import_product_detail[$i]->product_detail_id = $this->product_detail_id[$i];
-                $this->list_import_product_detail[$i]->size_id = $this->size_id[$i];
+                if(isset($this->size_id[$i])){
+                    if($this->size_id[$i] == ""){
+                        $this->list_import_product_detail[$i]->size_id = NULL;
+                    }else{
+                        $this->list_import_product_detail[$i]->size_id = $this->size_id[$i];
+                    }
+                }
                 $this->list_import_product_detail[$i]->quantity = $this->import_product_detail_qnty[$i];
                 $this->list_import_product_detail[$i]->save();
             }
