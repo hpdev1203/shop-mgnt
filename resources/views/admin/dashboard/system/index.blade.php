@@ -17,6 +17,17 @@
                 </li>
             </ol>
         </nav>
-       @livewire('admin.system.edit-system')
+        <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div class="px-4 py-6 md:px-6 xl:px-7.5">
+                <div class="flex justify-between items-center">
+                        <h4 class="text-xl font-bold text-black dark:text-white inline">CHỈNH SỬA - <span class="uppercase font-bold text-sky-400">Thông Tin Hệ Thống</span></h4>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
+                @livewire('admin.system.edit-system')
+            </div>
+        </div>
+       
     </div>
 @endsection
