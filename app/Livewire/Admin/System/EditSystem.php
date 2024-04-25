@@ -20,6 +20,8 @@ class EditSystem extends Component
     public $system_city = '';
     public $system_state = '';
     public $website = '';
+    public $photo;
+    public $existedPhoto;
 
 
     public function updateSystem()
@@ -40,6 +42,19 @@ class EditSystem extends Component
             'system_city.required' => 'Vui lòng nhập thành phố.',
             'system_state.required' => 'Vui lòng nhập Tỉnh thành.',
         ]);
+        if ($this->photo) {
+            $this->validate([
+                'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ], [
+                'photo.image' => 'File không phải là ảnh',
+                'photo.mimes' => 'Ảnh không đúng định dạng',
+                'photo.max' => 'Ảnh không được lớn hơn 2MB'
+            ]);
+            Storage::delete('public\\' . $this->existedPhoto);
+            $photo_name = time() . '.' . $this->photo->extension();
+            ImageOptimizer::optimize($this->photo->path());
+            $this->photo->storeAs(path: "public\images\systems", name: $photo_name);
+        }
 
         $system_info = System::first();
         $system_info->name = $this->system_name;
@@ -49,6 +64,9 @@ class EditSystem extends Component
         $system_info->city = $this->system_city;
         $system_info->state = $this->system_state;
         $system_info->website = $this->website;
+        if ($this->photo) {
+            $system_info->logo = $photo_name;
+        }
         $system_info->save();
 
         session()->flash('success', 'Cài đặt hệ thống thành công.');
@@ -70,7 +88,9 @@ class EditSystem extends Component
         $this->system_city  =  $system_info->city;
         $this->system_state  =  $system_info->state;
         $this->website  = $system_info->website;
-
+        if($system_info->logo){
+            $this->existedPhoto = "images/systems/" . $system_info->logo;
+        }
         return view('livewire.admin.system.edit-system', ['system_info' => $system_info]);
     }
 }
