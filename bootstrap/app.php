@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
         $middleware->web(append:[
             App\Http\Middleware\LocalizationMiddleware::class,
+            App\Http\Middleware\Admin\ShareDataMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

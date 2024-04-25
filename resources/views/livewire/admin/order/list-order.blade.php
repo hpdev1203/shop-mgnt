@@ -1,8 +1,8 @@
 <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
     <div class="px-4 py-6 md:px-6 xl:px-7.5">
         <div class="flex justify-between items-center">
-            <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH SẢN PHẨM</h4>
-            <a href="{{route('admin.products.add')}}" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
+            <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH ĐẶT HÀNG</h4>
+            <a href="{{route('admin.orders.add')}}" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
                 Thêm mới
             </a>
         </div>
@@ -17,7 +17,7 @@
             <thead class="bg-gray-200">
                 <tr>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-10 text-center">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="checkDeleteMultiple('cbx_delete_product');" class="cursor-pointer">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="checkDeleteMultiple('cbx_delete_order');" class="cursor-pointer">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                             <g id="SVGRepo_iconCarrier"> 
@@ -30,51 +30,35 @@
                         </svg>
                     </th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-12 text-center">STT</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-20 text-center"></th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-36 text-center">Mã sản phẩm</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Sản phẩm</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-right">Giá lẽ (VND)</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-right">Giá sỉ (VND)</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Tổng nhập kho</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Đã được đặt</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Tồn kho</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-36 text-center">Mã đơn hàng</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Khách Hàng</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-left">Hình thức thanh toán</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Trạng thái thanh toán</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Trạng thái</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-right">Tổng tiền (VND)</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-36 text-center">Hành Động</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 text-sm	">
-                @if ($products->isEmpty())
+                @if ($orders->isEmpty())
                     <tr>
                         <td class="px-2 py-2 whitespace-nowrap text-center" colspan="10">Không có dữ liệu</td>
                     </tr>
                 @endif
-                @foreach ($products as $index => $product)
+                @foreach ($orders as $index => $order)
                     <tr>
                         <td class="px-2 py-2 whitespace-nowrap text-center">
-                            <input type="checkbox" name="cbx_delete_product" class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:model="selected_index.{{$index}}" value="{{$product->id}}">
+                            <input type="checkbox" name="cbx_delete_order" class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:model="selected_index.{{$index}}" value="{{$order->id}}">
                         </td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">{{ $products->perPage() * ($products->currentPage() - 1) + $loop->iteration }}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center">{{ $orders->perPage() * ($orders->currentPage() - 1) + $loop->iteration }}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$order->code}}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->name}}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-left"></td>
+                        <td class="px-2 py-2 whitespace-nowrap text-right"></td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center"></td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center"></td>
                         <td class="px-2 py-2 whitespace-nowrap text-center">
-                            <div class="flex justify-center">
-                                @if (count($product->productDetails) > 0 && $product->productDetails[0] && $product->productDetails[0]->image)
-                                    @php
-                                        $imageThumbnailCheck = json_decode($product->productDetails[0]->image);   
-                                        $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $product->productDetails[0]->image;
-                                    @endphp
-                                    <img src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="Hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
-                                @else
-                                    <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
-                                @endif
-                            </div>
-                        </td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->code}}</td>
-                        <td class="px-2 py-2">{{$product->name}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-right">{{number_format($product->retail_price, 0, ',', '.')}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-right">{{number_format($product->wholesale_price, 0, ',', '.')}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->importProducts->sum('quantity')}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->orderDetails->sum('quantity')}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->importProducts->sum('quantity')-$product->orderDetails->sum('quantity')}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">
-                            <a href="{{route('admin.products.edit', $product->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
+                            <a href="{{route('admin.orders.edit', $order->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
                                 <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
@@ -82,7 +66,7 @@
                                     <path d="M16 5l3 3"></path>
                                 </svg>
                             </a>
-                            <a data-modal-target="popup-delete-item" data-modal-toggle="popup-delete-item" onclick="parseDataDelete('{{$product->id}}', '{{$product->name}}')" class="cursor-pointer inline-flex items-center text-red-600 hover:text-red-900">
+                            <a data-modal-target="popup-delete-item" data-modal-toggle="popup-delete-item" onclick="parseDataDelete('{{$order->id}}', '{{$order->name}}')" class="cursor-pointer inline-flex items-center text-red-600 hover:text-red-900">
                                 <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Delete" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -102,7 +86,7 @@
         </table>
     </div>
     <div class="px-4 py-6 md:px-6 xl:px-7.5">
-        {{$products->links('livewire.custom-pagination')}}
+        {{$orders->links('livewire.custom-pagination')}}
     </div>
     <div class="hidden" data-modal-target="popup-delete-multiple-item" data-modal-toggle="popup-delete-multiple-item"></div>
     <div class="hidden" data-modal-target="popup-warning" data-modal-toggle="popup-warning"></div>

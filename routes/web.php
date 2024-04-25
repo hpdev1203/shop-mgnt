@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\ImportProductController;
 use App\Http\Controllers\Admin\TransferWarehouseController;
 use App\Http\Controllers\Admin\LocaleController;
+use App\Http\Controllers\Admin\OrderController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -24,8 +25,6 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
         return view('admin.dashboard.dashboard');
     })->name('admin');
     
-
-
     /* Data Seeder  */
     Route::get('/admin/seeder', DataSeeder::class)->name('admin.seeder');
     
@@ -70,6 +69,7 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
         Route::get('/transfer-warehouse/add', [TransferWarehouseController::class, 'add'])->name('admin.transfer-warehouse.add');
         Route::get('/transfer-warehouse/edit/{id}', [TransferWarehouseController::class, 'edit'])->name('admin.transfer-warehouse.edit');
     });
+
     /* Audit  */
     Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits');
     Route::get('/admin/audits/detail/{id}', [AuditController::class, 'detail'])->name('admin.audits.detail');
@@ -78,6 +78,11 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators', [AdministratorController::class, 'index'])->name('admin.administrators');
     Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
+
+    /* Orders  */
+    Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders');
+    Route::get('/admin/orders/add', [OrderController::class, 'add'])->name('admin.orders.add');
+    Route::get('/admin/orders/edit/{id}', [OrderController::class, 'edit'])->name('admin.orders.edit');
 });
 
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
