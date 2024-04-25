@@ -41,6 +41,11 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 text-sm	">
+                @if ($products->isEmpty())
+                    <tr>
+                        <td class="px-2 py-2 whitespace-nowrap text-center" colspan="10">Không có dữ liệu</td>
+                    </tr>
+                @endif
                 @foreach ($products as $index => $product)
                     <tr>
                         <td class="px-2 py-2 whitespace-nowrap text-center">
@@ -122,7 +127,6 @@
                 parseInfoDeleteMultiple('deleteListCheckbox()');
             }
         }
-        
     </script>
     @script
         <script>

@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Quản lý khách hàng')
+@section('title', 'Khách hàng')
 @section('menu', 'users')
 
 @section('content')
     <div class="container mx-auto px-2 py-8 sm:px-6 md:px-8">
-        <h3 class="text-xl font-bold">QUẢN LÝ KHÁCH HÀNG</h3>
+        <h3 class="text-xl font-bold">KHÁCH HÀNG</h3>
         <nav class="text-sm font-medium text-gray-500 py-4" aria-label="breadcrumb">
             <ol class="list-none p-0 inline-flex">
                 <li class="flex items-center">
@@ -13,7 +13,7 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">Quản lý khách hàng</span>
+                    <span class="text-gray-700">Khách hàng</span>
                 </li>
             </ol>
         </nav>

@@ -14,17 +14,35 @@ class ListAdministrator extends Component
 
     public $search_input = '';
     public $isAdmin = 'n';
+    public $list_admin = [];
+    public $selected_index = [];
 
     public function search()
     {
         $this->resetPage();
     }
 
+    public function deleteListCheckbox()
+    {
+        foreach ($this->selected_index as $key => $checked) {
+            if($checked == true){
+                $user_id = $this->list_admin[$key]['id'];
+                $this->deleteAdmin($user_id);
+            }
+        }
+        $this->selected_index = [];
+        $this->render();
+    }
+
+    public function deleteAdmin($id){
+        $admin = Administrator::find($id);
+        $admin->delete();
+        session()->flash('success', 'QTV đã được xóa thành công');
+    }
+
     public function handleDetele($id)
     {
-        $administrators = Administrator::find($id);
-        $administrators->delete();
-        session()->flash('success', 'Quản trị viên đã xóa thành công');
+        $this->deleteAdmin($id);
         $this->render();
     }
     
@@ -54,6 +72,7 @@ class ListAdministrator extends Component
             ])
             ->paginate(10);
         }
+        $this->list_admin = collect($administrators->items());
         return view('livewire.admin.administrator.list-administrator', ['administrators' => $administrators]);
     }
 }
