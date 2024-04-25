@@ -4,6 +4,9 @@ namespace App\Livewire\Admin\Order;
 
 use Livewire\Component;
 use App\Models\Order;
+use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
+use App\Models\OrderDetail;
 
 class ListOrder extends Component
 {
@@ -29,6 +32,10 @@ class ListOrder extends Component
     }
 
     public function deleteOrder($id){
+        $order_detail = OrderDetail::where('order_id', $id)->get();
+        foreach ($order_detail as $item) {
+            $item->delete();
+        }
         $order = Order::find($id);
         $order->delete();
         session()->flash('success', 'Order deleted successfully');

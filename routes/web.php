@@ -85,7 +85,7 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 
     Route::get('/admin/systems', [SystemInformationController::class, 'index'])->name('admin.systems');
-
+});
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
 Route::get('/admin/logout', [Login::class, 'handleLogout'])->name('admin.logout');
