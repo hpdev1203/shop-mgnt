@@ -18,15 +18,13 @@ use App\Http\Controllers\Admin\ImportProductController;
 use App\Http\Controllers\Admin\TransferWarehouseController;
 use App\Http\Controllers\Admin\LocaleController;
 use App\Http\Controllers\Admin\SystemInformationController;
-
+use App\Http\Controllers\Admin\OrderController;
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin', function () {
         return view('admin.dashboard.dashboard');
     })->name('admin');
     
-
-
     /* Data Seeder  */
     Route::get('/admin/seeder', DataSeeder::class)->name('admin.seeder');
     
@@ -71,6 +69,12 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
         Route::get('/transfer-warehouse/add', [TransferWarehouseController::class, 'add'])->name('admin.transfer-warehouse.add');
         Route::get('/transfer-warehouse/edit/{id}', [TransferWarehouseController::class, 'edit'])->name('admin.transfer-warehouse.edit');
     });
+
+    /* Orders  */
+    Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders');
+    Route::get('/admin/orders/add', [OrderController::class, 'add'])->name('admin.orders.add');
+    Route::get('/admin/orders/edit/{id}', [OrderController::class, 'edit'])->name('admin.orders.edit');
+
     /* Audit  */
     Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits');
     Route::get('/admin/audits/detail/{id}', [AuditController::class, 'detail'])->name('admin.audits.detail');
@@ -80,10 +84,8 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 
-    /* system setting  */
     Route::get('/admin/systems', [SystemInformationController::class, 'index'])->name('admin.systems');
 });
-
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
 Route::get('/admin/logout', [Login::class, 'handleLogout'])->name('admin.logout');
