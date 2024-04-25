@@ -26,6 +26,7 @@
 		>
 			<div class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
 	  	</div>
+		
 	  	<!-- ===== Preloader End ===== -->
 		
 		<!-- ===== Page Wrapper Start ===== -->

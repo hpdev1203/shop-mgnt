@@ -6,7 +6,7 @@
     <!-- SIDEBAR HEADER -->
     <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <a href="{{route('admin')}}">
-            <img src="{{asset('library/images/logo/logo.svg')}}" alt="Logo" />
+            <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-100 md:text-2xl lg:text-2xl dark:text-white">{{$system_info->name}}</h1>
         </a>
         <button
             class="block lg:hidden"
@@ -33,7 +33,7 @@
         >
         <!-- Sidebar Menu -->
         <nav
-            class="px-4 py-4 lg:px-6"
+            class="px-2 py-2 lg:px-2"
             x-data="{selected: $persist('Dashboard')}"
             >
             <div>
@@ -41,7 +41,7 @@
                     <!-- Menu Item Dashboard -->
                     <li>
                         <a
-                            class="group relative flex items-center gap-2 rounded-sm px-4 py-1 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 text-white"
+                            class="group relative flex items-center gap-2 rounded-sm px-2 py-1 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 text-white"
                             href="{{route('admin')}}"
                             >
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -57,7 +57,7 @@
 
                     <li>
                         <a
-                            class="group relative flex items-center gap-2 rounded-sm px-4 py-1 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                            class="group relative flex items-center gap-2 rounded-sm px-2 py-1 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                             href="#"
                             @click.prevent="selected = (selected === 'Ecommerce' ? '':'Ecommerce')"
                             :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Ecommerce') || (page === 'formElements' || page === 'formLayout') }"
@@ -91,7 +91,7 @@
                             >
                             <ul class="mt-2 flex flex-col gap-2 pl-6">
                                 <li>
-                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="form-elements.html"
                                         :class="page === 'formElements' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -106,9 +106,9 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                        href="form-elements.html"
-                                        :class="page === 'formElements' && '!text-white'">
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{route('admin.orders')}}"
+                                        :class="page === 'orders' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
@@ -120,7 +120,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.categories')}}"
                                         :class="page === 'categories' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -133,7 +133,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.brands')}}"
                                         :class="page === 'brands' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -146,7 +146,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.products')}}"
                                         :class="page === 'products' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -161,7 +161,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.inventories')}}" :class="page === 'inventories' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -173,7 +173,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.warehouses')}}"
                                         :class="page === 'warehouses' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -188,9 +188,9 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.users')}}"
-                                        :class="page === 'formElements' && '!text-white'">
+                                        :class="page === 'users' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
@@ -205,20 +205,19 @@
                         </div>
                     </li>
 
-                    <!-- Menu Item Settings -->
                     <li>
                         <a
-                            class="group relative flex items-center gap-2 rounded-sm py-1 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                            class="group relative flex items-center gap-2 rounded-sm py-1 px-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                             href="#"
                             @click="selected = (selected === 'Settings' ? '':'Settings')"
-                            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Settings') && (page === 'settings') }"
+                            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Settings') }"
                             :class="page === 'settings' && 'bg-graydark'"
                             >
                             <svg
                                 class="fill-current"
-                                width="18"
+                                width="19"
                                 height="19"
-                                viewBox="0 0 18 19"
+                                viewBox="0 0 19 19"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
                                 >
@@ -235,20 +234,20 @@
                                 <defs>
                                     <clipPath id="clip0_130_9763">
                                         <rect
-                                            width="18"
-                                            height="18"
+                                            width="19"
+                                            height="19"
                                             fill="white"
                                             transform="translate(0 0.052124)"
                                             />
                                     </clipPath>
                                 </defs>
                             </svg>
-                            Hệ thống
+                            Cài đặt
                             <svg
                                 class="absolute right-4 top-1/2 -translate-y-1/2 fill-current"
                                 :class="{ 'rotate-180': (selected === 'Settings') }"
-                                width="15"
-                                height="15"
+                                width="19"
+                                height="19"
                                 viewBox="0 0 20 20"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -267,20 +266,107 @@
                             >
                             <ul class="mt-2 flex flex-col gap-2 pl-6">
                                 <li>
-                                    <a  class="group relative flex items-center gap-2 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                        href="{{route('admin.administrators')}}"
-                                        :class="page === 'formElements' && '!text-white'">
-                                        <svg  width="19" height="19" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" version="1.1"  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                            <title>administrator-solid</title>
-                                            <circle cx="14.67" cy="8.3" r="6" class="clr-i-solid clr-i-solid-path-1"></circle><path d="M16.44,31.82a2.15,2.15,0,0,1-.38-2.55l.53-1-1.09-.33A2.14,2.14,0,0,1,14,25.84V23.79a2.16,2.16,0,0,1,1.53-2.07l1.09-.33-.52-1a2.17,2.17,0,0,1,.35-2.52,18.92,18.92,0,0,0-2.32-.16A15.58,15.58,0,0,0,2,23.07v7.75a1,1,0,0,0,1,1H16.44Z" class="clr-i-solid clr-i-solid-path-2"></path><path d="M33.7,23.46l-2-.6a6.73,6.73,0,0,0-.58-1.42l1-1.86a.35.35,0,0,0-.07-.43l-1.45-1.46a.38.38,0,0,0-.43-.07l-1.85,1a7.74,7.74,0,0,0-1.43-.6l-.61-2a.38.38,0,0,0-.36-.25H23.84a.38.38,0,0,0-.35.26l-.6,2a6.85,6.85,0,0,0-1.45.61l-1.81-1a.38.38,0,0,0-.44.06l-1.47,1.44a.37.37,0,0,0-.07.44l1,1.82A7.24,7.24,0,0,0,18,22.83l-2,.61a.36.36,0,0,0-.26.35v2.05a.36.36,0,0,0,.26.35l2,.61a7.29,7.29,0,0,0,.6,1.41l-1,1.9a.37.37,0,0,0,.07.44L19.16,32a.38.38,0,0,0,.44.06l1.87-1a7.09,7.09,0,0,0,1.4.57l.6,2.05a.38.38,0,0,0,.36.26h2.05a.38.38,0,0,0,.35-.26l.6-2.05a6.68,6.68,0,0,0,1.38-.57l1.89,1a.38.38,0,0,0,.44-.06L32,30.55a.38.38,0,0,0,.06-.44l-1-1.88a6.92,6.92,0,0,0,.57-1.38l2-.61a.39.39,0,0,0,.27-.35V23.82A.4.4,0,0,0,33.7,23.46Zm-8.83,4.72a3.34,3.34,0,1,1,3.33-3.34A3.34,3.34,0,0,1,24.87,28.18Z" class="clr-i-solid clr-i-solid-path-3"></path>
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{route('admin.payment-methods')}}"
+                                        :class="page === 'paymentmethods' && '!text-white'">
+                                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"></path>
+                                            <path d="M3 10l18 0"></path>
+                                            <path d="M7 15l.01 0"></path>
+                                            <path d="M11 15l2 0"></path>
                                         </svg>
-                                        Quản Trị Viên
+                                        Phương thức thanh toán
+                                    </a>
+                                </li>
+                                <li>
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{route('admin.payment-status')}}"
+                                        :class="page === 'paymentstatus' && '!text-white'">
+                                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18"></path>
+                                            <path d="M13 8l2 0"></path>
+                                            <path d="M13 12l2 0"></path>
+                                        </svg>
+                                        Trạng thái thanh toán
+                                    </a>
+                                </li>
+                                <li>
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{route('admin.order-status')}}"
+                                        :class="page === 'orderstatus' && '!text-white'">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M7.50626 15.2647C7.61657 15.6639 8.02965 15.8982 8.4289 15.7879C8.82816 15.6776 9.06241 15.2645 8.9521 14.8652L7.50626 15.2647ZM6.07692 7.27442L6.79984 7.0747V7.0747L6.07692 7.27442ZM4.7037 5.91995L4.50319 6.64265L4.7037 5.91995ZM3.20051 4.72457C2.80138 4.61383 2.38804 4.84762 2.2773 5.24675C2.16656 5.64589 2.40035 6.05923 2.79949 6.16997L3.20051 4.72457ZM20.1886 15.7254C20.5895 15.6213 20.8301 15.2118 20.7259 14.8109C20.6217 14.41 20.2123 14.1695 19.8114 14.2737L20.1886 15.7254ZM10.1978 17.5588C10.5074 18.6795 9.82778 19.8618 8.62389 20.1747L9.00118 21.6265C10.9782 21.1127 12.1863 19.1239 11.6436 17.1594L10.1978 17.5588ZM8.62389 20.1747C7.41216 20.4896 6.19622 19.7863 5.88401 18.6562L4.43817 19.0556C4.97829 21.0107 7.03196 22.1383 9.00118 21.6265L8.62389 20.1747ZM5.88401 18.6562C5.57441 17.5355 6.254 16.3532 7.4579 16.0403L7.08061 14.5885C5.10356 15.1023 3.89544 17.0911 4.43817 19.0556L5.88401 18.6562ZM7.4579 16.0403C8.66962 15.7254 9.88556 16.4287 10.1978 17.5588L11.6436 17.1594C11.1035 15.2043 9.04982 14.0768 7.08061 14.5885L7.4579 16.0403ZM8.9521 14.8652L6.79984 7.0747L5.354 7.47414L7.50626 15.2647L8.9521 14.8652ZM4.90421 5.19725L3.20051 4.72457L2.79949 6.16997L4.50319 6.64265L4.90421 5.19725ZM6.79984 7.0747C6.54671 6.15847 5.8211 5.45164 4.90421 5.19725L4.50319 6.64265C4.92878 6.76073 5.24573 7.08223 5.354 7.47414L6.79984 7.0747ZM11.1093 18.085L20.1886 15.7254L19.8114 14.2737L10.732 16.6332L11.1093 18.085Z" fill="#1C274C"/>
+                                            <path d="M19.1647 6.2358C18.6797 4.48023 18.4372 3.60244 17.7242 3.20319C17.0113 2.80394 16.1062 3.03915 14.2962 3.50955L12.3763 4.00849C10.5662 4.47889 9.66119 4.71409 9.24954 5.40562C8.8379 6.09714 9.0804 6.97492 9.56541 8.73049L10.0798 10.5926C10.5648 12.3481 10.8073 13.2259 11.5203 13.6252C12.2333 14.0244 13.1384 13.7892 14.9484 13.3188L16.8683 12.8199C18.6784 12.3495 19.5834 12.1143 19.995 11.4227C20.2212 11.0429 20.2499 10.6069 20.1495 10" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                                            </svg>
+                                        Trạng thái đơn hàng
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <!-- Menu Item Settings -->
+
+                    <li>
+                        <a
+                            class="group relative flex items-center gap-2 rounded-sm py-1 px-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+                            href="#"
+                            @click="selected = (selected === 'Systems' ? '':'Systems')"
+                            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Systems') }"
+                            :class="page === 'Systems' && 'bg-graydark'"
+                            >
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h2"></path>
+                                <path d="M22 16c0 4 -2.5 6 -3.5 6s-3.5 -2 -3.5 -6c1 0 2.5 -.5 3.5 -1.5c1 1 2.5 1.5 3.5 1.5z"></path>
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                            </svg>
+                            Hệ thống
+                            <svg
+                                class="absolute right-4 top-1/2 -translate-y-1/2 fill-current"
+                                :class="{ 'rotate-180': (selected === 'Systems') }"
+                                width="19"
+                                height="19"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                >
+                                <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                                    fill=""
+                                    />
+                            </svg>
+                        </a>
+                        <div
+                            class="translate transform overflow-hidden"
+                            :class="(selected === 'Systems') ? 'block' :'hidden'"
+                            >
+                            <ul class="mt-2 flex flex-col gap-2 pl-6">
+                                <li>
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{route('admin.administrators')}}"
+                                        :class="page === 'administrators' && '!text-white'">
+                                        <svg width="19" height="19" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" version="1.1"  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                            <title>administrator-solid</title>
+                                            <circle cx="14.67" cy="8.3" r="6" class="clr-i-solid clr-i-solid-path-1"></circle><path d="M16.44,31.82a2.15,2.15,0,0,1-.38-2.55l.53-1-1.09-.33A2.14,2.14,0,0,1,14,25.84V23.79a2.16,2.16,0,0,1,1.53-2.07l1.09-.33-.52-1a2.17,2.17,0,0,1,.35-2.52,18.92,18.92,0,0,0-2.32-.16A15.58,15.58,0,0,0,2,23.07v7.75a1,1,0,0,0,1,1H16.44Z" class="clr-i-solid clr-i-solid-path-2"></path><path d="M33.7,23.46l-2-.6a6.73,6.73,0,0,0-.58-1.42l1-1.86a.35.35,0,0,0-.07-.43l-1.45-1.46a.38.38,0,0,0-.43-.07l-1.85,1a7.74,7.74,0,0,0-1.43-.6l-.61-2a.38.38,0,0,0-.36-.25H23.84a.38.38,0,0,0-.35.26l-.6,2a6.85,6.85,0,0,0-1.45.61l-1.81-1a.38.38,0,0,0-.44.06l-1.47,1.44a.37.37,0,0,0-.07.44l1,1.82A7.24,7.24,0,0,0,18,22.83l-2,.61a.36.36,0,0,0-.26.35v2.05a.36.36,0,0,0,.26.35l2,.61a7.29,7.29,0,0,0,.6,1.41l-1,1.9a.37.37,0,0,0,.07.44L19.16,32a.38.38,0,0,0,.44.06l1.87-1a7.09,7.09,0,0,0,1.4.57l.6,2.05a.38.38,0,0,0,.36.26h2.05a.38.38,0,0,0,.35-.26l.6-2.05a6.68,6.68,0,0,0,1.38-.57l1.89,1a.38.38,0,0,0,.44-.06L32,30.55a.38.38,0,0,0,.06-.44l-1-1.88a6.92,6.92,0,0,0,.57-1.38l2-.61a.39.39,0,0,0,.27-.35V23.82A.4.4,0,0,0,33.7,23.46Zm-8.83,4.72a3.34,3.34,0,1,1,3.33-3.34A3.34,3.34,0,0,1,24.87,28.18Z" class="clr-i-solid clr-i-solid-path-3"></path>
+                                        </svg>
+                                        Quản trị viên
+                                    </a>
+                                </li>
+                                <li>
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{route('admin.systems')}}"
+                                        :class="page === 'systems' && '!text-white'">
+                                        <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path  class="clr-i-solid clr-i-solid-path-3"  d="M981.333333 469.333333a21.333333 21.333333 0 0 0-21.333333 21.333334v85.333333a85.333333 85.333333 0 0 1-85.333333 85.333333H149.333333a85.333333 85.333333 0 0 1-85.333333-85.333333V149.333333a85.333333 85.333333 0 0 1 85.333333-85.333333h725.333334a85.333333 85.333333 0 0 1 85.333333 85.333333 21.333333 21.333333 0 0 0 42.666667 0 128 128 0 0 0-128-128H149.333333a128 128 0 0 0-128 128v426.666667a128 128 0 0 0 128 128h725.333334a128 128 0 0 0 128-128v-85.333333a21.333333 21.333333 0 0 0-21.333334-21.333334z" fill="#8A99AF" /><path d="M981.333333 298.666667a21.333333 21.333333 0 0 0-21.333333 21.333333v85.333333a21.333333 21.333333 0 0 0 42.666667 0v-85.333333a21.333333 21.333333 0 0 0-21.333334-21.333333zM966.186667 219.52a21.333333 21.333333 0 0 0 0 30.293333 21.333333 21.333333 0 0 0 30.293333 0l2.56-3.413333a11.946667 11.946667 0 0 0 1.92-3.626667 13.226667 13.226667 0 0 0 1.706667-3.84 26.88 26.88 0 0 0 0-4.266666 21.333333 21.333333 0 0 0-36.48-15.146667zM896 960H128a21.333333 21.333333 0 0 0 0 42.666667h768a21.333333 21.333333 0 0 0 0-42.666667zM682.666667 853.333333a21.333333 21.333333 0 0 0 0-42.666666H341.333333a21.333333 21.333333 0 0 0 0 42.666666zM704 384a21.333333 21.333333 0 0 0 0-42.666667h-44.373333a149.333333 149.333333 0 0 0-28.16-67.84l31.36-31.36a21.333333 21.333333 0 1 0-30.08-30.08l-31.573334 31.146667A149.333333 149.333333 0 0 0 533.333333 215.04V170.666667a21.333333 21.333333 0 0 0-42.666666 0v44.373333a149.333333 149.333333 0 0 0-67.84 28.16l-31.573334-31.36a21.333333 21.333333 0 0 0-30.08 30.08l31.36 31.36A149.333333 149.333333 0 0 0 364.373333 341.333333H320a21.333333 21.333333 0 0 0 0 42.666667h44.373333a149.333333 149.333333 0 0 0 28.16 67.84l-31.36 31.36a21.333333 21.333333 0 1 0 30.08 30.08l31.36-31.36A149.333333 149.333333 0 0 0 490.666667 510.293333V554.666667a21.333333 21.333333 0 0 0 42.666666 0v-44.373334a149.333333 149.333333 0 0 0 67.84-28.16l31.36 31.36a21.333333 21.333333 0 0 0 30.08-30.08l-31.146666-31.573333A149.333333 149.333333 0 0 0 659.626667 384z m-192 85.333333a106.666667 106.666667 0 1 1 106.666667-106.666666 106.666667 106.666667 0 0 1-106.666667 106.666666z" fill="#8A99AF"  class="clr-i-solid clr-i-solid-path-3" /></svg>
+                                        Cài đặt hệ thống
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                   
                 </ul>
             </div>
         </nav>

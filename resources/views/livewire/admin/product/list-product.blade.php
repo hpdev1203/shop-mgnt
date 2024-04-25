@@ -35,12 +35,18 @@
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Sản phẩm</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-right">Giá lẽ (VND)</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-right">Giá sỉ (VND)</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Tổng nhập kho</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Đã được đặt</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Tồn kho</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-36 text-center">Hành Động</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 text-sm	">
+                @if ($products->isEmpty())
+                    <tr>
+                        <td class="px-2 py-2 whitespace-nowrap text-center" colspan="10">Không có dữ liệu</td>
+                    </tr>
+                @endif
                 @foreach ($products as $index => $product)
                     <tr>
                         <td class="px-2 py-2 whitespace-nowrap text-center">
@@ -64,8 +70,9 @@
                         <td class="px-2 py-2">{{$product->name}}</td>
                         <td class="px-2 py-2 whitespace-nowrap text-right">{{number_format($product->retail_price, 0, ',', '.')}}</td>
                         <td class="px-2 py-2 whitespace-nowrap text-right">{{number_format($product->wholesale_price, 0, ',', '.')}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->stock}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->stock}}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->importProducts->sum('quantity')}}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->orderDetails->sum('quantity')}}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->importProducts->sum('quantity')-$product->orderDetails->sum('quantity')}}</td>
                         <td class="px-2 py-2 whitespace-nowrap text-center">
                             <a href="{{route('admin.products.edit', $product->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
                                 <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -122,7 +129,6 @@
                 parseInfoDeleteMultiple('deleteListCheckbox()');
             }
         }
-        
     </script>
     @script
         <script>

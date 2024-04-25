@@ -38,7 +38,7 @@ class ListProduct extends Component
         $product = Product::find($id);
         $checkOrder = $product->orderDetails;
         if(count($checkOrder) > 0){
-            $this->dispatch('error', ['error' => 'Sản phẩm '.$product->name.' đã được đặt hàng, vì vậy không thể xóa. Ẩn nó là phương án tốt nhất.']);
+            $this->dispatch('error', ['error' => 'Sản phẩm '.$product->name.' đã được đặt hàng, vì vậy không thể xóa. Vui lòng chỉ ẩn để đảm bảo tính đúng đắn của dử liệu.']);
             return;
         }
         $product_size = ProductSize::where('product_id', $id)->get();
