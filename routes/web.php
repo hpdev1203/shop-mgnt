@@ -17,8 +17,8 @@ use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\ImportProductController;
 use App\Http\Controllers\Admin\TransferWarehouseController;
 use App\Http\Controllers\Admin\LocaleController;
+use App\Http\Controllers\Admin\SystemInformationController;
 use App\Http\Controllers\Admin\OrderController;
-
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin', function () {
@@ -70,6 +70,11 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
         Route::get('/transfer-warehouse/edit/{id}', [TransferWarehouseController::class, 'edit'])->name('admin.transfer-warehouse.edit');
     });
 
+    /* Orders  */
+    Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders');
+    Route::get('/admin/orders/add', [OrderController::class, 'add'])->name('admin.orders.add');
+    Route::get('/admin/orders/edit/{id}', [OrderController::class, 'edit'])->name('admin.orders.edit');
+
     /* Audit  */
     Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits');
     Route::get('/admin/audits/detail/{id}', [AuditController::class, 'detail'])->name('admin.audits.detail');
@@ -79,11 +84,7 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 
-    /* Orders  */
-    Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders');
-    Route::get('/admin/orders/add', [OrderController::class, 'add'])->name('admin.orders.add');
-    Route::get('/admin/orders/edit/{id}', [OrderController::class, 'edit'])->name('admin.orders.edit');
-});
+    Route::get('/admin/systems', [SystemInformationController::class, 'index'])->name('admin.systems');
 
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
