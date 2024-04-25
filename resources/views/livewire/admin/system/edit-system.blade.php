@@ -15,7 +15,7 @@
                     @enderror
                 </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="system_email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
+                    <label for="system_email" class="block text-sm font-medium leading-6 text-gray-900">Email <span class="text-red-700">*</span></label>
                     <div class="mt-2">
                         <input wire:model="system_email" type="email" name="system_email" id="system_email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
@@ -26,7 +26,7 @@
                 <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
                 
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                    <label for="system_phone" class="block text-sm font-medium leading-6 text-gray-900">Số điện thoại</label>
+                    <label for="system_phone" class="block text-sm font-medium leading-6 text-gray-900">Số điện thoại <span class="text-red-700">*</span></label>
                     <div class="mt-2">
                         <input wire:model="system_phone" type="text" name="system_phone" id="system_phone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
