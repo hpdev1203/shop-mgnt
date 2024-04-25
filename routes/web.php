@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\ImportProductController;
 use App\Http\Controllers\Admin\TransferWarehouseController;
 use App\Http\Controllers\Admin\LocaleController;
+use App\Http\Controllers\Admin\SystemInformationController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -78,6 +79,9 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators', [AdministratorController::class, 'index'])->name('admin.administrators');
     Route::get('/admin/administrators/add', [AdministratorController::class, 'add'])->name('admin.administrators.add');
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
+
+    /* system setting  */
+    Route::get('/admin/systems', [SystemInformationController::class, 'index'])->name('admin.systems');
 });
 
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
