@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Thêm nhãn hiệu')
-@section('menu', 'brands')
+@section('title', 'Trạng thái đơn hàng')
+@section('menu', 'orderstatus')
 
 @section('content')
     <div class="container mx-auto px-2 py-8 sm:px-6 md:px-8">
-        <h3 class="text-2xl text-gray-700 font-bold">THÊM NHÃN HÀNG</h3>
+        <h3 class="text-2xl text-gray-700 font-bold">TRẠNG THÁI ĐƠN HÀNG</h3>
         <nav class="text-sm font-medium text-gray-500 py-4" aria-label="breadcrumb">
             <ol class="list-none p-0 inline-flex">
                 <li class="flex items-center">
@@ -13,11 +13,11 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <a href="{{ route('admin.brands') }}" class="text-blue-500 hover:text-blue-700">Nhãn hàng</a>
+                    <a href="{{ route('admin.order-status') }}" class="text-blue-500 hover:text-blue-700">Trạng thái đơn hàng</a>
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">Thêm nhãn hàng</span>
+                    <span class="text-gray-700">Thêm trạng thái đơn hàng</span>
                 </li>
             </ol>
         </nav>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
-                @livewire('admin.brand.add-brand')
+                @livewire('admin.order-status.add-order-status')
             </div>
         </div>
     </div>
