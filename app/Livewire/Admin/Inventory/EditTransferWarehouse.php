@@ -45,25 +45,29 @@ class EditTransferWarehouse extends Component
         $this->validate([
             'transfer_warehouse_code' => 'required|unique:transfer_product,code,' .$this->id,
             'transfer_warehouse_name' => 'required',
-            'from_warehouse_id' => 'required',
-            'to_warehouse_id' => 'required',
+            'from_warehouse_id' => 'required|exists:import_product,warehouse_id',
+            'to_warehouse_id' => 'required|different:from_warehouse_id',
         ], [
             'transfer_warehouse_code.required' => 'Vui lòng nhập mã chuyển kho.',
             'transfer_warehouse_code.unique' => 'Mã chuyển kho đã tồn tại.',
             'transfer_warehouse_name.required' => 'Vui lòng nhập tiêu đề.',
             'from_warehouse_id.required' => 'Vui lòng chọn kho hàng đi.',
+            'from_warehouse_id.exists' => 'Kho hàng đi chưa có sản phẩm',
             'to_warehouse_id.required' => 'Vui lòng chọn kho hàng đến.',
+            'to_warehouse_id.different' => 'Vui lòng chọn kho hàng đến khác với kho hàng đi.',
         ]);
 
         if ($this->transfer_warehouse_detail_count > 0) {
             for ($i=0; $i < $this->transfer_warehouse_detail_count; $i++) {
                 $this->validate([
-                    'product_id.'.$i => 'required',
-                    'product_detail_id.'.$i => 'required',
+                    'product_id.'.$i => 'required|exists:import_product_detail,product_id',
+                    'product_detail_id.'.$i => 'required|exists:import_product_detail,product_detail_id',
                     'transfer_warehouse_detail_qnty.'.$i => 'required',
                 ], [
-                    'product_id.'.$i => 'Vui lòng chọn sản phẩm',
-                    'product_detail_id.'.$i => 'Vui lòng chọn mẫu sản phẩm',
+                    'product_id.'.$i.'.required' => 'Vui lòng chọn sản phẩm',
+                    'product_id.'.$i.'.exists' => 'Sản phẩm chưa được nhập hàng',
+                    'product_detail_id.'.$i.'.required' => 'Vui lòng chọn mẫu sản phẩm',
+                    'product_detail_id.'.$i.'.exists' => 'Mẫu sản phẩm chưa được nhập',
                     'transfer_warehouse_detail_qnty.'.$i => 'Vui lòng nhập số lượng',
                 ]);
             }
@@ -80,7 +84,13 @@ class EditTransferWarehouse extends Component
                 $this->list_transfer_warehouse_detail[$i]->transfer_product_id = $transfer_warehouse->id;
                 $this->list_transfer_warehouse_detail[$i]->product_id = $this->product_id[$i];
                 $this->list_transfer_warehouse_detail[$i]->product_detail_id = $this->product_detail_id[$i];
-                $this->list_transfer_warehouse_detail[$i]->size_id = $this->size_id[$i];
+                if (isset($this->size_id[$i])) {
+                    if($this->size_id[$i] == ""){
+                        $this->list_transfer_warehouse_detail[$i]->size_id = NULL;
+                    }else{
+                        $this->list_transfer_warehouse_detail[$i]->size_id = $this->size_id[$i];
+                    }
+                }
                 $this->list_transfer_warehouse_detail[$i]->quantity = $this->transfer_warehouse_detail_qnty[$i];
                 $this->list_transfer_warehouse_detail[$i]->save();
             }

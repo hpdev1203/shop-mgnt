@@ -77,7 +77,9 @@ class AddImportProduct extends Component
                 $import_product_detail[$i]->import_product_id = $import_product->id;
                 $import_product_detail[$i]->product_id = $this->product_id[$i];
                 $import_product_detail[$i]->product_detail_id = $this->product_detail_id[$i];
-                $import_product_detail[$i]->size_id = $this->size_id[$i];
+                if(isset($this->size_id[$i])){
+                    $import_product_detail[$i]->size_id = $this->size_id[$i];
+                }
                 $import_product_detail[$i]->quantity = $this->import_product_detail_qnty[$i];
                 $import_product_detail[$i]->save();
             }
