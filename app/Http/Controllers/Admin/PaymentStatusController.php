@@ -20,7 +20,6 @@ class PaymentStatusController extends Controller
 
     public function edit($id)
     {
-        $payment_status = PaymentStatus::find($id);
         return view('admin.dashboard.payment-status.edit_payment_status', ['payment_status' => $payment_status]);
     }
 }
