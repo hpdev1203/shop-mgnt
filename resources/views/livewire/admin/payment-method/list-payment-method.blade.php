@@ -30,7 +30,6 @@
                         </svg>
                     </th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-12 text-center">STT</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-20 text-center"></th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Mã Phương Thức</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Phương Thức</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Mô tả</th>
@@ -42,7 +41,7 @@
             <tbody class="bg-white divide-y divide-gray-200 text-sm">
                 @if ($payment_methods->isEmpty())
                     <tr>
-                        <td class="px-2 py-2 whitespace-nowrap text-center" colspan="7">Không có dữ liệu</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center" colspan="8">Không có dữ liệu</td>
                     </tr>
                 @endif
                 @foreach ($payment_methods as $index => $payment_method)
@@ -51,9 +50,6 @@
                             <input type="checkbox" name="cbx_delete_payment_method" class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:model="selected_index.{{$index}}" value="{{$payment_method->id}}">
                         </td>
                         <td class="px-2 py-2 whitespace-nowrap text-center">{{ $payment_methods->perPage() * ($payment_methods->currentPage() - 1) + $loop->iteration }}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">
-                           
-                        </td>
                         <td class="px-2 py-2 whitespace-nowrap">{{$payment_method->code}}</td>
                         <td class="px-2 py-2 whitespace-nowrap">{{$payment_method->name}}</td>
                         <td class="px-2 py-2 whitespace-nowrap" title="{{$payment_method->description}}">
@@ -148,7 +144,7 @@
             if (countChecked == 0) {
                 const popupWarning = document.querySelector('[data-modal-target="popup-warning"]');
                 popupWarning.click();
-                parseInfoWarning('Bạn chưa chọn nhãn hàng nào để xóa');
+                parseInfoWarning('Bạn chưa chọn phương thức thanh toán nào để xóa');
             } else {
                 const popupDeleteMultiple = document.querySelector('[data-modal-target="popup-delete-multiple-item"]');
                 popupDeleteMultiple.click();
