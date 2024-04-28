@@ -50,5 +50,6 @@
 		</div>
 		<!-- ===== Page Wrapper End ===== -->
 		@livewireScripts
+		<script src="{{asset('library/js/app.js')}}"></script>
 	</body>
 </html>
