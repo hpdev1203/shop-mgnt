@@ -13,16 +13,6 @@
 			}
 		</style>
 		<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js"></script>
-		<style>
-			.CodeMirror {
-				height: 200px;
-				border: 1px solid #d1d5db;
-				border-radius: 0.375rem;
-			}
-		</style>
-
 	</head>
 	<body 	x-data="{ page: '@yield("menu")', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     		x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));

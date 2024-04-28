@@ -218,7 +218,6 @@
         } )
         .then(editor => {
             editor.model.document.on('change:data', () => {
-                console.log(editor.getData());
                 @this.set('product_description', editor.getData());
             })
         })
