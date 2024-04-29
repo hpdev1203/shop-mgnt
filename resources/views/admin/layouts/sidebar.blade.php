@@ -92,8 +92,8 @@
                             <ul class="mt-2 flex flex-col gap-2 pl-6">
                                 <li>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                        href="form-elements.html"
-                                        :class="page === 'formElements' && '!text-white'">
+                                        href="{{route('admin.reports')}}"
+                                        :class="page === 'reports' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>

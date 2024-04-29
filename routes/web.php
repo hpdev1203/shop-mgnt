@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\PaymentStatusController;
 use App\Http\Controllers\Admin\OrderStatusController;
+use App\Http\Controllers\Admin\ReportController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -94,6 +95,10 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 
     Route::get('/admin/systems', [SystemInformationController::class, 'index'])->name('admin.systems');
+
+    /* Report  */
+    Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin.reports');
+    Route::get('/admin/reports/prelim/{id}', [ReportController::class, 'prelim'])->name('admin.reports.prelim');
 });
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
