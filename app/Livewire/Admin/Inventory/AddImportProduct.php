@@ -54,6 +54,10 @@ class AddImportProduct extends Component
 
         if ($this->import_product_detail_count > 0) {
             for ($i=0; $i < $this->import_product_detail_count; $i++) {
+                $product_size[$i] = 0;
+                if(isset($this->product_id[$i])){
+                    $product_size[$i] = ProductSize::where('product_id',$this->product_id[$i])->get();
+                }
                 $this->validate([
                     'product_id.'.$i => 'required',
                     'product_detail_id.'.$i => 'required',
@@ -63,6 +67,13 @@ class AddImportProduct extends Component
                     'product_detail_id.'.$i => 'Vui lòng chọn mẫu sản phẩm',
                     'import_product_detail_qnty.'.$i => 'Vui lòng nhập số lượng',
                 ]);
+                if (count($product_size[$i]) > 0) {
+                    $this->validate([
+                        'size_id.'.$i => 'required',
+                    ], [
+                        'size_id.'.$i => 'Vui lòng chọn size',
+                    ]);
+                }
             }
         }
         $import_product = new ImportProduct();
@@ -89,13 +100,10 @@ class AddImportProduct extends Component
 
     public function render()
     {
-        $id_latest = ImportProduct::latest('id')->first();
-        if($id_latest == null){
-            $id_latest = (object) ['id' => 0];
-        }   
+        $id_latest = ImportProduct::all(); 
         $warehouses = Warehouse::all();
         $products = Product::all();
-        $this->import_product_code = 'IMP-'.str_pad($id_latest->id + 1, 4, '0', STR_PAD_LEFT);
+        $this->import_product_code = 'IMP-'.str_pad(count($id_latest) + 1, 4, '0', STR_PAD_LEFT);
         return view('livewire.admin.inventory.add-import-product',['warehouses' => $warehouses, 'products' => $products, 'list_import_product_detail' => $this->list_import_product_detail , 'product_detail_list' => $this->product_detail_list , 'product_size_list' => $this->product_size_list]);
     }
 }

@@ -40,7 +40,7 @@ class ListUser extends Component
 
     public function handleDetele($id)
     {
-        $this->deleteBrand($id);
+        $this->deleteUser($id);
         $this->render();
     }
     

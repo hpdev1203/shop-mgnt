@@ -38,6 +38,11 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 text-sm	">
+                @if ($transfer_warehouses->isEmpty())
+                    <tr>
+                        <td class="px-2 py-2 whitespace-nowrap text-center" colspan="9">Không có dữ liệu</td>
+                    </tr>
+                @endif
                 @foreach ($transfer_warehouses as $index => $transfer_warehouse)
                 <tr>
                     <td class="px-2 py-2 whitespace-nowrap text-center">
