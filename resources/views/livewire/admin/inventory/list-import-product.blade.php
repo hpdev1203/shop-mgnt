@@ -37,6 +37,11 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 text-sm	">
+                @if ($import_products->isEmpty())
+                    <tr>
+                        <td class="px-2 py-2 whitespace-nowrap text-center" colspan="9">Không có dữ liệu</td>
+                    </tr>
+                @endif
                 @foreach ($import_products as $index => $import_product)
                 <tr>
                     <td class="px-2 py-2 whitespace-nowrap text-center">
