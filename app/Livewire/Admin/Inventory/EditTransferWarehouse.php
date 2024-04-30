@@ -93,13 +93,29 @@ class EditTransferWarehouse extends Component
                             ['product_detail_id',$this->product_detail_id[$i]],
                             ['size_id',$this->size_id[$i]],
                         ])->groupBy('product_id','product_detail_id','size_id')->first();
+                        $tranfer_warehouse_quantity[$i] = TransferWarehouseDetail::select('product_id','product_detail_id','size_id',TransferWarehouseDetail::raw('SUM(quantity) as quantity'))->where([
+                            ['product_id',$this->product_id[$i]],
+                            ['product_detail_id',$this->product_detail_id[$i]],
+                            ['size_id',$this->size_id[$i]],
+                            ['transfer_product_id','<>',$this->id],
+                        ])->groupBy('product_id','product_detail_id','size_id')->first();
                     }else{
                         $import_product_quantity[$i] = ImportProductDetail::select('product_id','product_detail_id',ImportProductDetail::raw('SUM(quantity) as quantity'))->where([
                             ['product_id',$this->product_id[$i]],
                             ['product_detail_id',$this->product_detail_id[$i]],
                         ])->groupBy('product_id','product_detail_id')->first();
+                        $tranfer_warehouse_quantity[$i] = TransferWarehouseDetail::select('product_id','product_detail_id',TransferWarehouseDetail::raw('SUM(quantity) as quantity'))->where([
+                            ['product_id',$this->product_id[$i]],
+                            ['product_detail_id',$this->product_detail_id[$i]],
+                            ['transfer_product_id','<>',$this->id],
+                        ])->groupBy('product_id','product_detail_id')->first();
                     }
-                    $quantity[$i] = (int)$import_product_quantity[$i]->quantity;
+                    if (isset($import_product_quantity[$i]->quantity)) {
+                        $quantity[$i] = (int)$import_product_quantity[$i]->quantity;
+                        if (isset($tranfer_warehouse_quantity[$i]->quantity)) {
+                            $quantity[$i] = $quantity[$i] - (int)$tranfer_warehouse_quantity[$i]->quantity;
+                        }
+                    }
                     if($quantity[$i] > 0){
                          $this->validate([
                             'transfer_warehouse_detail_qnty.'.$i => 'lte:'.$quantity[$i],
