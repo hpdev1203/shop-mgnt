@@ -5,7 +5,10 @@ const createDropdown = (selectElement) => {
 	const selectClasses = selectElement.classList;
 	selectClasses.remove("convert-to-dropdown"); // Remove class to prevent duplicate conversion
 	// Get width of select element
-	const selectWidth = selectElement.offsetWidth;
+	let selectWidth = selectElement.offsetWidth;
+	if(selectWidth === 0) {
+		selectWidth = "100%"; // Set width to 100% if it is 0
+	}
 	// Get classes of select element
 	const selectClassList = selectElement.classList;
 	const selectId = selectElement.id;
@@ -22,10 +25,13 @@ const createDropdown = (selectElement) => {
 	hiddenInput.dispatchEvent(new Event('input')); // Dispatch change event to hidden input
 	container.innerHTML = `
 		<div class="relative">
-			<input type="text" id="search_${selectId}" class="${[...selectClassList].join(' ')}" placeholder="Search..." value="${selectedText}" style="width: ${selectWidth}px;">
-			<div id="dropdown${selectId}" class="absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg hidden" style="width: ${selectWidth}px;">
+			<input type="text" id="search_${selectId}" class="${[...selectClassList].join(' ')}" placeholder="Search..." value="${selectedText}" style="width: ${selectWidth}; padding-right: 20px;">
+			<div id="dropdown${selectId}" class="absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg hidden text-sm" style="width: ${selectWidth};">
 				<!-- Dropdown items will be inserted here -->
 			</div>
+			<svg class="absolute right-0 top-2 mt-0.5 mr-2 pointer-events-none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M7 10l5 5 5-5"></path>
+			</svg>
 		</div>
 		`;
 	container.appendChild(hiddenInput);
@@ -45,12 +51,13 @@ const createDropdown = (selectElement) => {
 		items.forEach(item => {
 			const div = document.createElement('div');
 			div.textContent = item.innerText;
-			div.classList.add('py-2', 'px-4', 'cursor-pointer', 'hover:bg-gray-100');
+			div.classList.add('py-1', 'px-3', 'cursor-pointer', 'hover:bg-gray-100');
 			div.addEventListener('click', () => {
 				searchInput.value = item.innerText; // Set selected item to input value
 				dropdown.classList.add('hidden'); // Hide dropdown after selecting an item
 				hiddenInput.value = item.value;
 				hiddenInput.dispatchEvent(new Event('input')); // Dispatch change event to hidden input
+				hiddenInput.dispatchEvent(new Event('change')); // Dispatch change event to hidden input
 			});
 			dropdown.appendChild(div);
 		});
