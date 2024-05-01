@@ -19,7 +19,7 @@
                     <div class="col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sản phẩm</label>
                         <div class="mt-2">
-                            <select id="product_add" wire:model="product_add" name="product_add" class="convert-to-dropdown block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <select id="product_add" wire:model.defer="product_add" name="product_add" wire:change.prevent="loadProductDetails()" class="convert-to-dropdown block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                 <option value="">-</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
@@ -29,12 +29,14 @@
                     </div>
                     <div class="col-span-2">
                         <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mẫu</label>
-                        <select id="product_detail" wire:model="product_detail" name="product_detail" class="convert-to-dropdown block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                            <option value="">-</option>
-                            @foreach($product_details as $product_detail)
-                                <option value="{{$product_detail->id}}">{{$product_detail->title}}</option>
-                            @endforeach
-                        </select>
+                        <div class="mt-2">
+                            <select id="product_detail" wire:model="product_detail" name="product_detail" class="convert-to-dropdown block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <option value="">-</option>
+                                @foreach($product_details as $product_detail)
+                                    <option value="{{$product_detail->id}}">{{$product_detail->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>

@@ -22,7 +22,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        @error('customer')
+                        @error('customer_id')
                             <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                         @enderror
                     </div>
@@ -45,7 +45,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        @error('payment_method')
+                        @error('payment_method_id')
                             <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                         @enderror
                     </div>
@@ -53,6 +53,7 @@
                         <label class="block text-sm font-medium leading-6 text-gray-900">Trạng thái thanh toán <span class="text-red-700">*</span></label>
                         <div class="mt-2">
                             <select wire:model="payment_status" id="payment_status" name="payment_status" class="convert-to-dropdown block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <option value="">-</option>
                                 <option value="pending">Đang chờ thanh toán</option>
                                 <option value="paid">Đã thanh toán</option>
                             </select>
@@ -65,6 +66,7 @@
                         <label class="block text-sm font-medium leading-6 text-gray-900">Trạng thái đơn hàng <span class="text-red-700">*</span></label>
                         <div class="mt-2">
                             <select wire:model="order_status" id="order_status" name="order_status" class="convert-to-dropdown block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <option value="">-</option>
                                 <option value="pending">Đang chờ xác nhận</option>
                                 <option value="confirmed">Đã xác nhận</option>
                                 <option value="shipping">Đang giao hàng</option>
@@ -117,70 +119,105 @@
                 <div class="mt-6">
                     <div class="flex justify-between items-center">
                         <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH SẢN PHẨM</h4>
-                        <button type="button" data-modal-target="modal-order-product" data-modal-toggle="modal-order-product" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
-                            Thêm mới
-                        </button>
+                        <button type="button" 
+                                wire:click="addProduct"
+                                class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
+                                >Thêm sảm phẩm</button>
                     </div>
                 </div>
                 <div class="overflow-x-auto mt-2">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-200">
                             <tr>
-                                <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-12 text-center">STT</th>
-                                <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-center">Sản phẩm</th>
-                                <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Mẫu</th>
-                                <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Size</th>
-                                <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Kho</th>
-                                <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-16 text-center">Số lượng</th>
-                                <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Đơn giá</th>
-                                <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Thành tiền</th>
-                                <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-12 text-center"></th>
+                                <th scope="col" class="px-2 py-4 text-xs font-medium text-gray-700 uppercase tracking-wider w-12 text-center">STT</th>
+                                <th scope="col" class="px-2 py-4 text-xs font-medium text-gray-700 uppercase tracking-wider text-center">Sản phẩm</th>
+                                <th scope="col" class="px-2 py-4 text-xs font-medium text-gray-700 uppercase tracking-wider w-48 text-center">Mẫu</th>
+                                <th scope="col" class="px-2 py-4 text-xs font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Size</th>
+                                <th scope="col" class="px-2 py-4 text-xs font-medium text-gray-700 uppercase tracking-wider w-48 text-center">Kho</th>
+                                <th scope="col" class="px-2 py-4 text-xs font-medium text-gray-700 uppercase tracking-wider w-32 text-center">Số lượng</th>
+                                <th scope="col" class="px-2 py-4 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Đơn giá</th>
+                                <th scope="col" class="px-2 py-4 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-center">Thành tiền</th>
+                                <th scope="col" class="px-2 py-4 text-xs font-medium text-gray-700 uppercase tracking-wider w-12 text-center"></th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200 text-sm	">
-                            @if ($order_products->isEmpty())
+                            @if (count($order_products) == 0)
                                 <tr>
                                     <td class="px-2 py-2 whitespace-nowrap text-center" colspan="9">Không có dữ liệu</td>
                                 </tr>
                             @endif
-                            {{-- @foreach ($order_products as $index => $product)
+                            @foreach ($order_products as $index => $order_product)
                                 <tr>
-                                    <td class="px-2 py-2 whitespace-nowrap text-center">
-                                        <input type="checkbox" name="cbx_delete_order" class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:model="selected_index.{{$index}}" value="{{$order->id}}">
+                                    <td class="px-2 py-2 whitespace-nowrap text-center">{{$index+1}}</td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-left">
+                                        <select wire:model="products_id.{{$index}}" wire:change="loadProductAttributes({{$index}})" name="products_id{{$index}}" id="products_id{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <option value="">-</option>
+                                            @foreach($product_list as $product)
+                                                <option value="{{$product->id}}">{{$product->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
-                                    <td class="px-2 py-2 whitespace-nowrap text-center">{{ $order_products->perPage() * ($order_products->currentPage() - 1) + $loop->iteration }}</td>
-                                    <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->code}}</td>
-                                    <td class="px-2 py-2 whitespace-nowrap text-left">{{$product->name}}</td>
-                                    <td class="px-2 py-2 whitespace-nowrap text-left"></td>
-                                    <td class="px-2 py-2 whitespace-nowrap text-right"></td>
-                                    <td class="px-2 py-2 whitespace-nowrap text-center"></td>
-                                    <td class="px-2 py-2 whitespace-nowrap text-center"></td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-left">
+                                        <select wire:model="products_model_id.{{$index}}" name="products_model_id{{$index}}" id="products_model_id{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <option value="">-</option>
+                                            @if(isset($product_model_list[$index]))
+                                                @foreach($product_model_list[$index] as $product_model)
+                                                    <option value="{{$product_model->id}}">{{$product_model->title}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-left">
+                                        <select wire:model="products_size_id.{{$index}}" name="products_size_id{{$index}}" id="products_size_id{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <option value="">-</option>
+                                            @if(isset($product_size_list[$index]))
+                                                @foreach($product_size_list[$index] as $product_size)
+                                                    <option value="{{$product_size->id}}">{{$product_size->size}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-right">
+                                        <select wire:model="products_warehouse_id.{{$index}}" name="products_warehouse_id{{$index}}" id="products_warehouse_id{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <option value="">-</option>
+                                            @foreach($warehouses as $warehouse)
+                                                <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-center">
-                                        <a href="{{route('admin.orders.edit', $product->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
-                                            <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                                                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
-                                                <path d="M16 5l3 3"></path>
-                                            </svg>
-                                        </a>
-                                        <a data-modal-target="popup-delete-item" data-modal-toggle="popup-delete-item" onclick="parseDataDelete('{{$order->id}}', '{{$order->name}}')" class="cursor-pointer inline-flex items-center text-red-600 hover:text-red-900">
-                                            <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Delete" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                                <g id="SVGRepo_iconCarrier"> 
-                                                    <path d="M20.5001 6H3.5" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path> 
-                                                    <path d="M9.5 11L10 16" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path>
-                                                    <path d="M14.5 11L14 16" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path>
-                                                    <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#ab0d0d" stroke-width="1.5"></path>
-                                                    <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path> 
-                                                </g>
-                                            </svg>
-                                        </a>
+                                        <input wire:model="products_quantity.{{$index}}" wire:change="updateAmount({{$index}})" type="number" name="products_quantity{{$index}}" id="products_quantity{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-right">
+                                    </td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-center">
+                                        <input wire:model="products_unit_price.{{$index}}" wire:change="updateAmount({{$index}})" type="number" name="products_unit_price{{$index}}" id="products_unit_price{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-right">
+                                    </td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-center">
+                                        <input wire:model="products_total_price.{{$index}}" type="number" name="products_total_price{{$index}}" id="products_total_price{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-right">
+                                    </td>
+                                    <td>
+                                        <button type="button" 
+                                                wire:click="removeProduct({{$index}})"
+                                                class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-600 active:bg-red-700 focus:outline-none focus:border-red-900 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150"
+                                                >Xóa</button>
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
+                    </table>
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <tr>
+                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
+                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-32 text-left"><b>Giảm giá</b></td>
+                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-center">
+                                <input wire:model="discount" type="text" name="discount" id="discount" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-right">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
+                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-32 text-left"><b>Tổng tiền</b></td>
+                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-center">
+                                <input wire:model="total_price" type="text" name="total_price" id="total_price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-right">
+                            </td>
                     </table>
                 </div>
             </div>
@@ -189,6 +226,17 @@
             <a href="{{route('admin.categories')}}" class="text-sm font-semibold leading-6 text-gray-900">Hủy</a>
             <button class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Lưu</button>
         </div>
+        @if (session()->has('message'))
+            <div class="mt-6 text-sm text-green-600">{{ session('message') }}</div>
+        @endif
     </form>
-    @include('admin.layouts.pop-up-order-product')
+    @script
+    <script>
+        Livewire.hook('element.init', ({ component, el }) => {
+            setTimeout(() => {
+                convertSelectsToDropdowns()
+            }, 100);
+        })
+    </script>
+    @endscript
 </div>
