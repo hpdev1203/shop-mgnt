@@ -99,6 +99,10 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     /* Report  */
     Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin.reports');
     Route::get('/admin/reports/prelim/{id}', [ReportController::class, 'prelim'])->name('admin.reports.prelim');
+    Route::get('/admin/reports/inventory', [ReportController::class, 'inventory'])->name('admin.reports.inventory');
+    Route::get('/admin/reports/revenue', [ReportController::class, 'revenue'])->name('admin.reports.revenue');
+    Route::get('/admin/reports/brand', [ReportController::class, 'brand'])->name('admin.reports.brand');
+    Route::get('/admin/reports/customer', [ReportController::class, 'customer'])->name('admin.reports.customer');
 });
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');

@@ -17,4 +17,20 @@ class ReportController extends Controller
     {
         return view('admin.dashboard.report.prelim_report', ['id' => $id]);
     }
+    public function inventory()
+    {
+        return view('admin.dashboard.report.inventory_report');
+    }
+    public function revenue()
+    {
+        return view('admin.dashboard.report.revenue_report');
+    }
+    public function brand()
+    {
+        return view('admin.dashboard.report.brand_report');
+    }
+    public function customer()
+    {
+        return view('admin.dashboard.report.customer_report');
+    }
 }
