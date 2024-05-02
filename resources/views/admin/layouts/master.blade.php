@@ -43,13 +43,13 @@
 
 				<main>
 					@yield('content')
+					@livewire('wire-elements-modal')
 				</main>
 
 			</div>
 			<!-- ===== Content Area End ===== -->
 		</div>
 		<!-- ===== Page Wrapper End ===== -->
-		@livewire('livewire-ui-modal')
 		@livewireScripts
 		<script src="{{asset('library/js/app.js')}}"></script>
 	</body>

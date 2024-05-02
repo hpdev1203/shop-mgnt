@@ -25,6 +25,9 @@ class OrderController extends Controller
 
     public function edit($id){
         $order = Order::find($id);
-        return view('admin.dashboard.order.edit_order', ['order' => $order]);
+        $customers = User::where('role', 'customer')->get();
+        $payment_methods = PaymentMethod::all();
+        $products = Product::all();
+        return view('admin.dashboard.order.edit_order', ['order' => $order, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products]);
     }
 }
