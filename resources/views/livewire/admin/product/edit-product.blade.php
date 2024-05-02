@@ -2,7 +2,7 @@
     <form wire:submit='storeProduct'>
         <div class="px-4 py-6 md:px-6 xl:px-7.5">
             <div class="flex justify-between items-center">
-                <h4 class="text-xl font-bold text-black dark:text-white inline">THÊM MỚI</h4>
+                <h4 class="text-xl font-bold text-black dark:text-white inline">CHỈNH SỬA - <span class="uppercase font-bold text-sky-400">{{$product_name}}</span></h4>
                 <div class="flex flex-col sm:flex-row items-center justify-end gap-x-6">
                     <a href="{{route('admin.products')}}" class="text-sm font-semibold leading-6 text-gray-900">Hủy</a>
                     <button class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Lưu</button>

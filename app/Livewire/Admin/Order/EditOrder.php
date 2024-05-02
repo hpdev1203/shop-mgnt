@@ -8,7 +8,7 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Warehouse;
 
-class AddOrder extends Component
+class EditOrder extends Component
 {
     public $customers;
     public $payment_methods;
@@ -30,6 +30,7 @@ class AddOrder extends Component
     public $grandtotal_amount = 0;
     public $shipping_amount = 0;
     public $total_amount = 0;
+    public $order_id;
 
     protected $listeners = ['updateOrderProduct'];
 
@@ -89,7 +90,7 @@ class AddOrder extends Component
             return;
         }
 
-        $order = new Order();
+        $order = Order::find($this->order_id);
         $order->code = $this->order_code;
         $order->user_id = $this->customer_id;
         $order->order_date = $this->order_date;
@@ -110,7 +111,11 @@ class AddOrder extends Component
         $order->save();
 
         foreach ($this->order_details as $key => $order_product) {
-            $order_detail = new OrderDetail();
+            if(array_key_exists("id", $order_product)){
+                $order_detail = OrderDetail::find($order_product["id"]);
+            }else{
+                $order_detail = new OrderDetail();
+            }
             $order_detail->order_id = $order->id;
             $order_detail->product_id = $order_product["product_id"];
             $order_detail->product_detail_id = $order_product["product_detail_id"];
@@ -146,21 +151,44 @@ class AddOrder extends Component
         $this->total_amount = $this->grandtotal_amount + $this->shipping_amount;
     }
 
-    public function mount($customers, $payment_methods, $products)
+    public function mount($id, $customers, $payment_methods, $products)
     {
+        $order = Order::find($id);
+        $this->product_list = Product::all();
+
+        $this->order_id = $id;
         $this->customers = $customers;
         $this->payment_methods = $payment_methods;
-        $this->product_list = Product::all();
-        $this->order_details = collect(new OrderDetail);
-        $this->warehouses = Warehouse::all();
-        $this->order_code = 'ODR'.time().rand(100,999).rand(100,999);
-    }
+        $this->order_code = $order->code;
+        $this->customer_id = $order->user_id;
+        $this->payment_method_id = $order->payment_method_id;
+        $this->payment_status = $order->payment_status;
+        $this->order_date = $order->order_date;
+        $this->order_status = $order->status;
+        $this->order_note = $order->note;
+        $this->order_phone = $order->shipping_phone;
+        $this->order_email = $order->shipping_email;
+        $this->order_address = $order->shipping_address;
+        $this->order_state = $order->shipping_state;
+        $this->order_city = $order->shipping_city;
+        $this->subtotal_amount = $order->subtotal_amount;
+        $this->shipping_amount = $order->shipping_amount;
+        $this->discount_amount = $order->discount_amount;
+        $this->grandtotal_amount = $order->grandtotal_amount;
+        $this->total_amount = $order->total_amount;
 
+        $this->order_details = collect(OrderDetail::where('order_id', $id)->get());
+        foreach ($this->order_details as $key => $order_detail) {
+            $this->order_details[$key]["product_name"] = $order_detail->product->name;
+            $this->order_details[$key]["product_detail_name"] = $order_detail->product_detail->title;
+            $this->order_details[$key]["size_name"] = $order_detail->product_size->size;
+            $this->order_details[$key]["warehouse_name"] = $order_detail->warehouse->name;
+        }
+        $this->warehouses = Warehouse::all();
+       
+    }
     public function render()
     {
-        return view('livewire.admin.order.add-order', [
-            'customers' => $this->customers,
-            'payment_methods' => $this->payment_methods
-        ]);
+        return view('livewire.admin.order.edit-order');
     }
 }

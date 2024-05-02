@@ -19,4 +19,14 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(ProductDetail::class, 'product_detail_id', 'id');
     }
+
+    public function product_size()
+    {
+        return $this->belongsTo(ProductSize::class, 'size_id', 'id');
+    }
+    
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class, 'warehouse_id', 'id');
+    }
 }

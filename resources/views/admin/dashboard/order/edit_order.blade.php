@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Chỉnh sửa sản phẩm')
-@section('menu', 'products')
+@section('title', 'Chỉnh sửa đơn đặt hàng')
+@section('menu', 'orders')
 
 @section('content')
     <div class="container mx-auto px-2 py-8 sm:px-6 md:px-8">
-        <h3 class="text-2xl text-gray-700 font-bold">CHỈNH SỬA SẢN PHẨM</h3>
+        <h3 class="text-2xl text-gray-700 font-bold">CHỈNH SỬA ĐƠN ĐẶT HÀNG</h3>
         <nav class="text-sm font-medium text-gray-500 py-4" aria-label="breadcrumb">
             <ol class="list-none p-0 inline-flex">
                 <li class="flex items-center">
@@ -13,15 +13,25 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <a href="{{ route('admin.products') }}" class="text-blue-500 hover:text-blue-700">Sản phẩm</a>
+                    <a href="{{ route('admin.orders') }}" class="text-blue-500 hover:text-blue-700">Đặt hàng</a>
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">Chỉnh sửa sản phẩm</span>
+                    <span class="text-gray-700">Chỉnh sửa đơn đặt hàng</span>
                 </li>
             </ol>
         </nav>
-        
-        @livewire('admin.product.edit-product', ['id' => $product->id, 'brands' => $brands, 'categories' => $categories])
+        <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div class="px-4 py-6 md:px-6 xl:px-7.5">
+                <div class="flex justify-between items-center">
+                    <h4 class="text-xl font-bold text-black dark:text-white inline">CHỈNH SỬA - <span class="uppercase font-bold text-sky-400">{{$order->code}}</span></h4>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
+                @livewire('admin.order.edit-order', ['id' => $order->id, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products])
+            </div>
+        </div>
+       
     </div>
 @endsection

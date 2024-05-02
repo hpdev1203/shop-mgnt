@@ -52,11 +52,33 @@
                         </td>
                         <td class="px-2 py-2 whitespace-nowrap text-center">{{ $orders->perPage() * ($orders->currentPage() - 1) + $loop->iteration }}</td>
                         <td class="px-2 py-2 whitespace-nowrap text-center">{{$order->code}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->name}}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-left"></td>
-                        <td class="px-2 py-2 whitespace-nowrap text-right"></td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center"></td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center"></td>
+                        <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->customer->name}}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->payment_method->name}}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center">
+                            @if ($order->payment_status == "paid")
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Đã thanh toán</span>
+                            @else
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Chưa thanh toán</span>
+                            @endif
+                        </td>
+                        <td class="px-2 py-2 whitespace-nowrap text-center">
+                            @if ($order->status == "pending")
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Chờ xác nhận</span>
+                            @elseif ($order->status == "confirmed")
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Đã xác nhận</span>
+                            @elseif ($order->status == "shipping")
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">Đang giao hàng</span>
+                            @elseif ($order->status == "delivered")
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Đã giao hàng</span>
+                            @elseif ($order->status == "cancelled")
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Đã hủy</span>
+                            @elseif ($order->status == "completed")
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Hoàn thành</span>
+                            @endif
+                        </td>
+                        <td class="px-2 py-2 whitespace-nowrap text-right">
+                            {{number_format($order->total_amount, 0, ',', '.')}}
+                        </td>
                         <td class="px-2 py-2 whitespace-nowrap text-center">
                             <a href="{{route('admin.orders.edit', $order->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
                                 <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -66,7 +88,7 @@
                                     <path d="M16 5l3 3"></path>
                                 </svg>
                             </a>
-                            <a data-modal-target="popup-delete-item" data-modal-toggle="popup-delete-item" onclick="parseDataDelete('{{$order->id}}', '{{$order->name}}')" class="cursor-pointer inline-flex items-center text-red-600 hover:text-red-900">
+                            <a data-modal-target="popup-delete-item" data-modal-toggle="popup-delete-item" onclick="parseDataDelete('{{$order->id}}', '{{$order->code}}')" class="cursor-pointer inline-flex items-center text-red-600 hover:text-red-900">
                                 <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Delete" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -106,7 +128,7 @@
             if (countChecked == 0) {
                 const popupWarning = document.querySelector('[data-modal-target="popup-warning"]');
                 popupWarning.click();
-                parseInfoWarning('Bạn chưa chọn sản phẩm nào để xóa');
+                parseInfoWarning('Bạn chưa chọn đơn hàng nào để xóa');
             } else {
                 const popupDeleteMultiple = document.querySelector('[data-modal-target="popup-delete-multiple-item"]');
                 popupDeleteMultiple.click();
