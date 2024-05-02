@@ -29,7 +29,7 @@
             </div>
 
             <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
-                @livewire('admin.order.add-order')
+                @livewire('admin.order.add-order', ['customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products])
             </div>
         </div>
     </div>
