@@ -29,7 +29,7 @@ class EditProductModal extends ModalComponent
     public $classRef;
     public function mount($order_detail, $index, $mode)
     {
-        if($mode == 'edit'){
+        if($mode == 'New'){
             $this->classRef = AddOrder::class;
         }else{
             $this->classRef = EditOrder::class;
@@ -67,6 +67,32 @@ class EditProductModal extends ModalComponent
     }
 
     public function storeOrderProduct(){
+        $this->validate(
+            [
+                'product_id' => 'required',
+                'product_detail_id' => 'required',
+                'product_size_id' => 'required',
+                'warehouse_id' => 'required',
+                'product_quantity' => 'required|numeric|min:1',
+                'product_unit_price' => 'required|numeric|min:1',
+                'product_total_amount' => 'required|numeric|min:1',
+            ],
+            [
+                'product_id.required' => 'Trường sản phẩm là bắt buộc.',
+                'product_detail_id.required' => 'Trường chi tiết sản phẩm là bắt buộc.',
+                'product_size_id.required' => 'Trường kích thước là bắt buộc.',
+                'warehouse_id.required' => 'Trường kho hàng là bắt buộc.',
+                'product_quantity.required' => 'Trường số lượng là bắt buộc.',
+                'product_quantity.numeric' => 'Trường số lượng phải là số.',
+                'product_quantity.min' => 'Trường số lượng phải lớn hơn 0.',
+                'product_unit_price.required' => 'Trường giá bán là bắt buộc.',
+                'product_unit_price.numeric' => 'Trường giá bán phải là số.',
+                'product_unit_price.min' => 'Trường giá bán phải lớn hơn 0.',
+                'product_total_amount.required' => 'Trường thành tiền là bắt buộc.',
+                'product_total_amount.numeric' => 'Trường thành tiền phải là số.',
+                'product_total_amount.min' => 'Trường thành tiền phải lớn hơn 0.',
+            ]
+        );
         $this->order_product->product_id = $this->product_id;
         $this->order_product->product_detail_id = $this->product_detail_id;
         $this->order_product->product_name = $this->order_product->product->name;

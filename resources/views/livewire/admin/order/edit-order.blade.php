@@ -159,16 +159,16 @@
                                 <tr>
                                     <td class="px-2 py-2 whitespace-nowrap text-center">{{$index+1}}</td>
                                     <td class="px-2 py-2 whitespace-nowrap text-left">
-                                        {{$order_detail['product_name']}}
+                                        {{$order_detail['product']['name']}}
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-left">
-                                        {{$order_detail['product_detail_name']}}
+                                        {{$order_detail['product_detail']['title']}}
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-left">
-                                        {{$order_detail['size_name']}}
+                                        {{$order_detail['product_size']['size']}}
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-left">
-                                        {{$order_detail['warehouse_name']}}
+                                        {{$order_detail['warehouse']['name']}}
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-right">
                                         {{$order_detail['quantity']}}
