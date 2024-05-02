@@ -27,4 +27,12 @@ class Product extends Model implements Auditable
     {
         return $this->hasMany(OrderDetail::class);
     }
+    public function productBrand()
+    {
+        return $this->HasOne(Brand::class, 'id', 'brand_id');
+    }
+    public function productCategory()
+    {
+        return $this->HasOne(Category::class, 'id', 'category_id');
+    }
 }
