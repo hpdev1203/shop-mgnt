@@ -29,7 +29,7 @@ class AddProductModal extends ModalComponent
 
     public function mount($mode)
     {
-        if($mode == 'edit'){
+        if($mode == 'New'){
             $this->classRef = AddOrder::class;
         }else{
             $this->classRef = EditOrder::class;

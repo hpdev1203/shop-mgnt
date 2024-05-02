@@ -12,19 +12,20 @@ class AddOrder extends Component
 {
     public $customers;
     public $payment_methods;
+    public $order;
+    public $order_details = [];
+    public $order_code;
     public $payment_method_id = '';
     public $payment_status = '';
     public $customer_id = '';
     public $order_date = '';
     public $order_status = '';
     public $order_note = '';
-    public $order_code = '';
     public $order_phone = '';
     public $order_email = '';
     public $order_address = '';
     public $order_state = '';
     public $order_city = '';
-    public $order_details = [];
     public $subtotal_amount = 0;
     public $discount_amount = 0;
     public $grandtotal_amount = 0;
@@ -33,27 +34,94 @@ class AddOrder extends Component
 
     protected $listeners = ['updateOrderProduct'];
 
-    public function updateOrderProduct($order_product, $index)
+    public function mount($customers, $payment_methods)
     {
-        if($index == null){
-            $this->order_details->push($order_product);
-            $index = $this->order_details->count() - 1;
-        }else{
-            $this->order_details[$index-1] = $order_product;
+        $this->customers = $customers;
+        $this->payment_methods = $payment_methods;
+        $this->order_code = 'ODR' . time() . rand(100, 999) . rand(100, 999);
+    }
+
+    public function updateOrderProduct($order_product, $index = null)
+    {
+        if ($index === null) {
+            $this->order_details[] = $order_product;
+            $index = count($this->order_details) - 1;
+        } else {
+            $index = $index - 1;
+            $this->order_details[$index] = $order_product;
         }
-        $this->updateAmount($index-1);
+        $this->updateAmount($index);
         $this->calTotalAmount();
     }
 
     public function removeProduct($index)
     {
-        $this->order_details->forget($index);
-        $this->order_details = $this->order_details->values();
-        $this->updateAmount(count($this->order_details)-1);
+        unset($this->order_details[$index]);
+        $this->updateAmount($index-1);
         $this->calTotalAmount();
     }
 
     public function storeOrder()
+    {
+        $this->validateOrder();
+        if(empty($this->order_details)){
+            $this->dispatch('successOrder', [
+                'title' => 'Thất bại',
+                'message' => 'Vui lòng chọn sản phẩm cho đơn hàng',
+                'type' => 'error',
+                'timeout' => 3000
+            ]);
+            return;
+        }
+
+        $order = Order::create([
+            'code' => $this->order_code,
+            'user_id' => $this->customer_id,
+            'payment_method_id' => $this->payment_method_id,
+            'payment_status' => $this->payment_status,
+            'order_date' => $this->order_date,
+            'status' => $this->order_status,
+            'note' => $this->order_note,
+            'shipping_phone' => $this->order_phone,
+            'shipping_email' => $this->order_email,
+            'shipping_address' => $this->order_address,
+            'shipping_state' => $this->order_state,
+            'shipping_city' => $this->order_city,
+            'subtotal_amount' => $this->subtotal_amount,
+            'discount_amount' => $this->discount_amount,
+            'grandtotal_amount' => $this->grandtotal_amount,
+            'shipping_amount' => $this->shipping_amount,
+            'total_amount' => $this->total_amount,
+        ]);
+
+        foreach ($this->order_details as $order_product) {
+            if(empty($order_product["id"])){
+                $order_detail = new OrderDetail();
+            } else {
+                $order_detail = OrderDetail::find($order_product["id"]);
+            }
+            $order_detail->fill([
+                'order_id' => $order->id,
+                'product_id' => $order_product["product_id"],
+                'product_detail_id' => $order_product["product_detail_id"],
+                'size_id' => $order_product["size_id"],
+                'warehouse_id' => $order_product["warehouse_id"],
+                'quantity' => $order_product["quantity"],
+                'unit_price' => $order_product["unit_price"],
+                'total_amount' => $order_product["total_amount"],
+                'note' => $order_product["note"],
+            ])->save();
+        }
+
+        $this->dispatch('successOrder', [
+            'title' => 'Thành công',
+            'message' => '',
+            'type' => 'success',
+            'timeout' => 3000
+        ]);
+    }
+
+    protected function validateOrder()
     {
         $this->validate([
             'customer_id' => 'required',
@@ -78,58 +146,29 @@ class AddOrder extends Component
             'order_state.required' => 'Trường tỉnh/thành phố đơn hàng là bắt buộc.',
             'order_city.required' => 'Trường quận/huyện đơn hàng là bắt buộc.'
         ]);
+    }
 
-        if(count($this->order_details) == 0){
-            $this->dispatch('successOrder', [
-                'title' => 'Thêm đơn hàng thất bại',
-                'message' => 'Vui lòng chọn sản phẩm cho đơn hàng',
-                'type' => 'error',
-                'timeout' => 3000
-            ]);
-            return;
+    protected function createOrder()
+    {
+        $this->order['code'] = $this->order_code;
+        $this->order['user_id'] = $this->customer_id;
+        $this->order['payment_method_id'] = $this->payment_method_id;
+        $this->order['payment_status'] = $this->payment_status;
+        $this->order['order_date'] = $this->order_date;
+        $this->order['order_status'] = $this->order_status;
+        $this->order['order_note'] = $this->order_note;
+        $this->order['order_phone'] = $this->order_phone;
+        $this->order['order_email'] = $this->order_email;
+        $this->order['order_address'] = $this->order_address;
+        $this->order['order_state'] = $this->order_state;
+        $this->order['order_city'] = $this->order_city;
+
+        $order = Order::create($this->order);
+
+        foreach ($this->order_details as $order_product) {
+            $order_product['order_id'] = $order->id;
+            OrderDetail::create($order_product);
         }
-
-        $order = new Order();
-        $order->code = $this->order_code;
-        $order->user_id = $this->customer_id;
-        $order->order_date = $this->order_date;
-        $order->shipping_address = $this->order_address;
-        $order->shipping_phone = $this->order_phone;
-        $order->shipping_email = $this->order_email;
-        $order->shipping_state = $this->order_state;
-        $order->shipping_city = $this->order_city;
-        $order->payment_method_id = $this->payment_method_id;
-        $order->payment_status = $this->payment_status;
-        $order->status = $this->order_status;
-        $order->note = $this->order_note;
-        $order->subtotal_amount = $this->subtotal_amount;
-        $order->shipping_amount = $this->shipping_amount;
-        $order->discount_amount = $this->discount_amount;
-        $order->grandtotal_amount = $this->grandtotal_amount;
-        $order->total_amount = $this->total_amount;
-        $order->save();
-
-        foreach ($this->order_details as $key => $order_product) {
-            $order_detail = new OrderDetail();
-            $order_detail->order_id = $order->id;
-            $order_detail->product_id = $order_product["product_id"];
-            $order_detail->product_detail_id = $order_product["product_detail_id"];
-            $order_detail->size_id = $order_product["size_id"];
-            $order_detail->warehouse_id = $order_product["warehouse_id"];
-            $order_detail->quantity = $order_product["quantity"];
-            $order_detail->unit_price = $order_product["unit_price"];
-            $order_detail->total_amount = $order_product["total_amount"];
-            $order_detail->note = $order_product["note"];
-            $order_detail->save();
-        }
-
-        $this->dispatch('successOrder', [
-            'title' => 'Thêm đơn hàng thành công',
-            'message' => '',
-            'type' => 'success',
-            'timeout' => 3000
-        ]);
-
     }
 
     public function updateAmount($index)
@@ -146,21 +185,18 @@ class AddOrder extends Component
         $this->total_amount = $this->grandtotal_amount + $this->shipping_amount;
     }
 
-    public function mount($customers, $payment_methods, $products)
+    protected function dispatchSuccessMessage($title, $message, $type)
     {
-        $this->customers = $customers;
-        $this->payment_methods = $payment_methods;
-        $this->product_list = Product::all();
-        $this->order_details = collect(new OrderDetail);
-        $this->warehouses = Warehouse::all();
-        $this->order_code = 'ODR'.time().rand(100,999).rand(100,999);
+        $this->dispatch('successOrder', [
+            'title' => $title,
+            'message' => $message,
+            'type' => $type,
+            'timeout' => 3000
+        ]);
     }
 
     public function render()
     {
-        return view('livewire.admin.order.add-order', [
-            'customers' => $this->customers,
-            'payment_methods' => $this->payment_methods
-        ]);
+        return view('livewire.admin.order.add-order');
     }
 }
