@@ -174,24 +174,29 @@ class EditProduct extends Component
 
             if(array_key_exists($i, $this->product_detail_image_list)){
                 $image_list = $this->product_detail_image_list[$i];
-                $images_store = [];
-                if(is_string($image_list)){
-                    $image_list = json_decode($image_list);
-                }
-                if(count($image_list) > 0){
-                    foreach($image_list as $image){
-                        if(is_string($image)){
-                            $images_store[] = $image;
-                            continue;
-                        }
-                        $image_name = time() . uniqid() . '.' . $image->extension();
-
-                        $this->product_detail_list[$i]->image = $image_name;
-                        $image->storeAs(path: "public\images\products", name: $image_name);
-                        $images_store[] = $image_name;
+                if($image_list != null){
+                    $images_store = [];
+                    if(is_string($image_list)){
+                        $image_list = json_decode($image_list);
                     }
-                    $this->product_detail_list[$i]->image = json_encode($images_store);
+                    if(count($image_list) > 0){
+                        foreach($image_list as $image){
+                            if(is_string($image)){
+                                $images_store[] = $image;
+                                continue;
+                            }
+                            $image_name = time() . uniqid() . '.' . $image->extension();
+
+                            $this->product_detail_list[$i]->image = $image_name;
+                            $image->storeAs(path: "public\images\products", name: $image_name);
+                            $images_store[] = $image_name;
+                        }
+                        $this->product_detail_list[$i]->image = json_encode($images_store);
+                    }
+                }else{
+                    $this->product_detail_list[$i]->image = null;
                 }
+                
             }
             $this->product_detail_list[$i]->save();
         }

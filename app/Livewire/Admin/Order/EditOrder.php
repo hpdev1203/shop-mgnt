@@ -8,47 +8,49 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Warehouse;
 
-class AddOrder extends Component
+class EditOrder extends Component
 {
     public $customers;
     public $payment_methods;
-    public $order;
-    public $order_details = [];
-    public $order_code;
     public $payment_method_id = '';
     public $payment_status = '';
     public $customer_id = '';
     public $order_date = '';
     public $order_status = '';
     public $order_note = '';
+    public $order_code = '';
     public $order_phone = '';
     public $order_email = '';
     public $order_address = '';
     public $order_state = '';
     public $order_city = '';
+    public $order_details = [];
     public $subtotal_amount = 0;
     public $discount_amount = 0;
     public $grandtotal_amount = 0;
     public $shipping_amount = 0;
     public $total_amount = 0;
+    public $order;
+    public $order_id;
+    public $order_product_delete = [];
 
     protected $listeners = ['updateOrderProduct'];
 
-    public function mount($customers, $payment_methods)
-    {
-        $this->customers = $customers;
-        $this->payment_methods = $payment_methods;
-        $this->order_code = 'ODR' . time() . rand(100, 999) . rand(100, 999);
-    }
-
     public function updateOrderProduct($order_product, $index = null)
     {
-        if ($index === null) {
+        if($index === null){
             $this->order_details[] = $order_product;
             $index = count($this->order_details) - 1;
         } else {
             $index = $index - 1;
+            if(empty($this->order_details[$index]["id"])){
+                $id = null;
+            } else {
+                $id = $this->order_details[$index]["id"];
+            }
+            
             $this->order_details[$index] = $order_product;
+            $this->order_details[$index]["id"] = $id;
         }
         $this->updateAmount($index);
         $this->calTotalAmount();
@@ -56,7 +58,9 @@ class AddOrder extends Component
 
     public function removeProduct($index)
     {
+        $this->order_product_delete[] = $this->order_details[$index];
         unset($this->order_details[$index]);
+        $this->order_details = array_values($this->order_details);
         $this->updateAmount($index-1);
         $this->calTotalAmount();
     }
@@ -64,6 +68,7 @@ class AddOrder extends Component
     public function storeOrder()
     {
         $this->validateOrder();
+
         if(empty($this->order_details)){
             $this->dispatch('successOrder', [
                 'title' => 'Thất bại',
@@ -74,7 +79,7 @@ class AddOrder extends Component
             return;
         }
 
-        $order = Order::create([
+        $this->order->update([
             'code' => $this->order_code,
             'user_id' => $this->customer_id,
             'payment_method_id' => $this->payment_method_id,
@@ -94,6 +99,9 @@ class AddOrder extends Component
             'total_amount' => $this->total_amount,
         ]);
 
+        foreach ($this->order_product_delete as $order_product) {
+            OrderDetail::find($order_product["id"])->delete();
+        }
         foreach ($this->order_details as $order_product) {
             if(empty($order_product["id"])){
                 $order_detail = new OrderDetail();
@@ -101,7 +109,7 @@ class AddOrder extends Component
                 $order_detail = OrderDetail::find($order_product["id"]);
             }
             $order_detail->fill([
-                'order_id' => $order->id,
+                'order_id' => $this->order->id,
                 'product_id' => $order_product["product_id"],
                 'product_detail_id' => $order_product["product_detail_id"],
                 'size_id' => $order_product["size_id"],
@@ -148,29 +156,6 @@ class AddOrder extends Component
         ]);
     }
 
-    protected function createOrder()
-    {
-        $this->order['code'] = $this->order_code;
-        $this->order['user_id'] = $this->customer_id;
-        $this->order['payment_method_id'] = $this->payment_method_id;
-        $this->order['payment_status'] = $this->payment_status;
-        $this->order['order_date'] = $this->order_date;
-        $this->order['order_status'] = $this->order_status;
-        $this->order['order_note'] = $this->order_note;
-        $this->order['order_phone'] = $this->order_phone;
-        $this->order['order_email'] = $this->order_email;
-        $this->order['order_address'] = $this->order_address;
-        $this->order['order_state'] = $this->order_state;
-        $this->order['order_city'] = $this->order_city;
-
-        $order = Order::create($this->order);
-
-        foreach ($this->order_details as $order_product) {
-            $order_product['order_id'] = $order->id;
-            OrderDetail::create($order_product);
-        }
-    }
-
     public function updateAmount($index)
     {
         $this->subtotal_amount = 0;
@@ -185,18 +170,34 @@ class AddOrder extends Component
         $this->total_amount = $this->grandtotal_amount + $this->shipping_amount;
     }
 
-    protected function dispatchSuccessMessage($title, $message, $type)
+    public function mount($id, $customers, $payment_methods)
     {
-        $this->dispatch('successOrder', [
-            'title' => $title,
-            'message' => $message,
-            'type' => $type,
-            'timeout' => 3000
-        ]);
+        $this->order = Order::findOrFail($id);
+        $this->order_id = $id;
+        $this->payment_method_id = $this->order->payment_method_id;
+        $this->payment_status = $this->order->payment_status;
+        $this->customer_id = $this->order->user_id;
+        $this->order_date = $this->order->order_date;
+        $this->order_status = $this->order->status;
+        $this->order_note = $this->order->note;
+        $this->order_code = $this->order->code;
+        $this->order_phone = $this->order->shipping_phone;
+        $this->order_email = $this->order->shipping_email;
+        $this->order_address = $this->order->shipping_address;
+        $this->order_state = $this->order->shipping_state;
+        $this->order_city = $this->order->shipping_city;
+        $this->subtotal_amount = $this->order->subtotal_amount;
+        $this->discount_amount = $this->order->discount_amount;
+        $this->grandtotal_amount = $this->order->grandtotal_amount;
+        $this->shipping_amount = $this->order->shipping_amount;
+        $this->total_amount = $this->order->total_amount;
+        $this->customers = $customers;
+        $this->payment_methods = $payment_methods;
+        $this->order_details = $this->order->order_detail()->with('product', 'product_size', 'warehouse', 'product_detail')->get()->toArray();
     }
 
     public function render()
     {
-        return view('livewire.admin.order.add-order');
+        return view('livewire.admin.order.edit-order');
     }
 }

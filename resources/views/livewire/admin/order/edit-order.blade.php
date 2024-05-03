@@ -129,7 +129,7 @@
                     <div class="flex justify-between items-center">
                         <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH SẢN PHẨM</h4>
                         <button type="button" 
-                                wire:click="$dispatch('openModal', { component: 'admin.order.add-product-modal', arguments : { mode : 'New' } })"
+                                wire:click="$dispatch('openModal', { component: 'admin.order.add-product-modal', arguments: { mode : 'Edit' } })"
                                 class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
                                 >Thêm sảm phẩm</button>
                     </div>
@@ -159,16 +159,16 @@
                                 <tr>
                                     <td class="px-2 py-2 whitespace-nowrap text-center">{{$index+1}}</td>
                                     <td class="px-2 py-2 whitespace-nowrap text-left">
-                                        {{$order_detail['product_name']}}
+                                        {{$order_detail['product']['name']}}
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-left">
-                                        {{$order_detail['product_detail_name']}}
+                                        {{$order_detail['product_detail']['title']}}
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-left">
-                                        {{$order_detail['size_name']}}
+                                        {{$order_detail['product_size']['size']}}
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-left">
-                                        {{$order_detail['warehouse_name']}}
+                                        {{$order_detail['warehouse']['name']}}
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-right">
                                         {{$order_detail['quantity']}}
@@ -181,7 +181,7 @@
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-center">
                                         <button type="button" 
-                                                wire:click="$dispatch('openModal', { component: 'admin.order.edit-product-modal', arguments: { order_detail : {{json_encode($order_detail)}}, index : {{$index}}, mode : 'New' } })"
+                                                wire:click="$dispatch('openModal', { component: 'admin.order.edit-product-modal', arguments: { order_detail : {{json_encode($order_detail)}}, index : {{$index}}, mode : 'Edit' } })"
                                                 class="inline-flex items-center px-2 py-1 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
                                                 >Sửa</button>
                                         <button type="button" 
