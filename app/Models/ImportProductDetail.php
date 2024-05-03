@@ -10,4 +10,9 @@ class ImportProductDetail extends Model
     use HasFactory;
     protected $table = 'import_product_detail';
     protected $fillable = ['product_id', 'product_detail_id', 'quantity', 'size_id'];
+
+    public function importProduct()
+    {
+        return $this->belongsTo(ImportProduct::class, 'import_product_id', 'id');
+    }
 }

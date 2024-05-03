@@ -16,4 +16,9 @@ class ImportProduct extends Model
     {
         return $this->hasOne(Warehouse::class, 'id', 'warehouse_id');
     }
+
+    public function importDetails()
+    {
+        return $this->hasMany(ImportProductDetail::class, 'import_product_id', 'id');
+    }
 }
