@@ -30,7 +30,7 @@
                 @foreach ($products as $index => $product)
                 <tr>
 
-                    <td class="px-2 py-2 whitespace-nowrap text-center">{{ $products->perPage() * ($products->currentPage() - 1) + $loop->iteration }}</td>
+                    <td class="px-2 py-2 whitespace-nowrap text-center">{{ $index + 1 }}</td>
                     <td class="px-2 py-2 whitespace-nowrap text-center">
                         <div class="flex justify-center">
                             @if (count($product->productDetails) > 0 && $product->productDetails[0] && $product->productDetails[0]->image)
@@ -50,18 +50,16 @@
                     <td class="px-2 py-2 whitespace-nowrap text-left">{{$product->productBrand->name}}</td>
                     <td class="px-2 py-2 whitespace-nowrap text-right">{{number_format($product->retail_price, 0, ',', '.')}}</td>
                     <td class="px-2 py-2 whitespace-nowrap text-right">{{number_format($product->wholesale_price, 0, ',', '.')}}</td>
-                    <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->importProducts->sum('quantity')}}</td>
-                    <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->orderDetails->sum('quantity')}}</td>
-                    <td class="px-2 py-2 whitespace-nowrap text-center">{{$product->importProducts->sum('quantity')-$product->orderDetails->sum('quantity')}}</td>
+                    <td class="px-2 py-2 whitespace-nowrap text-right">{{$product->importProducts->sum('quantity')}}</td>
+                    <td class="px-2 py-2 whitespace-nowrap text-right">{{$product->orderDetails->sum('quantity')}}</td>
+                    <td class="px-2 py-2 whitespace-nowrap text-right">{{$product->importProducts->sum('quantity')-$product->orderDetails->sum('quantity')}}</td>
                     
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
-    <div class="px-4 py-6 md:px-6 xl:px-7.5">
-        {{$products->links('livewire.custom-pagination')}}
-    </div>
+   
     <div class="hidden" data-modal-target="popup-delete-multiple-item" data-modal-toggle="popup-delete-multiple-item"></div>
     <div class="hidden" data-modal-target="popup-warning" data-modal-toggle="popup-warning"></div>
     @include('admin.layouts.confirm-delete')

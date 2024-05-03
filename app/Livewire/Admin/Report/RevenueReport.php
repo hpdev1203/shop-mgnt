@@ -13,10 +13,14 @@ use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 use App\Models\ImportProduct;
 use App\Models\ImportProductDetails;
+use Illuminate\Support\Facades\DB;
 
 
 class RevenueReport extends Component
 {
+
+    public $startdate = "";
+    public $endate = "";    
 
     public function updateRevenue()
     {
@@ -32,25 +36,21 @@ class RevenueReport extends Component
 
     public function render()
     {
-        // $categories = RevenueReport::all();
-        // $brand = RevenueReport::find($this->id);
-        // $this->brand_code = $brand->code;
-        // $this->brand_name = $brand->name;
-        // $this->description = $brand->description;
-        // if($brand->logo) {
-        //     $this->existedPhoto = "images/brands/" . $brand->logo;
-        // }
-        if(request()->brandId == '' && request()->categoryID == ''){
-            $products = Product::with(['productDetails' => function ($query) {
-                $query->where('image', '!=', null)->take(1);
-            }])->paginate(10);
-        } else {
-            $products = Product::where('category_id', '=', request()->categoryID)->orWhere('brand_id', '=', request()->brandId)->with(['productDetails' => function ($query) {
-                $query->where('image', '!=', null)->take(1);
-            }])->paginate(10);
+      
+        $where = '';
+        $startdate = request()->startdate;
+        $endate = request()->endate;
+        if($startdate != '' && $endate != ''){
+                $where = "where od.order_date between '".$startdate."' and '".$endate."'";
         }
 
+        $results = DB::select('
+        SELECT  od.code, od.id , user.name , od.total_amount, od.order_date
+        FROM orders as od 
+        INNER JOIN users user on user.id = od.user_id '.$where);
+  
+
         
-        return view('livewire.admin.report.inventory-report', ['products' => $products]);
+        return view('livewire.admin.report.revenue-report', ['results' => $results]);
     }
 }

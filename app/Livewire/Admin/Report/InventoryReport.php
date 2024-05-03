@@ -43,11 +43,11 @@ class InventoryReport extends Component
         if(request()->brandId == '' && request()->categoryID == ''){
             $products = Product::with(['productDetails' => function ($query) {
                 $query->where('image', '!=', null)->take(1);
-            }])->paginate(10);
+            }])->paginate(10000);
         } else {
             $products = Product::where('category_id', '=', request()->categoryID)->orWhere('brand_id', '=', request()->brandId)->with(['productDetails' => function ($query) {
                 $query->where('image', '!=', null)->take(1);
-            }])->paginate(10);
+            }])->paginate(10000);
         }
 
         

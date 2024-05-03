@@ -5,8 +5,8 @@
 
 @section('content')
         @php
-        $id = 1;
-        $report_name = "Báo cáo hàng tồn kho";
+        $id = 2;
+        $report_name = "Báo cáo doanh thu";
 
         @endphp
     <div class="container mx-auto px-2 py-8 sm:px-6 md:px-8">
@@ -22,7 +22,13 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">{{$report_name}}</span>
+                    <a href="{{ route('admin.reports.prelim',['id'=>2]) }}" class="text-blue-500 hover:text-blue-700">
+                   {{$report_name}}
+                    </a>
+                    &nbsp;/&nbsp;
+                </li>
+                <li class="flex items-center">
+                    <span class="text-gray-700">Kết quả</span>
                 </li>
             </ol>
         </nav>
@@ -35,7 +41,7 @@
             </div>
 
             <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
-                @livewire('admin.report.inventory-report', ['id' => $id])
+                @livewire('admin.report.revenue-report', ['id' => $id])
             </div>
         </div>
     </div>
