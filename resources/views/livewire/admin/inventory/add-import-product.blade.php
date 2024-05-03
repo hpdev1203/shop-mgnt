@@ -24,7 +24,7 @@
                 <div class="col-span-1 sm:col-span-2 md:col-span-4">
                     <label for="warehouse_id" class="block text-sm font-medium leading-6 text-gray-900">Kho hàng <span class="text-red-700">*</span></label>
                     <div class="mt-2">
-                        <select wire:model="warehouse_id" id="warehouse_id" name="warehouse_id" autocomplete="warehouse_id" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <select wire:model="warehouse_id" id="warehouse_id" name="warehouse_id" autocomplete="warehouse_id" class="convert-to-dropdown block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                             <option value="">-</option>
                             @foreach ($warehouses as $warehouse)
                                 <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
@@ -68,7 +68,7 @@
                                     <tr>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">{{{$index+1}}}</td>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">
-                                            <select wire:model="product_id.{{$index}}" wire:change="pullDropdown({{$index}})" id="product_id.{{$index}}" name="product_id.{{$index}}" autocomplete="product_id.{{$index}}" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <select wire:model="product_id.{{$index}}" wire:change="pullDropdown({{$index}})" id="product_id{{$index}}" name="product_id{{$index}}" autocomplete="product_id{{$index}}" class="convert-to-dropdown block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                                 <option value="">-</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -124,3 +124,13 @@
         <button class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Lưu</button>
     </div>
 </form>
+
+@script
+    <script>
+        Livewire.hook('element.init', ({ component, el }) => {
+            setTimeout(() => {
+                convertSelectsToDropdowns()
+            }, 100);
+        })
+    </script>
+    @endscript
