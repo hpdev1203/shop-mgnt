@@ -106,7 +106,9 @@ class AddTransferWarehouse extends Component
                                 ['size_id',$this->size_id[$i]],
                                 ['warehouse_id',$this->from_warehouse_id],
                             ])->groupBy('product_id','product_detail_id','size_id','warehouse_id')->first();
-                            $quantity_order[$i] = (int)$order_quantity[$i]->quantity;
+                            if (isset($order_quantity[$i]->quantity)) {
+                                $quantity_order[$i] = (int)$order_quantity[$i]->quantity;
+                            }
                         }
                     }else{
                         $import_product_quantity[$i] = ImportProductDetail::select('product_id','product_detail_id',ImportProductDetail::raw('SUM(quantity) as quantity'))->where([
@@ -123,7 +125,9 @@ class AddTransferWarehouse extends Component
                                 ['product_detail_id',$this->product_detail_id[$i]],
                                 ['warehouse_id',$this->from_warehouse_id],
                             ])->groupBy('product_id','product_detail_id','size_id','warehouse_id')->first();
-                            $quantity_order[$i] = (int)$order_quantity[$i]->quantity;
+                            if (isset($order_quantity[$i]->quantity)) {
+                                $quantity_order[$i] = (int)$order_quantity[$i]->quantity;
+                            }
                         }
                     }
                     if (isset($import_product_quantity[$i]->quantity)) {
