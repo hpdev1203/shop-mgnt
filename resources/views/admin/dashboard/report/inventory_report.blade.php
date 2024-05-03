@@ -22,7 +22,13 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">{{$report_name}}</span>
+                    <a href="{{ route('admin.reports.prelim',['id'=>1]) }}" class="text-blue-500 hover:text-blue-700">
+                   {{$report_name}}
+                    </a>
+                    &nbsp;/&nbsp;
+                </li>
+                <li class="flex items-center">
+                    <span class="text-gray-700">Kết quả</span>
                 </li>
             </ol>
         </nav>

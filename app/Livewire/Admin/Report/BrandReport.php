@@ -13,10 +13,13 @@ use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 use App\Models\ImportProduct;
 use App\Models\ImportProductDetails;
-
+use Illuminate\Support\Facades\DB;
 
 class BrandReport extends Component
 {
+
+    public $startdate = "";
+    public $endate = "";    
 
     public function updateBrand()
     {
@@ -32,25 +35,18 @@ class BrandReport extends Component
 
     public function render()
     {
-        // $categories = BrandReport::all();
-        // $brand = BrandReport::find($this->id);
-        // $this->brand_code = $brand->code;
-        // $this->brand_name = $brand->name;
-        // $this->description = $brand->description;
-        // if($brand->logo) {
-        //     $this->existedPhoto = "images/brands/" . $brand->logo;
-        // }
+      
         if(request()->brandId == '' && request()->categoryID == ''){
             $products = Product::with(['productDetails' => function ($query) {
                 $query->where('image', '!=', null)->take(1);
-            }])->paginate(10);
+            }])->paginate(10000);
         } else {
             $products = Product::where('category_id', '=', request()->categoryID)->orWhere('brand_id', '=', request()->brandId)->with(['productDetails' => function ($query) {
                 $query->where('image', '!=', null)->take(1);
-            }])->paginate(10);
+            }])->paginate(10000);
         }
 
         
-        return view('livewire.admin.report.inventory-report', ['products' => $products]);
+        return view('livewire.admin.report.brand-report', ['products' => $products]);
     }
 }
