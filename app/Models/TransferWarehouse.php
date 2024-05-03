@@ -20,4 +20,9 @@ class TransferWarehouse extends Model
     {
         return $this->hasOne(Warehouse::class, 'id', 'to_warehouse_id');
     }
+
+    public function transferDetails()
+    {
+        return $this->hasMany(TransferWarehouseDetail::class, 'transfer_product_id', 'id');
+    }
 }

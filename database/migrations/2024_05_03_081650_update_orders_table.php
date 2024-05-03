@@ -15,16 +15,6 @@ return new class extends Migration
             if (Schema::hasColumn('orders', 'shipping_method')) {
                 $table->dropColumn('shipping_method');
             }
-            if (Schema::hasColumn('orders', 'tax_amount')) {
-                $table->dropColumn('tax_amount');
-            }
-        });
-
-
-        Schema::table('order_detail', function (Blueprint $table) {
-            if (Schema::hasColumn('order_detail', 'uom')) {
-                $table->dropColumn('uom');
-            }
         });
     }
 
