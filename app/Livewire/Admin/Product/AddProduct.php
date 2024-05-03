@@ -20,6 +20,7 @@ class AddProduct extends Component
     public $product_retail_price = 0;
     public $product_wholesale_price = 0;
     public $product_description;
+    public $product_uom = 'Cái';
     public $product_size = '';
     public $product_size_list = [];
     public $product_detail_number = 0;
@@ -90,6 +91,7 @@ class AddProduct extends Component
             'product_name' => 'required',
             'product_retail_price' => 'required|numeric',
             'product_wholesale_price' => 'required|numeric',
+            'product_uom' => 'required',
         ], [
             'product_code.required' => 'Mã sản phẩm là bắt buộc.',
             'product_code.unique' => 'Mã sản phẩm đã tồn tại.',
@@ -98,6 +100,7 @@ class AddProduct extends Component
             'product_retail_price.numeric' => 'Giá bán lẻ phải là số.',
             'product_wholesale_price.required' => 'Giá bán sỉ là bắt buộc.',
             'product_wholesale_price.numeric' => 'Giá bán sỉ phải là số.',
+            'product_uom.required' => 'Đơn vị tính là bắt buộc.'
         ]);
 
         for($i = 0; $i < $this->product_detail_number; $i++){
@@ -117,6 +120,7 @@ class AddProduct extends Component
         $product->wholesale_price = $this->product_wholesale_price;
         $product->description = $this->product_description;
         $product->slug = Str::of($this->product_name)->slug('-');
+        $product->uom = $this->product_uom;
         $product->save();
        
         foreach($this->product_size_list as $size){

@@ -22,6 +22,7 @@ class EditProduct extends Component
     public $product_wholesale_price = 0;
     public $product_description;
     public $product_size = '';
+    public $product_uom = 'Cái';
     public $product_size_list = [];
     public $product_size_list_deleted = [];
     public $product_detail_number = 0;
@@ -102,6 +103,7 @@ class EditProduct extends Component
             'product_name' => 'required',
             'product_retail_price' => 'required|numeric',
             'product_wholesale_price' => 'required|numeric',
+            'product_uom' => 'required',
         ], [
             'product_code.required' => 'Mã sản phẩm là bắt buộc.',
             'product_code.unique' => 'Mã sản phẩm đã tồn tại.',
@@ -110,6 +112,7 @@ class EditProduct extends Component
             'product_retail_price.numeric' => 'Giá bán lẻ phải là số.',
             'product_wholesale_price.required' => 'Giá bán sỉ là bắt buộc.',
             'product_wholesale_price.numeric' => 'Giá bán sỉ phải là số.',
+            'product_uom.required' => 'Đơn vị tính là bắt buộc.'
         ]);
 
         for($i = 0; $i < $this->product_detail_number; $i++){
@@ -129,6 +132,7 @@ class EditProduct extends Component
         $product->wholesale_price = $this->product_wholesale_price;
         $product->description = $this->product_description;
         $product->slug = Str::of($this->product_name)->slug('-');
+        $product->uom = $this->product_uom;
         $product->save();
 
         foreach($this->product_size_list_deleted as $size){
@@ -214,6 +218,7 @@ class EditProduct extends Component
         $this->product_retail_price = $product->retail_price;
         $this->product_wholesale_price = $product->wholesale_price;
         $this->product_description = $product->description;
+        $this->product_uom = $product->uom;
 
         if(count($this->product_size_list) == 0 && count($this->product_size_list_deleted) == 0){
             $product_size = ProductSize::where('product_id', $this->id)->get();

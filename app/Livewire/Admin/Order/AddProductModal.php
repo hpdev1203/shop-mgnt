@@ -9,6 +9,10 @@ use App\Models\OrderDetail;
 use App\Models\ProductSize;
 use App\Models\Warehouse;
 use App\Models\Product;
+use App\Models\ImportProductDetail;
+use App\Models\TransferWarehouseDetail;
+use App\Models\ImportProduct;
+use App\Models\TransferWarehouse;
 
 class AddProductModal extends ModalComponent
 {
@@ -82,6 +86,39 @@ class AddProductModal extends ModalComponent
                 'product_total_amount.min' => 'Trường thành tiền phải lớn hơn 0.',
             ]
         );
+        $totalOrdered = OrderDetail::where('product_id', $this->product_id)
+            ->where('product_detail_id', $this->product_detail_id)
+            ->where('size_id', $this->product_size_id)
+            ->where('warehouse_id', $this->warehouse_id)
+            ->sum('quantity');
+
+        $totalImported = Warehouse::find($this->warehouse_id)->importProducts->sum(function($importProduct){
+            return $importProduct->importDetails->where('product_id', $this->product_id)
+                ->where('product_detail_id', $this->product_detail_id)
+                ->where('size_id', $this->product_size_id)
+                ->sum('quantity');
+        });
+
+        $totalTransferFrom = Warehouse::find($this->warehouse_id)->transferWarehouseFrom->sum(function($transfer){
+            return $transfer->transferDetails->where('product_id', $this->product_id)
+                ->where('product_detail_id', $this->product_detail_id)
+                ->where('size_id', $this->product_size_id)
+                ->sum('quantity');
+        });
+
+        $totalTransferTo = Warehouse::find($this->warehouse_id)->transferWarehouseTo->sum(function($transfer){
+            return $transfer->transferDetails->where('product_id', $this->product_id)
+                ->where('product_detail_id', $this->product_detail_id)
+                ->where('size_id', $this->product_size_id)
+                ->sum('quantity');
+        });
+
+        $totalAvailable = $totalImported - $totalOrdered + $totalTransferTo - $totalTransferFrom;
+
+        if($this->product_quantity > $totalAvailable){
+            $this->addError('product_quantity', 'Số lượng sản phẩm trong kho không đủ. Sản phẩm còn lại: '.$totalAvailable.' sản phẩm.');
+            return;
+        }
         $this->order_product->product_id = $this->product_id;
         $this->order_product->product_detail_id = $this->product_detail_id;
         $this->order_product->product_name = $this->order_product->product->name;

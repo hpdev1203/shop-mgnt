@@ -124,22 +124,22 @@ class EditTransferWarehouse extends Component
                         ]);
                     }
                 }
-                if(isset($this->from_warehouse_id)){
-                    $empty_product[$i] = 0;
-                    if(isset($this->product_id[$i])){
-                        $empty_product[$i] = ImportProductDetail::join('import_product' , 'import_product.id','=','import_product_detail.product_id')
-                            ->where('import_product.warehouse_id',$this->from_warehouse_id)
-                            ->where('import_product_detail.product_id',$this->product_id[$i])
-                            ->distinct()->get();
-                        if(count($empty_product[$i]) == 0){
-                            $this->validate([
-                                'product_id.'.$i => 'in:'.$empty_product[$i],
-                            ], [
-                                'product_id.'.$i.'.in' => 'Sản phẩm không thuộc kho hàng đi',
-                            ]);
-                        }
-                    }
-                }
+                // if(isset($this->from_warehouse_id)){
+                //     $empty_product[$i] = 0;
+                //     if(isset($this->product_id[$i])){
+                //         $empty_product[$i] = ImportProductDetail::join('import_product' , 'import_product.id','=','import_product_detail.product_id')
+                //             ->where('import_product.warehouse_id',$this->from_warehouse_id)
+                //             ->where('import_product_detail.product_id',$this->product_id[$i])
+                //             ->distinct()->get();
+                //         if(count($empty_product[$i]) == 0){
+                //             $this->validate([
+                //                 'product_id.'.$i => 'in:'.$empty_product[$i],
+                //             ], [
+                //                 'product_id.'.$i.'.in' => 'Sản phẩm không thuộc kho hàng đi',
+                //             ]);
+                //         }
+                //     }
+                // }
             }
         }
         $transfer_warehouse = TransferWarehouse::find($this->id);
