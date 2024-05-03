@@ -22,6 +22,11 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\PaymentStatusController;
 use App\Http\Controllers\Admin\OrderStatusController;
+use App\Http\Controllers\Client\IndexController;
+use App\Livewire\Client\LoginClient;
+use App\Http\Controllers\Client\ShowProductController;
+use App\Http\Controllers\Client\ShowProductDetailController;
+use App\Http\Controllers\Client\CartController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -99,3 +104,10 @@ Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
 Route::get('/admin/logout', [Login::class, 'handleLogout'])->name('admin.logout');
 Route::get('/admin/setup', Setup::class)->middleware([CheckSetup::class])->name('admin.setup');
+
+Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/login', LoginClient::class)->name('login');
+Route::get('/logout', [LoginClient::class, 'handleLogout'])->name('logout');
+Route::get('/product', [ShowProductController::class, 'index'])->name('product');
+Route::get('/productdetail', [ShowProductDetailController::class, 'index'])->name('productdetail');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');

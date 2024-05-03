@@ -91,11 +91,8 @@ class AddUser extends Component
     }
     public function render()
     {
-        $id_latest = User::where('role','customer')->latest('id')->first();
-        if($id_latest == null){
-            $id_latest = (object) ['id' => 0];
-        }   
-        $this->user_code = 'CUS-'.str_pad($id_latest->id + 1, 4, '0', STR_PAD_LEFT);
+        $id_latest = User::where('role','customer')->get();
+        $this->user_code = 'CUS-'.str_pad(count($id_latest)+ 1, 4, '0', STR_PAD_LEFT);
         return view('livewire.admin.user.add-user');
     }
 }
