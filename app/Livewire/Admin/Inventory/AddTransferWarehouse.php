@@ -11,6 +11,7 @@ use App\Models\ProductDetail;
 use App\Models\ProductSize;
 use App\Models\ImportProduct;
 use App\Models\ImportProductDetail;
+use App\Models\OrderDetail;
 
 class AddTransferWarehouse extends Component
 {
@@ -85,6 +86,7 @@ class AddTransferWarehouse extends Component
                     ]);
                 }
                 $quantity[$i] = 0;
+                $quantity_order[$i] = 0;
                 if(isset($this->product_detail_id[$i])){
                     if (count($product_size[$i]) > 0){
                         $import_product_quantity[$i] = ImportProductDetail::select('product_id','product_detail_id','size_id',ImportProductDetail::raw('SUM(quantity) as quantity'))->where([
@@ -97,6 +99,15 @@ class AddTransferWarehouse extends Component
                             ['product_detail_id',$this->product_detail_id[$i]],
                             ['size_id',$this->size_id[$i]],
                         ])->groupBy('product_id','product_detail_id','size_id')->first();
+                        if(isset($this->from_warehouse_id)){
+                            $order_quantity[$i] = OrderDetail::select('product_id','product_detail_id','size_id','warehouse_id',OrderDetail::raw('SUM(quantity) as quantity'))->where([
+                                ['product_id',$this->product_id[$i]],
+                                ['product_detail_id',$this->product_detail_id[$i]],
+                                ['size_id',$this->size_id[$i]],
+                                ['warehouse_id',$this->from_warehouse_id],
+                            ])->groupBy('product_id','product_detail_id','size_id','warehouse_id')->first();
+                            $quantity_order[$i] = (int)$order_quantity[$i]->quantity;
+                        }
                     }else{
                         $import_product_quantity[$i] = ImportProductDetail::select('product_id','product_detail_id',ImportProductDetail::raw('SUM(quantity) as quantity'))->where([
                             ['product_id',$this->product_id[$i]],
@@ -106,9 +117,17 @@ class AddTransferWarehouse extends Component
                             ['product_id',$this->product_id[$i]],
                             ['product_detail_id',$this->product_detail_id[$i]],
                         ])->groupBy('product_id','product_detail_id')->first();
+                        if(isset($this->from_warehouse_id)){
+                            $order_quantity[$i] = OrderDetail::select('product_id','product_detail_id','size_id','warehouse_id',OrderDetail::raw('SUM(quantity) as quantity'))->where([
+                                ['product_id',$this->product_id[$i]],
+                                ['product_detail_id',$this->product_detail_id[$i]],
+                                ['warehouse_id',$this->from_warehouse_id],
+                            ])->groupBy('product_id','product_detail_id','size_id','warehouse_id')->first();
+                            $quantity_order[$i] = (int)$order_quantity[$i]->quantity;
+                        }
                     }
                     if (isset($import_product_quantity[$i]->quantity)) {
-                        $quantity[$i] = (int)$import_product_quantity[$i]->quantity;
+                        $quantity[$i] = (int)$import_product_quantity[$i]->quantity - $quantity_order[$i];
                         if (isset($tranfer_warehouse_quantity[$i]->quantity)) {
                             $quantity[$i] = $quantity[$i] - (int)$tranfer_warehouse_quantity[$i]->quantity;
                         }
