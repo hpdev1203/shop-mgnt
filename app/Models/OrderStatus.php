@@ -9,4 +9,9 @@ class OrderStatus extends Model
 {
     use HasFactory;
     protected $table = 'order_status';
+
+    public function actioner()
+    {
+        return $this->belongsTo(User::class, 'action_by');
+    }
 }

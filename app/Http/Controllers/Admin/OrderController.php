@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\PaymentMethod;
 use App\Models\Product;
+use App\Models\OrderStatus;
 
 class OrderController extends Controller
 {
@@ -28,6 +29,7 @@ class OrderController extends Controller
         $customers = User::where('role', 'customer')->get();
         $payment_methods = PaymentMethod::all();
         $products = Product::all();
-        return view('admin.dashboard.order.edit_order', ['order' => $order, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products]);
+        $changeLog = OrderStatus::where('order_id', $id)->get();
+        return view('admin.dashboard.order.edit_order', ['order' => $order, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products, 'changeLog' => $changeLog]);
     }
 }

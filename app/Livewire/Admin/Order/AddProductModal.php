@@ -86,34 +86,8 @@ class AddProductModal extends ModalComponent
                 'product_total_amount.min' => 'Trường thành tiền phải lớn hơn 0.',
             ]
         );
-        $totalOrdered = OrderDetail::where('product_id', $this->product_id)
-            ->where('product_detail_id', $this->product_detail_id)
-            ->where('size_id', $this->product_size_id)
-            ->where('warehouse_id', $this->warehouse_id)
-            ->sum('quantity');
-
-        $totalImported = Warehouse::find($this->warehouse_id)->importProducts->sum(function($importProduct){
-            return $importProduct->importDetails->where('product_id', $this->product_id)
-                ->where('product_detail_id', $this->product_detail_id)
-                ->where('size_id', $this->product_size_id)
-                ->sum('quantity');
-        });
-
-        $totalTransferFrom = Warehouse::find($this->warehouse_id)->transferWarehouseFrom->sum(function($transfer){
-            return $transfer->transferDetails->where('product_id', $this->product_id)
-                ->where('product_detail_id', $this->product_detail_id)
-                ->where('size_id', $this->product_size_id)
-                ->sum('quantity');
-        });
-
-        $totalTransferTo = Warehouse::find($this->warehouse_id)->transferWarehouseTo->sum(function($transfer){
-            return $transfer->transferDetails->where('product_id', $this->product_id)
-                ->where('product_detail_id', $this->product_detail_id)
-                ->where('size_id', $this->product_size_id)
-                ->sum('quantity');
-        });
-
-        $totalAvailable = $totalImported - $totalOrdered + $totalTransferTo - $totalTransferFrom;
+        
+        $totalAvailable = Warehouse::find($this->warehouse_id)->totalProductAvailable($this->product_id, $this->product_detail_id, $this->product_size_id);
 
         if($this->product_quantity > $totalAvailable){
             $this->addError('product_quantity', 'Số lượng sản phẩm trong kho không đủ. Sản phẩm còn lại: '.$totalAvailable.' sản phẩm.');

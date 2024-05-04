@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Warehouse;
+use Carbon\Carbon;
 
 class AddOrder extends Component
 {
@@ -59,6 +60,16 @@ class AddOrder extends Component
         unset($this->order_details[$index]);
         $this->updateAmount($index-1);
         $this->calTotalAmount();
+    }
+
+    public function createOrder(){
+        $this->order_status = "pending";
+        $this->storeOrder();
+    }
+
+    public function draftOrder(){
+        $this->order_status = "draft";
+        $this->storeOrder();
     }
 
     public function storeOrder()
@@ -146,29 +157,6 @@ class AddOrder extends Component
             'order_state.required' => 'Trường tỉnh/thành phố đơn hàng là bắt buộc.',
             'order_city.required' => 'Trường quận/huyện đơn hàng là bắt buộc.'
         ]);
-    }
-
-    protected function createOrder()
-    {
-        $this->order['code'] = $this->order_code;
-        $this->order['user_id'] = $this->customer_id;
-        $this->order['payment_method_id'] = $this->payment_method_id;
-        $this->order['payment_status'] = $this->payment_status;
-        $this->order['order_date'] = $this->order_date;
-        $this->order['order_status'] = $this->order_status;
-        $this->order['order_note'] = $this->order_note;
-        $this->order['order_phone'] = $this->order_phone;
-        $this->order['order_email'] = $this->order_email;
-        $this->order['order_address'] = $this->order_address;
-        $this->order['order_state'] = $this->order_state;
-        $this->order['order_city'] = $this->order_city;
-
-        $order = Order::create($this->order);
-
-        foreach ($this->order_details as $order_product) {
-            $order_product['order_id'] = $order->id;
-            OrderDetail::create($order_product);
-        }
     }
 
     public function updateAmount($index)

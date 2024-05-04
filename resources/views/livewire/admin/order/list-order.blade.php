@@ -70,10 +70,10 @@
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">Đang giao hàng</span>
                             @elseif ($order->status == "delivered")
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Đã giao hàng</span>
-                            @elseif ($order->status == "cancelled")
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Đã hủy</span>
+                            @elseif ($order->status == "rejected")
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Đã bị từ chối</span>
                             @elseif ($order->status == "completed")
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Hoàn thành</span>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-gray-800">Hoàn thành</span>
                             @endif
                         </td>
                         <td class="px-2 py-2 whitespace-nowrap text-right">

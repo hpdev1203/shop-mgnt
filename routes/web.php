@@ -28,12 +28,11 @@ use App\Livewire\Client\LoginClient;
 use App\Http\Controllers\Client\ShowProductController;
 use App\Http\Controllers\Client\ShowProductDetailController;
 use App\Http\Controllers\Client\CartController;
+use App\Http\Controllers\Admin\DashboardController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
-    Route::get('/admin', function () {
-        return view('admin.dashboard.dashboard');
-    })->name('admin');
+    Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
     
     /* Data Seeder  */
     Route::get('/admin/seeder', DataSeeder::class)->name('admin.seeder');
