@@ -65,6 +65,16 @@ class EditOrder extends Component
         $this->calTotalAmount();
     }
 
+    public function createOrder(){
+        $this->order_status = "pending";
+        $this->storeOrder();
+    }
+
+    public function draftOrder(){
+        $this->order_status = "draft";
+        $this->storeOrder();
+    }
+
     public function storeOrder()
     {
         $this->validateOrder();

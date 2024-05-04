@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit='storeOrder'>
+    <form>
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2">
@@ -63,21 +63,10 @@
                         @enderror
                     </div>
                     <div class="col-span-4 sm:col-span-1">
-                        <label class="block text-sm font-medium leading-6 text-gray-900">Trạng thái đơn hàng <span class="text-red-700">*</span></label>
+                        <label class="block text-sm font-medium leading-6 text-gray-900">Ghi chú</label>
                         <div class="mt-2">
-                            <select wire:model="order_status" id="order_status" name="order_status" class="convert-to-dropdown block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                <option value="">-</option>
-                                <option value="pending">Đang chờ xác nhận</option>
-                                <option value="confirmed">Đã xác nhận</option>
-                                <option value="shipping">Đang giao hàng</option>
-                                <option value="delivered">Đã giao hàng</option>
-                                <option value="cancelled">Đã hủy</option>
-                                <option value="completed">Hoàn thành</option>
-                            </select>
+                            <textarea wire:model="order_note" name="order_note" id="order_note" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                         </div>
-                        @error('order_status')
-                            <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-span-4 sm:col-span-1">
                         <label for="order_phone" class="block text-sm font-medium leading-6 text-gray-900">Số điện thoại người nhận hàng <span class="text-red-700">*</span></label>
@@ -238,7 +227,36 @@
         </div>
         <div class="mt-6 flex flex-col sm:flex-row items-center justify-end gap-x-6">
             <a href="{{route('admin.orders')}}" class="text-sm font-semibold leading-6 text-gray-900">Hủy</a>
-            <button class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Lưu</button>
+            @if($order_status == 'draft')
+                <button type="button" wire:click="draftOrder" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Lưu nháp</button>
+                <button type="button" wire:click="createOrder" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Tạo đơn</button>
+            @else
+                @if($order_status == 'pending' || $order_status == 'confirmed')
+                    <button type="button" 
+                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'rejected' } })"
+                        class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-600 active:bg-red-700 focus:outline-none focus:border-red-900 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150">Từ chối</button>
+                @endif
+                @if($order_status == 'pending')
+                    <button type="button" 
+                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'confirmed' } })"
+                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Xác nhận</button>
+                @endif
+                @if($order_status == 'confirmed')
+                    <button type="button" 
+                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'shipping' } })"
+                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Giao hàng</button>
+                @endif
+                @if($order_status == 'shipping')
+                    <button type="button" 
+                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'delivered' } })"
+                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Xác nhận đã giao hàng</button>
+                @endif
+                @if($order_status == 'delivered')
+                    <button type="button"
+                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'completed' } })"
+                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Hoàn thành</button>
+                @endif
+            @endif
         </div>
         @if (session()->has('message'))
             <div class="mt-6 text-sm text-green-600">{{ session('message') }}</div>
