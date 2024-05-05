@@ -6,6 +6,7 @@ use App\Livewire\Admin\DataSeeder;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\CheckSetup;
 use App\Http\Middleware\CheckAdminLogin;
+use App\Http\Middleware\CustomerAuth;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BrandController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\Client\ShowProductController;
 use App\Http\Controllers\Client\ShowProductDetailController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Admin\DashboardController;
+
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -113,9 +115,13 @@ Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->
 Route::get('/admin/logout', [Login::class, 'handleLogout'])->name('admin.logout');
 Route::get('/admin/setup', Setup::class)->middleware([CheckSetup::class])->name('admin.setup');
 
-Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::get('/login', LoginClient::class)->name('login');
-Route::get('/logout', [LoginClient::class, 'handleLogout'])->name('logout');
+
+
+Route::group(['middleware' => [CustomerAuth::class]], function () {
+    Route::get('/', [IndexController::class, 'index'])->name('index');
+    Route::get('/login', LoginClient::class)->name('login');
+    Route::get('/logout', [LoginClient::class, 'handleLogout'])->name('logout');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+});
 Route::get('/product', [ShowProductController::class, 'index'])->name('product');
 Route::get('/productdetail', [ShowProductDetailController::class, 'index'])->name('productdetail');
-Route::get('/cart', [CartController::class, 'index'])->name('cart');

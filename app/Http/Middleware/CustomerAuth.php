@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Middleware\Admin;
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\SystemInfo;
-use Illuminate\Support\Facades\View;
-use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
-class ShareDataMiddleware
+class CustomerAuth
 {
     /**
      * Handle an incoming request.
@@ -18,9 +16,10 @@ class ShareDataMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $system_info = SystemInfo::first();
-        $categories = Category::where('parent_id', null)->get();
-        View::share(['system_info' => $system_info, 'categories' => $categories]);
+        if($request->is('login') && Auth::check()) {
+            return redirect()->route('index');
+        }
+
         return $next($request);
     }
 }

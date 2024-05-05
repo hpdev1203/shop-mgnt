@@ -63,9 +63,13 @@
             }
         </style>
 	</head>
-	<body class="bg-white text-gray-600 work-sans leading-normal text-base tracking-normal">
-        @include('client.layouts.menu')
-        @yield('content')
+	<body class="bg-orange-500 text-gray-600 work-sans leading-normal text-base tracking-normal">
+       
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            @include('client.layouts.menu')
+            @yield('content')
+        </div>
+        
         @include('client.layouts.footer')
     </body>
     @livewireScripts
