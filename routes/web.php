@@ -119,9 +119,9 @@ Route::get('/admin/setup', Setup::class)->middleware([CheckSetup::class])->name(
 
 Route::group(['middleware' => [CustomerAuth::class]], function () {
     Route::get('/', [IndexController::class, 'index'])->name('index');
-    Route::get('/login', LoginClient::class)->name('login');
+    Route::get('/dang-nhap', LoginClient::class)->name('login');
     Route::get('/logout', [LoginClient::class, 'handleLogout'])->name('logout');
-    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::get('/gio-hang', [CartController::class, 'index'])->name('cart');
 });
 Route::get('/product', [ShowProductController::class, 'index'])->name('product');
 Route::get('/productdetail', [ShowProductDetailController::class, 'index'])->name('productdetail');

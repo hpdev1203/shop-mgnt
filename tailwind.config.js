@@ -23,6 +23,7 @@ export default {
       }
     },
     fontFamily: {
+      'client': ['sans-serif', 'Roboto'],
       'body': [
         'Inter', 
         'ui-sans-serif', 

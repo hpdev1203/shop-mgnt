@@ -34,11 +34,6 @@ class LoginClient extends Component
                 session()->flash('error', 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.');
                 return;
             }
-            if(auth()->user()->role == 'system'){
-                auth()->logout();
-                session()->flash('error', 'Tài khoản của bạn không có quyền truy cập.');
-                return;
-            }
             return redirect()->route('index');
         }else{
             session()->flash('error', 'Thông tin đăng nhập không chính xác.');

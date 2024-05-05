@@ -63,10 +63,10 @@
             }
         </style>
 	</head>
-	<body class="bg-orange-500 text-gray-600 work-sans leading-normal text-base tracking-normal">
-       
+	<body class="bg-orange-300 font-client leading-normal text-base tracking-normal">
+        @include('client.layouts.menu')
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            @include('client.layouts.menu')
+            
             @yield('content')
         </div>
         
