@@ -30,6 +30,7 @@ use App\Http\Controllers\Client\ShowProductController;
 use App\Http\Controllers\Client\ShowProductDetailController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Client\UserClientController;
 
 
 
@@ -122,6 +123,7 @@ Route::group(['middleware' => [CustomerAuth::class]], function () {
     Route::get('/dang-nhap', LoginClient::class)->name('login');
     Route::get('/logout', [LoginClient::class, 'handleLogout'])->name('logout');
     Route::get('/gio-hang', [CartController::class, 'index'])->name('cart');
+    Route::get('/thong-tin-tai-khoan', [UserClientController::class, 'index'])->name('info_user');
 });
 Route::get('/product', [ShowProductController::class, 'index'])->name('product');
 Route::get('/productdetail', [ShowProductDetailController::class, 'index'])->name('productdetail');
