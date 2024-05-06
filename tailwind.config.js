@@ -57,7 +57,8 @@ export default {
         'Segoe UI Emoji', 
         'Segoe UI Symbol', 
         'Noto Color Emoji'
-      ]
+      ],
+      'oregano': ['Oregano', 'sans-serif']
     }
   },
   corePlugins: {
@@ -67,6 +68,7 @@ export default {
     require('@tailwindcss/forms'),
     require('flowbite/plugin'),
     require('@tailwindcss/aspect-ratio'),
+    require('tailwindcss-animated')
   ],
 }
 
