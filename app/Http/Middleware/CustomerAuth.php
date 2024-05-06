@@ -16,7 +16,7 @@ class CustomerAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->is('login') && Auth::check()) {
+        if($request->is('dang-nhap') && Auth::check()) {
             return redirect()->route('index');
         }
 
