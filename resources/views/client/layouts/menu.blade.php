@@ -59,7 +59,7 @@
                                 <div class="relative" x-data="{ isOpenProfile: false }">
                                     <button @click="isOpenProfile = !isOpenProfile" aria-expanded="false" type="button" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800" id="user-menu">
                                         @if(Auth::user()->avatar_user)
-                                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('storage/images/users/' . Auth::user()->avatar_user) }}" alt="User Avatar">
+                                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('storage/images/users/' . Auth::user()->avatar_user) }}" alt="{{Auth::user()->name}}">
                                         @else
                                             <img class="h-8 w-8 rounded-full" src="{{ asset('library/images/user/user-01.png') }}" alt="User Avatar">
                                         @endif
@@ -67,6 +67,7 @@
                                     <div x-show="isOpenProfile" aria-hidden="true" class="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-sm shadow-lg bg-white ring-1 ring-gray-300 ring-opacity-5" role="menu">
                                         <div class="py-1" role="none">
                                             <a href="{{ route('info_user') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Tài khoản</a>
+                                            <a href="{{ route('change_password') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Đổi mật khẩu</a>
                                             <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Đăng xuất</a>
                                         </div>
                                     </div>

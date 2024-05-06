@@ -18,7 +18,6 @@ class InfoUser extends Component
     public $user_email = '';
     public $user_phone = '';
     public $user_gender = '1';
-    public $user_username = '';
     public $user_address = '';
     public $user_state = '';
     public $user_city = '';
@@ -30,7 +29,6 @@ class InfoUser extends Component
         $this->validate([
             'user_name' => 'required',
             'user_email' => 'required|email|unique:users,email,' . Auth::user()->id,
-            'user_username' => 'required|unique:users,username,' . Auth::user()->id,
             'user_address' => 'required',
             'user_state' => 'required',
             'user_city' => 'required',
@@ -39,8 +37,6 @@ class InfoUser extends Component
             'user_email.required' => 'Vui lòng nhập email.',
             'user_email.email' => 'Vui lòng nhập đúng định dạng email.',
             'user_email.unique' => 'Email đã tồn tại.',
-            'user_username.required' => 'Vui lòng nhập tên đăng nhập',
-            'user_username.unique' => 'Tên đăng nhập đã tồn tại.',
             'user_address.required' => 'Vui lòng nhập địa chỉ.',
             'user_state.required' => 'Vui lòng nhập quận/huyện.',
             'user_city.required' => 'Vui lòng nhập tỉnh/thành phố.',
@@ -65,7 +61,6 @@ class InfoUser extends Component
         $user->email = $this->user_email;
         $user->phone = $this->user_phone;
         $user->gender = $this->user_gender;
-        $user->username = $this->user_username;
         if ($this->photo) {
             $user->avatar_user = $photo_name;
         }
@@ -88,7 +83,6 @@ class InfoUser extends Component
         $this->user_email = $user->email;
         $this->user_phone = $user->phone;
         $this->user_gender = $user->gender;
-        $this->user_username = $user->username;
         $this->user_address = $user->address;
         $this->user_state = $user->state;
         $this->user_city = $user->city;
