@@ -29,7 +29,7 @@
                             <label for="remember" class="text-gray-500 dark:text-gray-300">Ghi nhớ đăng nhập</label>
                             </div>
                         </div>
-                        <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Quên mật khẩu?</a>
+                        <a href="{{ Route('forgot_password') }}" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Quên mật khẩu?</a>
                     </div>
                     @if (session()->has('error'))
                         <div class="text-red-500 text-sm">{{ session('error') }}</div>

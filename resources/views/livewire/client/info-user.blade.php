@@ -57,18 +57,13 @@
                     <span class="tracking-wide">Thông tin cá nhân</span>
                 </div>
                 <ul class="mt-2 text-gray-700 text-sm">
-                    <li class="flex py-1 items-center">
+                    <li class="flex py-2 items-center">
                         <span class="font-bold w-52">Mã khách hàng:</span>
                         <span class="text-gray-700 w-full">{{$user->code}}</span>
                     </li>
-                    <li class="flex py-1 items-center">
+                    <li class="flex py-2 items-center">
                         <span class="font-bold w-52">Tên đăng nhập:</span>
-                        <span class="text-gray-700 w-full">
-                            <input wire:model="user_username" type="text" name="user_username" id="user_username" class="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                            @error('user_username')
-                                <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
-                            @enderror
-                        </span>
+                        <span class="text-gray-700 w-full">{{$user->username}}</span>
                     </li>
                     <li class="flex py-1 items-center">
                         <span class="font-bold w-52">Tên:</span>
