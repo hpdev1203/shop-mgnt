@@ -1,8 +1,8 @@
-<div class="bg-white py-8">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="container mx-auto flex flex-wrap pt-4 pb-12 px-100">
         <nav class="w-full z-30 top-0 px-6 py-1">
             <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Quần Nam</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">{{$category->name}}</h2>
             </div>
         </nav>
         @if ($products->isEmpty())
@@ -25,23 +25,11 @@
 
                     {{-- <img class="hover:grow hover:shadow-lg" src="https://images.unsplash.com/photo-1555982105-d25af4182e4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80"> --}}
                     
-                    <div class="pt-3 flex items-center justify-between text-xs product-grid__options">
-                        <div class="options-color flex">
-                            <div class="option-color__item is-current">
-                                <span class="checkmark">Mẫu 1</span>
-                            </div>
-                            <div class="option-color__item pl-2">
-                                <span class="checkmark">Mẫu 2</span>
-                            </div>
-                            <div class="option-color__item pl-2">
-                                <span class="checkmark">Mẫu 3</span>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="pt-3 flex items-center justify-between text-xs">
-                        <p class="">{{$product->name}}</p>
+                        <p class="text-sm">{{$product->name}}</p>
                     </div>
-                    <p class="pt-1 text-gray-900">{{number_format($product->retail_price, 0, ',', '.')}}</p>
+                    <p class="pt-1 text-gray-900 font-bold text-sm">{{number_format($product->retail_price, 0, ',', '.')}}đ</p>
                 </a>
             </div>
         @endforeach

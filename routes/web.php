@@ -28,7 +28,6 @@ use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\UserClientController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Client\CollectionController;
 
 
@@ -129,4 +128,4 @@ Route::get('/san-pham/{id}/{slug}', [ClientProductController::class, 'index'])->
 Route::get('/product', [ShowProductController::class, 'index'])->name('product');
 Route::get('/productdetail', [ShowProductDetailController::class, 'index'])->name('productdetail');
 
-Route::get('/collection', [CollectionController::class, 'index'])->name('collection');
+Route::get('/collection/{slug}', [CollectionController::class, 'index'])->name('collection');
