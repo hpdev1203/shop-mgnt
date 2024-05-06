@@ -3,10 +3,12 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Auth\Login;
 use App\Livewire\Admin\Setup;
 use App\Livewire\Admin\DataSeeder;
+use App\Livewire\Client\LoginClient;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\CheckSetup;
 use App\Http\Middleware\CheckAdminLogin;
 use App\Http\Middleware\CustomerAuth;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BrandController;
@@ -17,20 +19,15 @@ use App\Http\Controllers\Admin\AdministratorController;
 use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\ImportProductController;
 use App\Http\Controllers\Admin\TransferWarehouseController;
-use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SystemInformationController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentMethodController;
-use App\Http\Controllers\Admin\PaymentStatusController;
-use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Client\IndexController;
-use App\Livewire\Client\LoginClient;
-use App\Http\Controllers\Client\ShowProductController;
-use App\Http\Controllers\Client\ShowProductDetailController;
 use App\Http\Controllers\Client\CartController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Client\UserClientController;
+use App\Http\Controllers\Client\ProductController as ClientProductController;
+
 
 
 
@@ -123,7 +120,5 @@ Route::group(['middleware' => [CustomerAuth::class]], function () {
     Route::get('/dang-nhap', LoginClient::class)->name('login');
     Route::get('/logout', [LoginClient::class, 'handleLogout'])->name('logout');
     Route::get('/gio-hang', [CartController::class, 'index'])->name('cart');
-    Route::get('/thong-tin-tai-khoan', [UserClientController::class, 'index'])->name('info_user');
 });
-Route::get('/product', [ShowProductController::class, 'index'])->name('product');
-Route::get('/productdetail', [ShowProductDetailController::class, 'index'])->name('productdetail');
+Route::get('/san-pham/{id}/{slug}', [ClientProductController::class, 'index'])->name('product-detail');

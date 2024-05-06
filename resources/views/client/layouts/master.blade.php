@@ -10,6 +10,7 @@
 		@vite(['resources/css/app.css','resources/js/app.js'])
 		@livewireStyles
 		<style>
+            @import url('https://fonts.googleapis.com/css2?family=Oregano:ital@0;1&display=swap');
             .work-sans {
                 font-family: 'Work Sans', sans-serif;
             }
@@ -63,13 +64,9 @@
             }
         </style>
 	</head>
-	<body class="bg-orange-300 font-client leading-normal text-base tracking-normal">
+	<body class="bg-white font-sans leading-normal text-base tracking-normal">
         @include('client.layouts.menu')
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            
-            @yield('content')
-        </div>
-        
+        @yield('content')
         @include('client.layouts.footer')
     </body>
     @livewireScripts
