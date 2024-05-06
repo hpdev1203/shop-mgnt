@@ -6,15 +6,22 @@
                 <div class="flex h-20 items-center">
 					<!-- Logo -->
 					<div class="flex">
-						<a href="#">
+						<a href="{{ route('index') }}">
                             <span class="sr-only">Your Company</span>
-                            <img class="h-16 w-auto" src="{{asset('library/images/logo-default.png')}}" alt="">
+                            @if ($system_info->logo)
+                                <img src="{{ asset('storage/images/systems/' . $system_info->logo) }}"class="h-16 w-auto">
+                            @else
+                                <img src="{{ asset('library/images/image-not-found.jpg') }}" class="h-16 w-auto">
+                            @endif
 						</a>
 					</div>
 					<div class="ml-auto flex items-center">
 						<!-- Search -->
 						<div class="flex lg:ml-6" x-data="{ isOpenSearch: false }">
                             <input type="text" placeholder="Tìm kiếm" class="hidden lg:block border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <button type="button" class="hidden lg:flex p-2 text-gray-400 hover:text-gray-500">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                            </button>
                             <a href="#" @click="isOpenSearch = !isOpenSearch" aria-controls="search" aria-expanded="false" aria-label="Mở/closed thanh tìm kiếm" class="lg:hidden p-2 text-gray-400 hover:text-gray-500">
                                 <span class="sr-only">Tìm kiếm</span>
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -51,15 +58,15 @@
                             @if(Auth::check())
                                 <div class="relative" x-data="{ isOpenProfile: false }">
                                     <button @click="isOpenProfile = !isOpenProfile" aria-expanded="false" type="button" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800" id="user-menu">
-                                        @if(Auth::user()->avatar_user)
-                                            <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('storage/images/users/' . Auth::user()->avatar_user) }}" alt="{{Auth::user()->name}}">
+                                        @if(Auth::user()->avatar)
+                                            <img class="h-8 w-8 rounded-full" src="{{ Auth::user()->avatar }}" alt="User Avatar">
                                         @else
                                             <img class="h-8 w-8 rounded-full" src="{{ asset('library/images/user/user-01.png') }}" alt="User Avatar">
                                         @endif
                                     </button>
-                                    <div x-show="isOpenProfile" aria-hidden="true" class="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-sm shadow-lg bg-white ring-1 ring-gray-300 ring-opacity-5" role="menu">
+                                    <div x-show="isOpenProfile" aria-hidden="true" class="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-sm shadow-lg bg-white ring-1 ring-gray-300 ring-opacity-5" role="menu">
                                         <div class="py-1" role="none">
-                                            <a href="{{ route('info_user') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Thông tin cá nhân</a>
+                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Tài khoản</a>
                                             <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Đăng xuất</a>
                                         </div>
                                     </div>
@@ -81,7 +88,7 @@
                             </svg>
                         </button>
                         <div class="fixed inset-0 z-40 flex" x-show="isOpenMenu" aria-hidden="true">
-                            <div class="relative flex w-full max-w-xs flex-col bg-gray-300 pb-12 shadow-xl">
+                            <div class="relative flex w-full max-w-xs flex-col bg-gray-100 pb-12 shadow-xl">
                                 <div class="flex px-4 pb-2 pt-2 border-b">
                                     <button type="button" class="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400" @click="isOpenMenu = false" aria-expanded="true">
                                         <span class="absolute -inset-0.5"></span>
@@ -95,7 +102,7 @@
                                 <div>
                                     <div class="border-b border-gray-200">
                                         <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
-                                            <button class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-bold uppercase">Danh mục</button>
+                                            <button class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium uppercase">Danh mục</button>
                                         </div>
                                     </div>
                                     <div class="space-y-10 px-4 pb-8 pt-4" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
@@ -109,18 +116,18 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="lg:hidden flex items-center ml-4 text-sm font-bold text-gray-600 hover:text-gray-800 uppercase">Nam</a>
-                    <a href="#" class="lg:hidden flex items-center ml-4 text-sm font-bold text-gray-600 hover:text-gray-800 uppercase">Nữ</a>
+                    <a href="#" class="lg:hidden flex items-center ml-4 text-sm font-medium text-gray-900 hover:text-gray-800">Nam</a>
+                    <a href="#" class="lg:hidden flex items-center ml-4 text-sm font-medium text-gray-900 hover:text-gray-800">Nữ</a>
 					<!-- Flyout menus -->
 					<div class="hidden lg:block lg:self-stretch">
 						<div class="flex h-full space-x-8">
 							<div class="flex" x-data="{ isOpenCategory: false }">
 								<div class="relative flex items-center w-64 bg-blue-700 hover:bg-black text-white cursor-pointer"  @mouseenter="isOpenCategory = true" @mouseleave="isOpenCategory = false" aria-expanded="false" >
-                                    <button type="button" class="ml-4 border-transparent  hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-md font-bold transition-colors duration-200 ease-out">
+                                    <button type="button" class="ml-4 border-transparent  hover:text-gray-200 relative z-10 -mb-px flex items-center border-b-2 pt-px text-md font-medium transition-colors duration-200 ease-out">
                                         <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1C0 0.447715 0.447715 0 1 0H15C15.5523 0 16 0.447715 16 1C16 1.55228 15.5523 2 15 2H1C0.447715 2 0 1.55228 0 1ZM0 7C0 6.44772 0.447715 6 1 6H17C17.5523 6 18 6.44772 18 7C18 7.55228 17.5523 8 17 8H1C0.447715 8 0 7.55228 0 7ZM1 12C0.447715 12 0 12.4477 0 13C0 13.5523 0.447715 14 1 14H11C11.5523 14 12 13.5523 12 13C12 12.4477 11.5523 12 11 12H1Z" fill="currentColor"></path>
                                         </svg>
-                                        <span class="ml-2 text-sm uppercase">
+                                        <span class="ml-2 text-sm">
                                             Danh mục
                                         </span>
                                     </button>    
@@ -129,7 +136,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                         </svg>
                                     </span>                            
-                                    <div class="absolute w-64 inset-x-0 z-10 top-full text-sm text-gray-500" x-show="isOpenCategory" @mouseenter="isOpenCategory = true" @mouseleave="isOpenCategory = false" aria-hidden="true">
+                                    <div class="animate-fade-up absolute w-64 inset-x-0 z-50 top-full text-sm text-gray-500" x-show="isOpenCategory" @mouseenter="isOpenCategory = true" @mouseleave="isOpenCategory = false" aria-hidden="true">
                                         <div class="absolute inset-0 top-1/2 bg-white shadow"></div>
                                         <div class="relative bg-white">
                                             <div class="mx-auto max-w-7xl">
@@ -143,13 +150,14 @@
                                     </div>
                                 </div>
 							</div>
-							<a href="#" class="flex items-center text-sm font-bold text-gray-600 hover:text-gray-800 uppercase">Nam</a>
-							<a href="#" class="flex items-center text-sm font-bold text-gray-600 hover:text-gray-800 uppercase">Nữ</a>
+							<a href="#" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800 hover:text-blue-600">Đồ Nam</a>
+							<a href="#" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800 hover:text-blue-600">Đồ Nữ</a>
+                            <a href="#" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800 hover:text-blue-600">Liên hệ</a>
 						</div>
 					</div>
 					<div class="ml-auto flex items-center">
-                        <div class="flex lg:ml-6">
-                            <span class="text-gray-700 text-sm font-bold">Hotline: 0123456789</span>
+                        <div class="flex mr-3">
+                            <span class="text-gray-800 text-sm font-medium">Hotline: {{$system_info->phone}}</span>
                         </div>
 					</div>
 				</div>
