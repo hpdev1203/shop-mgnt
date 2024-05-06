@@ -30,6 +30,7 @@ use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\UserClientController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\CollectionController;
+use App\Http\Controllers\Client\ShowProductDetailController;
 
 
 

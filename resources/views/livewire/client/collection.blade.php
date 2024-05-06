@@ -12,7 +12,7 @@
         @endif
         @foreach ($products as $index => $product)
             <div class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
-                <a href="{{route('productdetail')}}">
+                <a href="{{route('product-detail',['id'=>$product->id,'slug'=>$product->slug])}}">
                     @if (count($product->productDetails) > 0 && $product->productDetails[0] && $product->productDetails[0]->image)
                         @php
                             $imageThumbnailCheck = json_decode($product->productDetails[0]->image);   
