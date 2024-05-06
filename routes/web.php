@@ -30,6 +30,8 @@ use App\Http\Controllers\Client\ShowProductController;
 use App\Http\Controllers\Client\ShowProductDetailController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Client\CollectionController;
+
 
 
 
@@ -125,3 +127,5 @@ Route::group(['middleware' => [CustomerAuth::class]], function () {
 });
 Route::get('/product', [ShowProductController::class, 'index'])->name('product');
 Route::get('/productdetail', [ShowProductDetailController::class, 'index'])->name('productdetail');
+
+Route::get('/collection', [CollectionController::class, 'index'])->name('collection');
