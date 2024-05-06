@@ -28,6 +28,7 @@ use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\UserClientController;
+use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\CollectionController;
 
 
@@ -123,8 +124,10 @@ Route::group(['middleware' => [CustomerAuth::class]], function () {
     Route::get('/logout', [LoginClient::class, 'handleLogout'])->name('logout');
     Route::get('/gio-hang', [CartController::class, 'index'])->name('cart');
     Route::get('/thong-tin-tai-khoan', [UserClientController::class, 'index'])->name('info_user');
+    Route::get('/doi-mat-khau', [ChangePasswordController::class, 'index'])->name('change_password');
 });
 Route::get('/san-pham/{id}/{slug}', [ClientProductController::class, 'index'])->name('product-detail');
+Route::get('/quen-mat-khau', [IndexController::class, 'forgot_password'])->name('forgot_password');
 Route::get('/product', [ShowProductController::class, 'index'])->name('product');
 Route::get('/productdetail', [ShowProductDetailController::class, 'index'])->name('productdetail');
 
