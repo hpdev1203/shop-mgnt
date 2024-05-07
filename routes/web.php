@@ -31,6 +31,7 @@ use App\Http\Controllers\Client\UserClientController;
 use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\CollectionController;
 use App\Http\Controllers\Client\ShowProductDetailController;
+use App\Http\Controllers\Client\SpotlightController;
 
 
 
@@ -133,3 +134,5 @@ Route::get('/product', [ShowProductController::class, 'index'])->name('product')
 Route::get('/productdetail', [ShowProductDetailController::class, 'index'])->name('productdetail');
 
 Route::get('/collection/{slug}', [CollectionController::class, 'index'])->name('collection');
+Route::get('/spotlight', [SpotlightController::class, 'index'])->name('spotlight');
+Route::get('/spotlight/search', [SpotlightController::class, 'search'])->name('spotlight.search');
