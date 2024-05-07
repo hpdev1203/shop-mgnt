@@ -6,15 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UserClientController extends Controller
+class PaymentController extends Controller
 {
     public function index()
     {   
         if (isset(Auth::user()->id)) {
-            return view('client.info_user');
+            return view('client.payment');
         }else{
             return redirect()->route('index');
         }
-        
     }
 }
