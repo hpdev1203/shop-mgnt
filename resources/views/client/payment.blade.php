@@ -22,7 +22,7 @@
                                 <img src='https://readymadeui.com/images/product10.webp' class="w-full object-contain" />
                                 </div>
                                 <div>
-                                <h3 class="text-base text-[#333]">Naruto: Split Sneakers</h3>
+                                <h3 class="text-base text-[#333]">Naruto: Split Sneakers </h3>
                                 <ul class="text-xs text-[#333] space-y-2 mt-2">
                                     <li class="flex flex-wrap gap-4">Size <span class="ml-auto">37</span></li>
                                     <li class="flex flex-wrap gap-4">Quantity <span class="ml-auto">2</span></li>

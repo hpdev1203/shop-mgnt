@@ -1,6 +1,6 @@
 
 <form wire:submit='updateInfoUser'>
-    <div class="lg:flex no-wrap lg:-mx-2 ">
+    <div class="lg:flex no-wrap lg:-mx-2">
         <div class="w-full lg:w-3/12 lg:mx-2">
             <div class="bg-white p-3 border-t-4 border-green-400">
                 <div class="image overflow-hidden">

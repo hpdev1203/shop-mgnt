@@ -132,6 +132,7 @@ Route::group(['middleware' => [CustomerAuth::class]], function () {
     Route::get('/thanh-toan', [PaymentController::class, 'index'])->name('payment');
     Route::get('/thong-tin-don-hang', [OrderSummariesController::class, 'index'])->name('order_summaries');
 });
+
 Route::get('/san-pham/{id}/{slug}', [ClientProductController::class, 'index'])->name('product-detail');
 Route::get('/quen-mat-khau', [IndexController::class, 'forgot_password'])->name('forgot_password');
 Route::get('/product', [ShowProductController::class, 'index'])->name('product');
