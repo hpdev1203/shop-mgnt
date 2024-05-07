@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
+    public function forgot_password(){
+        return view('client.forgot_password');
+    }
     public function index()
     {   
         $new_products = Product::orderBy('id', 'desc')->limit(8)->get();
