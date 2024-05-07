@@ -5,11 +5,11 @@
 @section('content')
     @include('client.layouts.slider')
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <section class="bg-white py-8">
-            <div class="container mx-auto flex items-center flex-wrap pt-4 pb-12">
-                <nav class="w-full z-30 top-0 px-6 py-1">
+        <section class="bg-white py-4">
+            <div class="container mx-auto flex items-center flex-wrap pt-4 pb-2 bg-orange-400">
+                <nav class="w-full z-30 top-0 px-6 py-1 bg-slate-200">
                     <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">SẢN PHẨM MỚI</h2>
+                        <h2 class="text-2xl font-bold text-gray-800">SẢN PHẨM MỚI</h2>
                     </div>
                 </nav>
                 @foreach ($new_products as $product)
@@ -33,11 +33,11 @@
                 @endforeach
             </div>
         </section>
-        <section class="bg-white py-8">
-            <div class="container mx-auto flex items-center flex-wrap pt-4 pb-12">
-                <nav class="w-full z-30 top-0 px-6 py-1">
+        <section class="bg-white py-4">
+            <div class="container mx-auto flex items-center flex-wrap pt-4 pb-2">
+                <nav class="w-full z-30 top-0 px-6 py-1 bg-orange-400">
                     <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">SẢN PHẨM BÁN CHẠY</h2>
+                        <h2 class="text-2xl font-bold text-gray-800">SẢN PHẨM BÁN CHẠY</h2>
                     </div>
                 </nav>
                 @foreach ($best_seller_products as $product)
