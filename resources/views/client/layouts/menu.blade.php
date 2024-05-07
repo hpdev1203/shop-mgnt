@@ -17,11 +17,14 @@
 					</div>
 					<div class="ml-auto flex items-center">
 						<!-- Search -->
-						<div class="flex lg:ml-6" x-data="{ isOpenSearch: false }">
-                            <input type="text" placeholder="Tìm kiếm" class="hidden lg:block border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            <button type="button" class="hidden lg:flex p-2 text-gray-400 hover:text-gray-500">
-                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
-                            </button>
+                        <form action="{{ route('spotlight.search') }}">
+						    <div class="flex lg:ml-6" x-data="{ isOpenSearch: false }">
+                            <input type="text" name="input_search" placeholder="Tìm kiếm" class="hidden lg:block border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            
+                                <button type="submit" class="hidden lg:flex p-2 text-gray-400 hover:text-gray-500">
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                                </button>
+  
                             <a href="#" @click="isOpenSearch = !isOpenSearch" aria-controls="search" aria-expanded="false" aria-label="Mở/closed thanh tìm kiếm" class="lg:hidden p-2 text-gray-400 hover:text-gray-500">
                                 <span class="sr-only">Tìm kiếm</span>
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -36,14 +39,15 @@
                                 </button>
                                 <div class="h-44 bg-white shadow-md py-4 mx-auto flex items-center w-full">
                                     <div class="mx-auto flex items-center">
-                                        <input type="text" placeholder="Tìm kiếm" class="block lg:hidden border border-gray-300 py-2 px-3 text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                        <button type="button" class="p-2 text-gray-400 hover:text-gray-500">
+                                        <input type="text" name="input_search2" placeholder="Tìm kiếm" class="block lg:hidden border border-gray-300 py-2 px-3 text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                        <button type="submit" class="p-2 text-gray-400 hover:text-gray-500">
                                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        </form>
 						<!-- Cart -->
 						<div class="ml-4 flow-root lg:ml-6">
 							<a href="#" class="group -m-2 flex items-center p-2">
