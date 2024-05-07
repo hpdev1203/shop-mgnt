@@ -35,4 +35,22 @@ class Product extends Model implements Auditable
     {
         return $this->HasOne(Category::class, 'id', 'category_id');
     }
+    public function totalImported()
+    {
+        return $this->importProducts()->sum('quantity');
+    }
+    public function totalSold()
+    {
+        return $this->orderDetails()->sum('quantity');
+    }
+    public function totalAvailable()
+    {
+        return $this->totalImported() - $this->totalSold();
+    }
+    public function warehouses(){
+        $listImportId = $this->importProducts()->pluck('import_product_id')->toArray();
+        $listWarehouseId = ImportProduct::whereIn('id', $listImportId)->pluck('warehouse_id')->toArray();
+        $listWarehouseId = array_unique($listWarehouseId);
+        return Warehouse::whereIn('id', $listWarehouseId)->get();
+    }
 }
