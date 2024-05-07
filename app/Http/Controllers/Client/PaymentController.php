@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-class ChangePasswordController extends Controller
+class PaymentController extends Controller
 {
     public function index()
     {   
         if (isset(Auth::user()->id)) {
-            return view('client.change_password');
+            return view('client.payment');
         }else{
             return redirect()->route('index');
         }

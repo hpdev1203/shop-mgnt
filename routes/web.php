@@ -32,6 +32,9 @@ use App\Http\Controllers\Client\ChangePasswordController;
 use App\Http\Controllers\Client\CollectionController;
 use App\Http\Controllers\Client\ShowProductDetailController;
 use App\Http\Controllers\Client\SpotlightController;
+use App\Http\Controllers\Client\PaymentController;
+use App\Http\Controllers\Client\OrderSummariesController;
+use App\Http\Controllers\Client\OrderHistoryController;
 
 
 
@@ -127,7 +130,11 @@ Route::group(['middleware' => [CustomerAuth::class]], function () {
     Route::get('/gio-hang', [CartController::class, 'index'])->name('cart');
     Route::get('/thong-tin-tai-khoan', [UserClientController::class, 'index'])->name('info_user');
     Route::get('/doi-mat-khau', [ChangePasswordController::class, 'index'])->name('change_password');
+    Route::get('/thanh-toan', [PaymentController::class, 'index'])->name('payment');
+    Route::get('/thong-tin-don-hang', [OrderSummariesController::class, 'index'])->name('order_summaries');
+    Route::get('/chi-tiet-don-hang/{id}', [OrderHistoryController::class, 'index'])->name('order_history');
 });
+
 Route::get('/san-pham/{id}/{slug}', [ClientProductController::class, 'index'])->name('product-detail');
 Route::get('/quen-mat-khau', [IndexController::class, 'forgot_password'])->name('forgot_password');
 
