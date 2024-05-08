@@ -10,26 +10,26 @@
         <div class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
             <div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
                 <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 p-4 w-full">
-                    <p class="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">Đơn hàng đã đặt</p>
+                    <p class="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800 mb-4">Đơn hàng đã đặt</p>
                     @if (count($orders) == 0)
-                        <p class="text-base dark:text-white leading-4 text-gray-800 pt-4">Không có dữ liệu</p>
+                        <p class="text-base dark:text-white leading-4 text-gray-800">Không có dữ liệu</p>
                     @else
                         <div class="w-full">
-                            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                                <div class="inline-block min-w-full shadow rounded-lg overflow-auto lg:h-[400px] md:h-[490px] h-[550px]">
-                                    <table class="min-w-full leading-normal">
+                            <div class="overflow-x-auto">
+                                <div class="inline-block w-full shadow rounded-lg overflow-auto lg:h-[400px] md:h-[490px] h-[550px]">
+                                    <table class="w-full leading-normal">
                                         <thead>
                                             <tr>
-                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
                                                     Mã đơn hàng
                                                 </th>
-                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
                                                     Ngày đặt
                                                 </th>
-                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
                                                     Tổng tiền
                                                 </th>
-                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
                                                     Trạng thái
                                                 </th>
                                             </tr>
@@ -38,7 +38,7 @@
                                             @foreach ($orders as $order)
                                                 <tr>
                                                     <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
-                                                        <a href="{{route('order_history', $order->id)}}" class="text-gray-900">{{ $order->code }}</a>
+                                                        <a href="{{route('order_history', $order->id)}}" class="text-green-500 hover:text-green-800">{{ $order->code }}</a>
                                                     </td>
                                                     <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
                                                         <p class="text-gray-900 whitespace-no-wrap">
@@ -52,17 +52,17 @@
                                                     </td>
                                                     <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
                                                         @if ($order->status == "pending")
-                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Chờ xác nhận</span>
+                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 text-nowrap">Chờ xác nhận</span>
                                                         @elseif ($order->status == "confirmed")
-                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Đã xác nhận</span>
+                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 text-nowrap">Đã xác nhận</span>
                                                         @elseif ($order->status == "shipping")
-                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">Đang giao hàng</span>
+                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800 text-nowrap">Đang giao hàng</span>
                                                         @elseif ($order->status == "delivered")
-                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Đã giao hàng</span>
+                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 text-nowrap">Đã giao hàng</span>
                                                         @elseif ($order->status == "rejected")
-                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Đã bị từ chối</span>
+                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 text-nowrap">Đã bị từ chối</span>
                                                         @elseif ($order->status == "completed")
-                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-gray-800">Hoàn thành</span>
+                                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-gray-800 text-nowrap">Hoàn thành</span>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                         <div class="flex w-full justify-center items-center md:justify-start md:items-start">
-                            <a href="{{route('info_user')}}" class="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800 text-center">Chỉnh sửa thông tin</a>
+                            <a href="{{route('info_user')}}" class="mt-6 md:mt-0 xl:mt-4 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800 text-center">Chỉnh sửa thông tin</a>
                         </div>
                     </div>
                 </div>
