@@ -3,12 +3,17 @@
 namespace App\Livewire\Client;
 
 use Livewire\Component;
+use Illuminate\Http\Request;
+use Livewire\Attributes\Url;
 
 class LoginClient extends Component
 {
+    #[Url]
+    public string $redirect = '';
     public $email_username = '';
     public $password = '';
     public $remember = '';
+    
 
     public function handleLogin()
     {
@@ -34,6 +39,9 @@ class LoginClient extends Component
                 session()->flash('error', 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.');
                 return;
             }
+            if($this->redirect != ''){
+                return redirect($this->redirect);
+            }
             return redirect()->route('index');
         }else{
             session()->flash('error', 'Thông tin đăng nhập không chính xác.');
@@ -43,7 +51,7 @@ class LoginClient extends Component
     public function handleLogout()
     {
         auth()->logout();
-        return redirect()->route('login');
+        return redirect()->route('index');
     }  
 
     public function render()

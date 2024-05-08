@@ -281,6 +281,27 @@
                                 </li>
                             </ul>
                         </div>
+                        <div
+                            class="translate transform overflow-hidden"
+                            :class="(selected === 'Settings') ? 'block' :'hidden'"
+                            >
+                            <ul class="mt-2 flex flex-col gap-2 pl-6">
+                                <li>
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{route('admin.payment-methods')}}"
+                                        :class="page === 'slideposts' && '!text-white'">
+                                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"></path>
+                                            <path d="M3 10l18 0"></path>
+                                            <path d="M7 15l.01 0"></path>
+                                            <path d="M11 15l2 0"></path>
+                                        </svg>
+                                        Slider
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
 
                     <li>

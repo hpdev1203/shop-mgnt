@@ -41,6 +41,15 @@ class EditProduct extends Component
         $this->id = $id;
         $this->brands = $brands;
         $this->categories = $categories;
+        $product = Product::find($this->id);
+        $this->product_code = $product->code;
+        $this->product_name = $product->name;
+        $this->category_id = $product->category_id;
+        $this->brand_id = $product->brand_id;
+        $this->product_retail_price = $product->retail_price;
+        $this->product_wholesale_price = $product->wholesale_price;
+        $this->product_description = $product->description;
+        $this->product_uom = $product->uom;
     }
 
     public function addProductSize(){
@@ -210,15 +219,6 @@ class EditProduct extends Component
     }
 
     public function initinalRender(){
-        $product = Product::find($this->id);
-        $this->product_code = $product->code;
-        $this->product_name = $product->name;
-        $this->category_id = $product->category_id;
-        $this->brand_id = $product->brand_id;
-        $this->product_retail_price = $product->retail_price;
-        $this->product_wholesale_price = $product->wholesale_price;
-        $this->product_description = $product->description;
-        $this->product_uom = $product->uom;
 
         if(count($this->product_size_list) == 0 && count($this->product_size_list_deleted) == 0){
             $product_size = ProductSize::where('product_id', $this->id)->get();
