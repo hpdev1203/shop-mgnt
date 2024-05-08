@@ -70,5 +70,13 @@
         @include('client.layouts.footer')
     </body>
     @livewireScripts
+    <script>
+        function updateCartNumber(number){
+            const cart_count = document.getElementById("cart-count")
+            if(cart_count){
+                cart_count.innerText = number
+            }
+        }
+    </script>
 	<script src="{{asset('library/js/app.js')}}"></script>
 </html>
