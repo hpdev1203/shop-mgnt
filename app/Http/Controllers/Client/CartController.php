@@ -11,6 +11,6 @@ class CartController extends Controller
 {
     public function index()
     {   
-        return redirect()->route('login');
+        return view('client.cart');
     }
 }

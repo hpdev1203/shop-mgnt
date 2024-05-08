@@ -9,7 +9,7 @@ class CartMD extends Model
 {
     use HasFactory;
     protected $table = 'Cart';
-    protected $fillable = ['id', 'user_id'];
+    //protected $fillable = ['id', 'user_id'];
     public function cart_item()
     {
         return $this->hasMany(CartItem::class, 'cart_id', 'id');
