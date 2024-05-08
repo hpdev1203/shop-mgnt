@@ -14,8 +14,7 @@ class UserClientController extends Controller
         if (isset(Auth::user()->id)) {
             return view('client.info_user');
         }else{
-            return redirect()->route('index');
+            return redirect()->route('dang-nhap');
         }
-        
     }
 }

@@ -5,31 +5,31 @@
 @section('content')
 <div class="py-14 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
     <div class="flex justify-start item-start space-y-2 flex-col">
-        <h1 class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Mã đơn hàng: {{$order->code}}</h1>
+        <h1 class="text-3xl dark:text-white lg:text-4xl font-semibold leading-8 lg:leading-9 text-gray-800">Mã đơn hàng: <span class="text-green-500">{{$order->code}}</span></h1>
         <p class="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">Ngày đặt: {{date('d/m/Y H:i:s', strtotime($order->order_date))}}</p>
     </div> 
     <div class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
         <div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-            <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-6 w-full overflow-auto lg:h-[575px] h-[700px]">
+            <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-6 w-full overflow-auto lg:max-h-[650px] md:max-h-[810px] max-h-[1000px]">
                 @if (count($order_details) == 0)
                     <p class="text-base dark:text-white leading-4 text-gray-800 pt-4">Không có dữ liệu</p>
                 @else
                     @foreach ($order_details as $order_detail)
                         <div class="flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
-                            <div class="pb-4 md:pb-8 w-full md:w-40">
-                                @if (count($order_detail->product->productDetails) > 0 && $order_detail->product->productDetails[0] && $order_detail->product->productDetails[0]->image)
+                            <div class="md:pb-8 w-40 h-40 mx-auto mb-4 md:mb-0">
+                                @if (isset($order_detail->product_detail) && $order_detail->product_detail->image != "")
                                     @php
-                                        $imageThumbnailCheck = json_decode($order_detail->product->productDetails[0]->image);   
-                                        $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $order_detail->product->productDetails[0]->image;
+                                        $imageThumbnailCheck = json_decode($order_detail->product_detail->image);   
+                                        $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $order_detail->product_detail->image;
                                     @endphp
                                     <img class="w-full object-cover" src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="{{$order_detail->product->name}}">
                                 @else
                                     <img class="w-full object-cover" src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm">
                                 @endif
                             </div>
-                            <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
-                                <div class="w-full flex flex-col justify-start items-start space-y-8">
-                                    <h3 class="text-md dark:text-white font-semibold leading-6 text-gray-800">{{$order_detail->product->name}}</h3>
+                            <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-4 md:pb-8 mb-4 md:mb-0 space-y-4 md:space-y-0">
+                                <div class="w-full flex flex-col justify-start items-start space-y-4 md:space-y-8">
+                                    <a href="{{route('product-detail', ['id' => $order_detail->product->id, 'slug' => $order_detail->product->slug])}}" class="text-md dark:text-white font-semibold leading-6 text-gray-800 hover:text-green-500">{{$order_detail->product->name}}</a>
                                     <div class="flex justify-start items-start flex-col space-y-2">
                                         <p class="text-sm dark:text-white leading-none text-gray-800"><span class="dark:text-gray-400 text-gray-400">Size: </span> {{$order_detail->product_size->size}}</p>
                                         <p class="text-sm dark:text-white leading-none text-gray-800"><span class="dark:text-gray-400 text-gray-400">Mẫu: </span> {{$order_detail->product_detail->title}}</p>
@@ -77,9 +77,12 @@
                                 @if($tracking_order->status == 'completed')
                                     HOÀN THÀNH
                                 @endif
+                                @if($tracking_order->status == 'rejected')
+                                    ĐÃ BỊ TỪ CHỐI
+                                @endif
                             </h3>
                             <time class="block text-xs font-normal leading-none text-gray-500 dark:text-gray-400">{{ $tracking_order->created_at->format('d/m/Y H:i:s') }}</time>
-                            <i class="text-xs">Xác nhận bởi : <b>{{$tracking_order->actioner->name}}</b></i>
+                            <i class="text-xs">Bởi : <b>{{$tracking_order->actioner->name}}</b></i>
                             <p class="mt-2 text-sm text-gray-700 dark:text-white">{{$tracking_order->note}}</p>
                         </li>
                     @endforeach
