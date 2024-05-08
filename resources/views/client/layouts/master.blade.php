@@ -8,6 +8,7 @@
         <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="{{asset('library/css/style.css')}}">
 		@vite(['resources/css/app.css','resources/js/app.js'])
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
 		@livewireStyles
 		<style>
             @import url('https://fonts.googleapis.com/css2?family=Oregano:ital@0;1&display=swap');
