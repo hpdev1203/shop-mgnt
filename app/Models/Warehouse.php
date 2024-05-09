@@ -10,7 +10,7 @@ class Warehouse extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
-    protected $table = 'Warehouse';
+    protected $table = 'warehouse';
     protected $fillable = ['code', 'name', 'address', 'phone', 'logo'];
 
     public function importProducts()
