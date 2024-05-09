@@ -150,9 +150,6 @@
                     </div>
                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"><span id="title-message"></span></h3>
                     <p id="message" class="mb-5 text-sm text-gray-500 dark:text-gray-400"></p>
-                    <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                        OK
-                    </button>
                 </div>
             </div>
         </div>
@@ -177,7 +174,7 @@
                 if(event.detail[0].type == 'success'){
                     setTimeout(() => {
                         window.location.href = "{{route('index')}}";
-                    }, 1500);
+                    }, 2000);
                 }
             })
         </script>
