@@ -3,7 +3,7 @@
 @section('title', 'Thông tin đơn hàng')
 
 @section('content')
-<div class="py-14 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
+<div class="py-6 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
         <div class="flex justify-start item-start space-y-2 flex-col">
             <h1 class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Thông tin đơn hàng</h1>
         </div> 
@@ -16,7 +16,7 @@
                     @else
                         <div class="w-full">
                             <div class="overflow-x-auto">
-                                <div class="inline-block w-full shadow rounded-lg overflow-auto lg:h-[400px] md:h-[490px] h-[550px]">
+                                <div class="inline-block w-full shadow rounded-lg overflow-auto lg:max-h-[400px] md:max-h-[490px] max-h-[550px]">
                                     <table class="w-full leading-normal">
                                         <thead>
                                             <tr>

@@ -36,7 +36,7 @@ class OrderSummariesController extends Controller
             $sum_paid = $paid + $unpaid;
             return view('client.order_summaries',['orders' => $orders,'paid' => $paid, 'unpaid' => $unpaid, 'sum_paid' => $sum_paid]);
         }else{
-            return redirect()->route('dang-nhap');
+            return redirect()->route('login');
         }
     }
 }
