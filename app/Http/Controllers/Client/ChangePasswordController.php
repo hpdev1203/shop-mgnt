@@ -14,7 +14,7 @@ class ChangePasswordController extends Controller
         if (isset(Auth::user()->id)) {
             return view('client.change_password');
         }else{
-            return redirect()->route('dang-nhap');
+            return redirect()->route('login');
         }
     }
 }

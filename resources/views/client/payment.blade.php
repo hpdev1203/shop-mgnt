@@ -34,7 +34,7 @@
                                         <div class="ml-2">
                                             <a href="{{route('product-detail', ['id' => $cart->product->id, 'slug' => $cart->product->slug])}}" class="text-base text-[#333] hover:text-green-500">{{$cart->product->name}}</a>
                                             <ul class="text-xs text-[#333] space-y-1 mt-2">
-                                                <li>Size: <span class="ml-auto">{{$cart->product_size->size}}</span></li>
+                                                <li>Size: <span class="ml-auto">{{$cart->productsize->size}}</span></li>
                                                 <li>Mẫu: <span class="ml-auto">{{$cart->product_detail->title}}</span></li>
                                                 <li>Số lượng: <span class="ml-auto">{{$cart->quantity}}</span></li>
                                                 <li>Giá: <span class="ml-auto">{{number_format($cart->unit_price_at_time)}}</span></li>

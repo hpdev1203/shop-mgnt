@@ -33,7 +33,7 @@ class OrderHistoryController extends Controller
             $tracking_orders = OrderStatus::where('order_id', $id)->get();
             return view('client.order_history',['order_details' => $order_details, 'order' => $order , 'tracking_orders' => $tracking_orders]);
         }else{
-            return redirect()->route('dang-nhap');
+            return redirect()->route('login');
         }
     }
 }
