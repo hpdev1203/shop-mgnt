@@ -51,7 +51,7 @@ class EditSystem extends Component
                 'photo.max' => 'Ảnh không được lớn hơn 2MB'
             ]);
             Storage::delete('public\\' . $this->existedPhoto);
-            $photo_name = time() . '.' . $this->photo->extension();
+            $photo_name = time() . uniqid() . '.' . $this->photo->extension();
             ImageOptimizer::optimize($this->photo->path());
             $this->photo->storeAs(path: "public\images\systems", name: $photo_name);
         }
