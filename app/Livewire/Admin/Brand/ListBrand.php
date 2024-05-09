@@ -35,13 +35,13 @@ class ListBrand extends Component
     public function deleteBrand($id){
         $brand = Brand::find($id);
         $brand->delete();
-        session()->flash('success', 'Brand deleted successfully');
+       
     }
 
     public function handleDetele($id)
     {
         $this->deleteBrand($id);
-        $this->render();
+        $this->mount();
     }
     
     public function render()
