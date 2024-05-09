@@ -18,4 +18,13 @@ class CartItem extends Model
     {
         return $this->HasOne(Product::class, 'id', 'product_id');
     }
+
+    public function warehouse()
+    {
+        return $this->HasOne(Warehouse::class, 'id', 'warehouse_id');
+    }
+    public function productsize()
+    {
+        return $this->HasOne(ProductSize::class, 'id', 'size_id');
+    }
 }
