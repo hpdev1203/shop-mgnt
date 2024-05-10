@@ -35,6 +35,7 @@ use App\Http\Controllers\Client\SpotlightController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\OrderSummariesController;
 use App\Http\Controllers\Client\OrderHistoryController;
+use App\Http\Controllers\Admin\InfoAdminController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -118,6 +119,10 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/reports/revenue', [ReportController::class, 'revenue'])->name('admin.reports.revenue');
     Route::get('/admin/reports/brand', [ReportController::class, 'brand'])->name('admin.reports.brand');
     Route::get('/admin/reports/customer', [ReportController::class, 'customer'])->name('admin.reports.customer');
+
+    /* Admin */
+    Route::get('/admin/info_admin', [InfoAdminController::class, 'index'])->name('admin.info_admin');
+    Route::get('/admin/change_password', [InfoAdminController::class, 'change_password'])->name('admin.change_password');
 });
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');

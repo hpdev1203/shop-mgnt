@@ -26,9 +26,9 @@
                                                     $imageThumbnailCheck = json_decode($cart->product_detail->image);   
                                                     $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $cart->product_detail->image;
                                                 @endphp
-                                                <img class="w-full object-cover" src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="{{$cart->product->name}}">
+                                                <img class="w-full h-full object-cover" src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="{{$cart->product->name}}">
                                             @else
-                                                <img class="w-full object-cover" src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm">
+                                                <img class="w-full h-full object-cover" src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm">
                                             @endif
                                         </div>
                                         <div class="ml-2">

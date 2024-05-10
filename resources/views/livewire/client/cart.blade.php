@@ -22,53 +22,26 @@
                         @foreach ($CartItems as $index => $item)
                         
                         <div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
-                            <div class="pb-4 md:pb-8 w-full md:w-40">
+                            <div class="pb-4 md:pb-8 w-40 h-40 md:w-40 mx-auto">
                                     @if ( $item->product_detail->image)
                                         @php
                                             $imageThumbnailCheck = json_decode($item->product_detail->image);   
                                             $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $item->product_detail->image;
                                         @endphp
-                                        <img  class="hover:grow hover:shadow-lg w-full bg-cover" src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="Hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
+                                        <img  class="hover:grow hover:shadow-lg w-full h-full object-cover bg-cover" src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="Hình ảnh sản phẩm">
                                     @else
-                                        <img  class="hover:grow hover:shadow-lg w-full bg-cover"  src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm" class="w-15 h-15 shadow-md">
+                                        <img  class="hover:grow hover:shadow-lg w-full h-full object-cover bg-cover"  src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm">
                                     @endif
-
-                                <!-- <img class="w-full hidden md:block" src="https://i.ibb.co/84qQR4p/Rectangle-10.png" alt="dress" />
-                                <img class="w-full md:hidden" src="https://i.ibb.co/L039qbN/Rectangle-10.png" alt="dress" /> -->
                             </div>
                             <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full h-full pb-8 space-y-4 md:space-y-0">
                                 <div class="w-full flex flex-col justify-start items-start space-y-8">
-                                    <h3 class="text-sm dark:text-white xl:text-sm font-semibold leading-6 text-gray-800"><a href="{{route('product-detail',['id'=>$item->product->id,'slug'=>$item->product->slug])}}" >{{$item->product_detail->short_description}}</a></h3>
+                                    <h3 class="text-sm dark:text-white xl:text-sm font-semibold leading-6 text-gray-800"><a href="{{route('product-detail',['id'=>$item->product->id,'slug'=>$item->product->slug])}}" >{{$item->product->name}}</a></h3>
                                     <div class="flex justify-start items-start flex-col space-y-2">
-                                        <!-- <p class="text-sm dark:text-white leading-none text-gray-800"><span class="dark:text-gray-400 text-gray-300">Style: </span> Italic Minimal Design</p> -->
-                                        {{-- <div class="flex">
-                                            <div class="dark:text-gray-400 text-gray-300">Kho: </div> 
-                                            <div class="flex text-sm pl-3 justify-center items-center dark:text-white leading-none text-gray-800">
-                                                {{$item->warehouse->totalProductAvailable($item->product_id, $item->product_detail_id, $item->size_id);}}
-                                            </div>
-                                        </div> --}}
-                                   
-                                        
                                         <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800">
                                             <div class="flex justify-start items-start flex-col space-y-2">
                                                 <p class="text-sm dark:text-white leading-none text-gray-800"><span class="dark:text-gray-400 text-gray-300">Size: </span> {{$item->productsize->size}}</p>
                                                 <p class="text-sm dark:text-white leading-none text-gray-800"><span class="dark:text-gray-400 text-gray-300">Mẫu: </span> {{$item->product_detail->title}}</p>
                                             </div>
-                                                {{-- <div>
-                                                <select id="product_detail" wire:model="product_detail" name="product_detail" wire:change="updateProductdetail({{$item->id}})" class="convert-to-dropdown block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                                    @foreach($item->product->productDetails as $product_item)
-                                                        <option value="{{$product_item->id}}" class="w-full"   {{$product_item->id == $item->product_detail_id ? 'selected' : ''}}>{{$product_item->title}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="pl-3">
-                                                <select id="product_size" wire:model="product_size" name="product_size" wire:change="updateProductSize({{$item->id}})" class="convert-to-dropdown block w-16 rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                                    @foreach($item->product->productSizes as $product_size)
-                                                        <option value="{{$product_size->id}}" wire:click=""  {{$product_size->id == $item->size_id ? 'selected' : ''}}>{{$product_size->size}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div> --}}
-                                            
                                         </div>
                                         <div class="flex text-sm flex-row dark:text-white leading-none text-gray-800">
                                             <button data-v-3c227870="" class="cart-item-remove" wire:click="handleDetele({{$item->id}})">
@@ -100,7 +73,7 @@
                                             </div>
                                         </div>    
                                     </div>
-                                    <div class="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">{{number_format($item->total_amount, 0, ',', '.')}}đ</div>
+                                    <div class="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">{{number_format($item->total_amount)}}</div>
                                 </div>
                             </div>
                         </div>
@@ -117,20 +90,20 @@
                         <div class="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
                             <div class="flex justify-between w-full">
                                 <p class="text-base dark:text-white leading-4 text-gray-800">Tạm tính</p>
-                                <p class="text-base dark:text-gray-300 leading-4 text-gray-600">{{number_format($total_amount, 0, ',', '.')}}đ</p>
+                                <p class="text-base dark:text-gray-300 leading-4 text-gray-600">{{number_format($total_amount)}}</p>
                             </div>
                             <div class="flex justify-between items-center w-full">
                                 <p class="text-base dark:text-white leading-4 text-gray-800">Giảm giá</p>
-                                <p class="text-base dark:text-gray-300 leading-4 text-gray-600">0đ</p>
+                                <p class="text-base dark:text-gray-300 leading-4 text-gray-600">0</p>
                             </div>
                             <div class="flex justify-between items-center w-full">
                                 <p class="text-base dark:text-white leading-4 text-gray-800">Phí giao hàng</p>
-                                <p class="text-base dark:text-gray-300 leading-4 text-gray-600">Miền phí</p>
+                                <p class="text-base dark:text-gray-300 leading-4 text-gray-600">Miễn phí</p>
                             </div>
                         </div>
                         <div class="flex justify-between items-center w-full">
                             <p class="text-base dark:text-white font-semibold leading-4 text-gray-800">Tổng</p>
-                            <p class="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">{{number_format($total_amount, 0, ',', '.')}}đ</p>
+                            <p class="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">{{number_format($total_amount)}}</p>
                         </div>
                     </div>
                     <div class="flex justify-between xl:h-full items-stretch w-full flex-col mt-6 md:mt-0">

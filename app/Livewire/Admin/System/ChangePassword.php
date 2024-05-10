@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client;
+namespace App\Livewire\Admin\System;
 
 use Livewire\Component;
 use App\Models\User;
@@ -30,14 +30,14 @@ class ChangePassword extends Component
             'confirm_password.min' => 'Vui lòng nhập ít nhất 6 ký tự',
         ]);
 
-        $user = User::find(Auth::user()->id);
-        $credentials = $user->username;
+        $admin = User::find(Auth::user()->id);
+        $credentials = $admin->username;
         if (!filter_var($credentials, FILTER_VALIDATE_EMAIL)) {
             $credentials = ['username' => $credentials, 'password' => $this->password_old];
         }
         if (auth()->attempt($credentials)) {
-            $user->password = Hash::make($this->password_new);
-            $user->save();
+            $admin->password = Hash::make($this->password_new);
+            $admin->save();
             $this->dispatch('successChangePassword', [
                 'title' => 'Thành công',
                 'message' => 'Bạn đã đổi mật khẩu thành công',
@@ -51,6 +51,6 @@ class ChangePassword extends Component
 
     public function render()
     {
-        return view('livewire.client.change-password');
+        return view('livewire.admin.system.change-password');
     }
 }
