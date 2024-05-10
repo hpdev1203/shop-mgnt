@@ -10,6 +10,7 @@ use App\Models\OrderDetail;
 
 class ListOrder extends Component
 {
+    use WithPagination, WithoutUrlPagination;
     public $search_input = '';
     public $list_order = [];
     public $selected_index = [];

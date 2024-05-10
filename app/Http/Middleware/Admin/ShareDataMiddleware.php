@@ -10,6 +10,7 @@ use App\Models\SystemInfo;
 use Illuminate\Support\Facades\View;
 use App\Models\Category;
 use App\Models\CartMD;
+use App\Models\Order;
 
 class ShareDataMiddleware
 {
@@ -28,8 +29,9 @@ class ShareDataMiddleware
             $cate_items = CartItem::where('cart_id', $cart->id)->get();
             $countCart = count($cate_items);
         }
+        $notifications = Order::where('status', 'pending')->orderBy('order_date','desc')->get();
         
-        View::share(['system_info' => $system_info, 'categories' => $categories, 'countCart' => $countCart]);
+        View::share(['system_info' => $system_info, 'categories' => $categories, 'countCart' => $countCart , 'notifications' => $notifications]);
         return $next($request);
     }
 }
