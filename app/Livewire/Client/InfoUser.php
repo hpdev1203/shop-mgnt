@@ -70,7 +70,7 @@ class InfoUser extends Component
         $user->save();
         $this->dispatch('successInfoUser', [
             'title' => 'Thành công',
-            'message' => '',
+            'message' => 'Thông tin đã được cập nhật',
             'type' => 'success',
             'timeout' => 3000
         ]);

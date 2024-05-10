@@ -60,7 +60,7 @@
                 }, 500);
                 if(event.detail[0].type == 'success'){
                     setTimeout(() => {
-                        window.location.href = "{{route('index')}}";
+                        window.location.href = "{{route('admin')}}";
                     }, 2000);
                 }
             })
