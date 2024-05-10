@@ -11,17 +11,19 @@
                     <h2 class="text-2xl font-bold text-white">SẢN PHẨM MỚI</h2>
                 </div>
                 @foreach ($new_products as $product)
-                    <div class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
+                    <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 flex flex-col">
                         <a href="{{route('product-detail', ['id' => $product->id, 'slug' => $product->slug])}}">
-                            @if (count($product->productDetails) > 0 && $product->productDetails[0] && $product->productDetails[0]->image)
-                                @php
-                                    $imageThumbnailCheck = json_decode($product->productDetails[0]->image);   
-                                    $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $product->productDetails[0]->image;
-                                @endphp
-                                <img src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="Hình ảnh sản phẩm" class="hover:grow hover:shadow-lg w-full lg:h-64 md:h-52 h-80 object-cover">
-                            @else
-                                <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm" class="hover:grow hover:shadow-lg  w-full lg:h-64 md:h-52 h-80 object-cover">
-                            @endif
+                            <div class="w-full h-80 lg:h-64">
+                                @if (count($product->productDetails) > 0 && $product->productDetails[0] && $product->productDetails[0]->image)
+                                    @php
+                                        $imageThumbnailCheck = json_decode($product->productDetails[0]->image);   
+                                        $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $product->productDetails[0]->image;
+                                    @endphp
+                                    <img src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="Hình ảnh sản phẩm" class="hover:grow hover:shadow-lg w-full h-full object-cover">
+                                @else
+                                    <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm" class="hover:grow hover:shadow-lg  w-full h-full object-cover">
+                                @endif
+                            </div>
                             <div class="pt-3 flex items-center justify-between">
                                 <p class="text-white font-bold">{{$product->name}}</p>
                             </div>
@@ -61,16 +63,16 @@
                     </svg>
                 </div>
                 @foreach ($best_seller_products as $product)
-                    <div class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
+                    <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 flex flex-col">
                         <a href="{{route('product-detail', ['id' => $product->product->id, 'slug' => $product->product->slug])}}">
                             @if (count($product->product->productDetails) > 0 && $product->product->productDetails[0] && $product->product->productDetails[0]->image)
                                 @php
                                     $imageThumbnailCheck = json_decode($product->product->productDetails[0]->image);   
                                     $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $product->product->productDetails[0]->image;
                                 @endphp
-                                <img src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="Hình ảnh sản phẩm" class="hover:grow hover:shadow-lg  w-full lg:h-64 md:h-52 h-80 object-cover">
+                                <img src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="Hình ảnh sản phẩm" class="hover:grow hover:shadow-lg w-full h-80 lg:h-64 object-cover">
                             @else
-                                <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm" class="hover:grow hover:shadow-lg  w-full lg:h-64 md:h-52 h-80 object-cover">
+                                <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm" class="hover:grow hover:shadow-lg w-full h-80 lg:h-64 object-cover">
                             @endif
                             <div class="pt-3 flex items-center justify-between">
                                 <p class="text-white font-bold">{{$product->product->name}}</p>
