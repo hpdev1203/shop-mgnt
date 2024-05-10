@@ -24,18 +24,12 @@ class PrelimReport extends Component
     public $userid = '';
     public function updatePrelim()
     {
-      
-
         $id = $this->id;
         $brandId = $this->brand_id;
         $categoryID = $this->category_id;
         $start_date = $this->start_date;
         $end_date = $this->end_date;
         $userid = $this->userid;
-
-
-        
-        // session()->flash('message', 'prelim has been updated successfully!');
 
         if($id==1){
             $link_route = 'admin.reports.inventory';
@@ -60,14 +54,8 @@ class PrelimReport extends Component
 
     public function render()
     {
-        // $categories = PrelimReport::all();
-        // $brand = PrelimReport::find($this->id);
-        // $this->brand_code = $brand->code;
-        // $this->brand_name = $brand->name;
-        // $this->description = $brand->description;
-        // if($brand->logo) {
-        //     $this->existedPhoto = "images/brands/" . $brand->logo;
-        // }
+        $this->start_date = now()->format('Y-m-d');
+        $this->end_date = now()->addMonth()->format('Y-m-d');
         $id = request() -> id;
         $brands = Brand::all();
         $categorys = Category::all();

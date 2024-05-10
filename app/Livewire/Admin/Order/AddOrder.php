@@ -185,6 +185,7 @@ class AddOrder extends Component
 
     public function render()
     {
+        $this->order_date = now()->format('Y-m-d');
         return view('livewire.admin.order.add-order');
     }
 }

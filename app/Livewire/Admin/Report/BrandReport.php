@@ -11,39 +11,27 @@ use App\Models\Warehouse;
 use App\Models\Product;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
-use App\Models\ImportProduct;
-use App\Models\ImportProductDetails;
 use Illuminate\Support\Facades\DB;
 
 class BrandReport extends Component
-{
-
-    public $startdate = "";
-    public $endate = "";    
-
-    public function updateBrand()
-    {
-       
-        session()->flash('message', 'brand has been updated successfully!');
-        return redirect()->route('admin.brands');
-    }
-
-    public function mount($id)
-    {
-        $this->id = $id;
-    }
-
+{ 
+    use WithPagination, WithoutUrlPagination;
     public function render()
     {
-      
         if(request()->brandId == '' && request()->categoryID == ''){
-            $products = Product::with(['productDetails' => function ($query) {
-                $query->where('image', '!=', null)->take(1);
-            }])->paginate(10000);
+            $products = Product::paginate(20);
         } else {
-            $products = Product::where('category_id', '=', request()->categoryID)->orWhere('brand_id', '=', request()->brandId)->with(['productDetails' => function ($query) {
-                $query->where('image', '!=', null)->take(1);
-            }])->paginate(10000);
+            if(request()->brandId != '' && request()->categoryID != ''){
+                $products = Product::where('category_id', '=', request()->categoryID)->where('brand_id', '=', request()->brandId)->with(['productDetails' => function ($query) {
+                    $query->where('image', '!=', null)->take(1);
+                }])->paginate(20);
+            }
+            else{
+                $products = Product::where('category_id', '=', request()->categoryID)->orWhere('brand_id', '=', request()->brandId)->with(['productDetails' => function ($query) {
+                    $query->where('image', '!=', null)->take(1);
+                }])->paginate(20);
+            }
+            
         }
 
         

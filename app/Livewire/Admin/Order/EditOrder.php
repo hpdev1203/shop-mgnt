@@ -187,7 +187,7 @@ class EditOrder extends Component
         $this->payment_method_id = $this->order->payment_method_id;
         $this->payment_status = $this->order->payment_status;
         $this->customer_id = $this->order->user_id;
-        $this->order_date = $this->order->order_date;
+        $this->order_date = date('Y-m-d', strtotime($this->order->order_date));
         $this->order_status = $this->order->status;
         $this->order_note = $this->order->note;
         $this->order_code = $this->order->code;
