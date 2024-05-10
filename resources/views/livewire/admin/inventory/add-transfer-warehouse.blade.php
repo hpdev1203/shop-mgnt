@@ -24,7 +24,7 @@
                 <div class="col-span-1 sm:col-span-2 md:col-span-2">
                     <label for="from_warehouse_id" class="block text-sm font-medium leading-6 text-gray-900">Kho hàng đi<span class="text-red-700">*</span></label>
                     <div class="mt-2">
-                        <select wire:model="from_warehouse_id" id="from_warehouse_id" name="from_warehouse_id" autocomplete="from_warehouse_id" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <select wire:model="from_warehouse_id" id="from_warehouse_id" name="from_warehouse_id" autocomplete="from_warehouse_id" class="convert-to-dropdown block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                             <option value="">-</option>
                             @foreach ($warehouses as $warehouse)
                                 <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
@@ -38,7 +38,7 @@
                 <div class="col-span-1 sm:col-span-2 md:col-span-2">
                     <label for="to_warehouse_id" class="block text-sm font-medium leading-6 text-gray-900">Kho hàng đến<span class="text-red-700">*</span></label>
                     <div class="mt-2">
-                        <select wire:model="to_warehouse_id" id="to_warehouse_id" name="to_warehouse_id" autocomplete="to_warehouse_id" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <select wire:model="to_warehouse_id" id="to_warehouse_id" name="to_warehouse_id" autocomplete="to_warehouse_id" class="convert-to-dropdown block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                             <option value="">-</option>
                             @foreach ($warehouses as $warehouse)
                                 <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
@@ -66,7 +66,7 @@
                 </div>
                 @if ($list_transfer_warehouse_detail)
                     <div class="col-span-1 sm:col-span-2 md:col-span-8">
-                        <div class="overflow-x-auto">
+                        <div class="">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
@@ -82,7 +82,7 @@
                                     <tr>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">{{{$index+1}}}</td>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">
-                                            <select wire:model="product_id.{{$index}}" wire:change="pullDropdown({{$index}})" id="product_id.{{$index}}" name="product_id.{{$index}}" autocomplete="product_id.{{$index}}" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <select wire:model="product_id.{{$index}}" wire:change="pullDropdown({{$index}})" id="product_id{{$index}}" name="product_id{{$index}}" autocomplete="product_id{{$index}}" class="convert-to-dropdown block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                                 <option value="">-</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -93,7 +93,7 @@
                                             @enderror
                                         </td>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">
-                                            <select wire:model="product_detail_id.{{$index}}" id="product_detail_id.{{$index}}" name="product_detail_id.{{$index}}" autocomplete="product_detail_id.{{$index}}" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <select wire:model="product_detail_id.{{$index}}" id="product_detail_id{{$index}}" name="product_detail_id{{$index}}" autocomplete="product_detail_id{{$index}}" class="convert-to-dropdown block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                                 <option value="">-</option>
                                                 @if ($product_detail_list && array_key_exists($index,$product_detail_list))
                                                     @foreach($product_detail_list[$index] as $product_detail)
@@ -106,7 +106,7 @@
                                             @enderror
                                         </td>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">
-                                            <select wire:model="size_id.{{$index}}" id="size_id.{{$index}}" name="size_id.{{$index}}" autocomplete="size_id.{{$index}}" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <select wire:model="size_id.{{$index}}" id="size_id{{$index}}" name="size_id{{$index}}" autocomplete="size_id{{$index}}" class="convert-to-dropdown block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                                 <option value="">-</option>
                                                 @if ($product_size_list && array_key_exists($index,$product_size_list))
                                                     @foreach($product_size_list[$index] as $product_size)
@@ -119,7 +119,7 @@
                                             @enderror
                                         </td>
                                         <td class="px-6 py-2 whitespace-nowrap text-left" valign="top">
-                                            <input wire:model="transfer_warehouse_detail_qnty.{{$index}}" type="number" name="transfer_warehouse_detail_qnty.{{$index}}" id="transfer_warehouse_detail_qnty.{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <input wire:model="transfer_warehouse_detail_qnty.{{$index}}" type="number" name="transfer_warehouse_detail_qnty{{$index}}" id="transfer_warehouse_detail_qnty{{$index}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                             @error('transfer_warehouse_detail_qnty.' .$index)
                                                 <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                                             @enderror
@@ -138,3 +138,13 @@
         <button class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Lưu</button>
     </div>
 </form>
+
+@script
+    <script>
+        Livewire.hook('element.init', ({ component, el }) => {
+            setTimeout(() => {
+                convertSelectsToDropdowns()
+            }, 100);
+        })
+    </script>
+@endscript

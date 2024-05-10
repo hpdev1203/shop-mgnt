@@ -19,17 +19,44 @@ class BrandReport extends Component
     public function render()
     {
         if(request()->brandId == '' && request()->categoryID == ''){
-            $products = Product::paginate(20);
+            $products = Product::select(
+                'products.id','products.code','products.name',
+                'products.category_id','products.brand_id','products.retail_price',
+                'products.wholesale_price'
+            )->join('order_detail','products.id','order_detail.product_id')
+            ->groupBy(
+                'products.id','products.code','products.name',
+                'products.category_id','products.brand_id','products.retail_price',
+                'products.wholesale_price'
+            )->paginate(20);
         } else {
             if(request()->brandId != '' && request()->categoryID != ''){
-                $products = Product::where('category_id', '=', request()->categoryID)->where('brand_id', '=', request()->brandId)->with(['productDetails' => function ($query) {
-                    $query->where('image', '!=', null)->take(1);
-                }])->paginate(20);
+                $products = Product::select(
+                    'products.id','products.code','products.name',
+                    'products.category_id','products.brand_id','products.retail_price',
+                    'products.wholesale_price'
+                )->join('order_detail','products.id','order_detail.product_id')
+                ->where('products.category_id', '=', request()->categoryID)
+                ->where('products.brand_id', '=', request()->brandId)
+                ->groupBy(
+                    'products.id','products.code','products.name',
+                    'products.category_id','products.brand_id','products.retail_price',
+                    'products.wholesale_price'
+                )->paginate(20);
             }
             else{
-                $products = Product::where('category_id', '=', request()->categoryID)->orWhere('brand_id', '=', request()->brandId)->with(['productDetails' => function ($query) {
-                    $query->where('image', '!=', null)->take(1);
-                }])->paginate(20);
+                $products = Product::select(
+                    'products.id','products.code','products.name',
+                    'products.category_id','products.brand_id','products.retail_price',
+                    'products.wholesale_price'
+                )->join('order_detail','products.id','order_detail.product_id')
+                ->where('products.category_id', '=', request()->categoryID)
+                ->orWhere('products.brand_id', '=', request()->brandId)
+                ->groupBy(
+                    'products.id','products.code','products.name',
+                    'products.category_id','products.brand_id','products.retail_price',
+                    'products.wholesale_price'
+                )->paginate(20);
             }
             
         }

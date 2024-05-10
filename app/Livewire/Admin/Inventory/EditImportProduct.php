@@ -33,6 +33,8 @@ class EditImportProduct extends Component
 
     public function pullDropdown($index){
         $product_id = $this->product_id[$index];
+        $this->product_detail_id[$index] = "";
+        $this->size_id[$index] = "";
         $product_detail = ProductDetail::where('product_id',$product_id)->get();
         $product_size = ProductSize::where('product_id',$product_id)->get();
         $this->product_detail_list[$index] = $product_detail;
@@ -54,29 +56,25 @@ class EditImportProduct extends Component
 
         if ($this->import_product_detail_count > 0) {
             for ($i=0; $i < $this->import_product_detail_count; $i++) {
-                if ($this->import_product_detail_count > 0) {
-                    for ($i=0; $i < $this->import_product_detail_count; $i++) {
-                        $product_size[$i] = 0;
-                        if(isset($this->product_id[$i])){
-                            $product_size[$i] = ProductSize::where('product_id',$this->product_id[$i])->get();
-                        }
-                        $this->validate([
-                            'product_id.'.$i => 'required',
-                            'product_detail_id.'.$i => 'required',
-                            'import_product_detail_qnty.'.$i => 'required',
-                        ], [
-                            'product_id.'.$i => 'Vui lòng chọn sản phẩm',
-                            'product_detail_id.'.$i => 'Vui lòng chọn mẫu sản phẩm',
-                            'import_product_detail_qnty.'.$i => 'Vui lòng nhập số lượng',
-                        ]);
-                        if (count($product_size[$i]) > 0) {
-                            $this->validate([
-                                'size_id.'.$i => 'required',
-                            ], [
-                                'size_id.'.$i => 'Vui lòng chọn size',
-                            ]);
-                        }
-                    }
+                $product_size[$i] = 0;
+                if(isset($this->product_id[$i])){
+                    $product_size[$i] = ProductSize::where('product_id',$this->product_id[$i])->get();
+                }
+                $this->validate([
+                    'product_id.'.$i => 'required',
+                    'product_detail_id.'.$i => 'required',
+                    'import_product_detail_qnty.'.$i => 'required',
+                ], [
+                    'product_id.'.$i => 'Vui lòng chọn sản phẩm',
+                    'product_detail_id.'.$i => 'Vui lòng chọn mẫu sản phẩm',
+                    'import_product_detail_qnty.'.$i => 'Vui lòng nhập số lượng',
+                ]);
+                if (count($product_size[$i]) > 0) {
+                    $this->validate([
+                        'size_id.'.$i => 'required',
+                    ], [
+                        'size_id.'.$i => 'Vui lòng chọn size',
+                    ]);
                 }
             }
         }
