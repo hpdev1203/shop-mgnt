@@ -6,6 +6,10 @@ use Livewire\Component;
 use App\Models\User;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
+use App\Models\CartMD;
+use App\Models\CartItem;
+use App\Models\Order;
+use App\Models\OrderDetail;
 
 class ListUser extends Component
 {
@@ -34,6 +38,26 @@ class ListUser extends Component
 
     public function deleteUser($id){
         $user = User::find($id);
+        $orders = Order::where('user_id',$id)->get();
+        if (count($orders) > 0) {
+            foreach ($orders as $key => $order) {
+                $order_details = OrderDetail::where('order_id', $order->id)->get();
+                foreach ($order_details as $item) {
+                    $item->delete();
+                }
+                $order->delete();
+            }
+        }
+
+        $cart = CartMD::where('user_id',$id)->first();
+        if (isset($cart)) {
+            $cart_items = CartItem::where('cart_id', $cart->id)->get();
+            foreach ($cart_items as $item) {
+                $item->delete();
+            }
+            $cart->delete();
+        }
+        
         $user->delete();
         session()->flash('success', 'Khách hàng đã được xóa thành công');
     }
