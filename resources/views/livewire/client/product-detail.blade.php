@@ -19,11 +19,21 @@
                     <div class="flex mb-4">
                         <div class="mr-4">
                             <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Giá:</span>
-                            <span class="text-gray-600 dark:text-gray-300">{{number_format($product->retail_price)}}</span>
+                            @if(Auth::check())
+                                <span class="text-green-500">{{number_format($product->retail_price)}} VNĐ</span>
+                            @else
+                                <span class="text-red-500 text-sm">Đăng nhập để xem giá</span>
+                            @endif
                         </div>
                         <div>
                             <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Tồn kho:</span>
-                            <span class="text-gray-600 dark:text-gray-300">{{$available_quantity}}</span>
+                            <span class="text-gray-600 dark:text-gray-300">
+                                @if(Auth::check())
+                                    {{$available_quantity}}
+                                @else
+                                <span class="text-red-500 text-sm">Đăng nhập để xem</span>
+                                @endif
+                            </span>
                         </div>
                     </div>
                     <div class="mb-4">
@@ -63,7 +73,7 @@
                                     {{$product_size->id == $product_size_id_selected ? 'bg-gray-400 dark:bg-gray-600' : ''}}" wire:click="updateProductSize({{$product_size->id}})">{{$product_size->size}}</button>
                                 @endforeach
                             @else
-                                <button class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600 bg-gray-400 dark:bg-gray-600">ZERO</button>
+                                <button class=" text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600 bg-gray-400 dark:bg-gray-600">ZERO</button>
                             @endif
                         </div>
                     </div>
@@ -81,7 +91,9 @@
                     </div>
                     <div class="pb-2">
                         <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Mô tả sản phẩm</span>
-                        {!! $product->description !!}
+                        <div class="text-sm">
+                            {!! $product->description !!}
+                        </div>
                     </div>
                 </div>
             </div>

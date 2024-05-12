@@ -122,8 +122,6 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="lg:hidden flex items-center ml-4 text-sm font-medium text-gray-900 hover:text-gray-800">Nam</a>
-                    <a href="#" class="lg:hidden flex items-center ml-4 text-sm font-medium text-gray-900 hover:text-gray-800">Nữ</a>
 					<!-- Flyout menus -->
 					<div class="hidden lg:block lg:self-stretch">
 						<div class="flex h-full space-x-8">
@@ -156,9 +154,7 @@
                                     </div>
                                 </div>
 							</div>
-							<a href="#" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800 hover:text-blue-600">Đồ Nam</a>
-							<a href="#" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800 hover:text-blue-600">Đồ Nữ</a>
-                            <a href="#" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800 hover:text-blue-600">Liên hệ</a>
+                            <a href="#" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800">Liên hệ</a>
 						</div>
 					</div>
 					<div class="ml-auto flex items-center">

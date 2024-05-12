@@ -288,7 +288,7 @@
                             <ul class="mt-2 flex flex-col gap-2 pl-6">
                                 <li>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                        href="{{route('admin.payment-methods')}}"
+                                        href="{{route('admin.sliders')}}"
                                         :class="page === 'slideposts' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -297,7 +297,7 @@
                                             <path d="M7 15l.01 0"></path>
                                             <path d="M11 15l2 0"></path>
                                         </svg>
-                                        Slider
+                                        Slide
                                     </a>
                                 </li>
                             </ul>
