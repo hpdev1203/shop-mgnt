@@ -33,6 +33,8 @@ class AddImportProduct extends Component
 
     public function pullDropdown($index){
         $product_id = $this->product_id[$index];
+        $this->product_detail_id[$index] = "";
+        $this->size_id[$index] = "";
         $product_detail = ProductDetail::where('product_id',$product_id)->get();
         $product_size = ProductSize::where('product_id',$product_id)->get();
         $this->product_detail_list[$index] = $product_detail;
