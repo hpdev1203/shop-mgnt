@@ -2,7 +2,7 @@
 
 <div id="default-carousel" class="relative w-full" data-carousel="slide">
     <!-- Carousel wrapper -->
-    <div class="relative h-96 overflow-hidden relative">
+    <div class="relative h-96 overflow-hidden">
          <!-- Item 1 -->
         <div class="hidden duration-700 ease-in-out bg-cyan-900" data-carousel-item>
             <div class="hidden lg:flex">

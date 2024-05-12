@@ -65,7 +65,7 @@
             }
         </style>
 	</head>
-	<body class="bg-white font-sans leading-normal text-base tracking-normal">
+	<body class="bg-gray-300 font-sans leading-normal text-base tracking-normal">
         @include('client.layouts.menu')
         @yield('content')
         @include('client.layouts.footer')
