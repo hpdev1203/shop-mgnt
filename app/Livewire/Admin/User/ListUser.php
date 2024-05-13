@@ -10,6 +10,7 @@ use App\Models\CartMD;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\ContactUser;
 
 class ListUser extends Component
 {
@@ -56,6 +57,13 @@ class ListUser extends Component
                 $item->delete();
             }
             $cart->delete();
+        }
+
+        $contacts = ContactUser::where('user_id',$id)->get();
+        if (count($contacts) > 0) {
+            foreach ($contacts as $key => $contact) {
+                $contact->delete();
+            }
         }
         
         $user->delete();

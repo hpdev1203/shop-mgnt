@@ -10,4 +10,9 @@ class ContactUser extends Model
     use HasFactory;
     protected $table = 'contact';
     protected $fillable = ['id', 'user_id', 'subject', 'description'];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

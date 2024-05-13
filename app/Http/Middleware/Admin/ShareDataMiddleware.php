@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\Category;
 use App\Models\CartMD;
 use App\Models\Order;
+use App\Models\ContactUser;
 
 class ShareDataMiddleware
 {
@@ -30,8 +31,9 @@ class ShareDataMiddleware
             $countCart = count($cate_items);
         }
         $notifications = Order::where('status', 'pending')->orderBy('order_date','desc')->get();
+        $notification_contacts = ContactUser::where('is_view', '0')->orderBy('created_at','desc')->get();
         
-        View::share(['system_info' => $system_info, 'categories' => $categories, 'countCart' => $countCart , 'notifications' => $notifications]);
+        View::share(['system_info' => $system_info, 'categories' => $categories, 'countCart' => $countCart , 'notifications' => $notifications , 'notification_contacts' => $notification_contacts]);
         return $next($request);
     }
 }
