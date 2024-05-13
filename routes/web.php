@@ -36,6 +36,8 @@ use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\OrderSummariesController;
 use App\Http\Controllers\Client\OrderHistoryController;
 use App\Http\Controllers\Admin\InfoAdminController;
+use App\Http\Controllers\Client\ContactController;
+use App\Http\Controllers\Admin\ContactController as AdminContactController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -123,6 +125,9 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     /* Admin */
     Route::get('/admin/info_admin', [InfoAdminController::class, 'index'])->name('admin.info_admin');
     Route::get('/admin/change_password', [InfoAdminController::class, 'change_password'])->name('admin.change_password');
+
+    Route::get('/admin/contact', [AdminContactController::class, 'index'])->name('admin.contact');
+    Route::get('/admin/contact/edit/{id}', [AdminContactController::class, 'edit'])->name('admin.contact.edit');
 });
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
@@ -141,6 +146,7 @@ Route::group(['middleware' => [CustomerAuth::class]], function () {
     Route::get('/thanh-toan', [PaymentController::class, 'index'])->name('payment');
     Route::get('/thong-tin-don-hang', [OrderSummariesController::class, 'index'])->name('order_summaries');
     Route::get('/chi-tiet-don-hang/{id}', [OrderHistoryController::class, 'index'])->name('order_history');
+    Route::get('/lien-he', [ContactController::class, 'index'])->name('contact');
 });
 
 Route::get('/san-pham/{id}/{slug}', [ClientProductController::class, 'index'])->name('product-detail');

@@ -53,6 +53,7 @@
                 </div>
             </div>
         </div>
+        @include('client.layouts.modal_success')
     </div>
   </div>
 @endsection
