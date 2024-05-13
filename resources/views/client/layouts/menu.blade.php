@@ -154,7 +154,7 @@
                                     </div>
                                 </div>
 							</div>
-                            <a href="#" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800">Liên hệ</a>
+                            <a href="{{route('contact')}}" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800">Liên hệ</a>
 						</div>
 					</div>
 					<div class="ml-auto flex items-center">

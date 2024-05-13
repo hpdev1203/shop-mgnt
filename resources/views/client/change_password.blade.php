@@ -12,5 +12,6 @@
             @livewire('client.change-password')
         </div>
     </div>
+    @include('client.layouts.modal_success')
 </div>
 @endsection
