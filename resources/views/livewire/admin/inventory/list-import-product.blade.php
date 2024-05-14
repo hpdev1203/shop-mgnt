@@ -16,19 +16,6 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-200">
                 <tr>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-10 text-center">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="checkDeleteMultiple('cbx_delete');" class="cursor-pointer">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier"> 
-                                <path d="M20.5001 6H3.5" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path> 
-                                <path d="M9.5 11L10 16" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path>
-                                <path d="M14.5 11L14 16" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path>
-                                <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#ab0d0d" stroke-width="1.5"></path>
-                                <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path> 
-                            </g>
-                        </svg>
-                    </th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-20 text-center">STT</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-52 text-left">Mã nhập hàng</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tiêu đề</th>
@@ -44,30 +31,15 @@
                 @endif
                 @foreach ($import_products as $index => $import_product)
                 <tr>
-                    <td class="px-2 py-2 whitespace-nowrap text-center">
-                        <input type="checkbox" name="cbx_delete" class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:model="selected_index.{{$index}}" value="{{$import_product->id}}">
-                    </td>
                     <td class="px-2 py-2 whitespace-nowrap text-center">{{$import_products->perPage() * ($import_products->currentPage() - 1) + $loop->iteration }}</td>
                     <td class="px-2 py-2 whitespace-nowrap">{{$import_product->code}}</td>
                     <td class="px-2 py-2 whitespace-nowrap">{{$import_product->name}}</td>
                     <td class="px-2 py-2 whitespace-nowrap">{{$import_product->warehouse->name}}</td>
                     <td class="px-2 py-2 whitespace-nowrap text-center">
                         <a href="{{route('admin.import-product.edit', $import_product->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
-                            <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
-                                <path d="M16 5l3 3"></path>
-                            </svg>
-                        </a>
-                        <a data-modal-target="popup-delete-item" data-modal-toggle="popup-delete-item" onclick="parseDataDelete('{{$import_product->id}}', '{{$import_product->name}}')" class="cursor-pointer inline-flex items-center text-red-600 hover:text-red-900">
-                            <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Delete" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M4 7l16 0"></path>
-                                <path d="M10 11l0 6"></path>
-                                <path d="M14 11l0 6"></path>
-                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                            <svg class="icon" data-bs-toggle="tooltip" data-bs-title="View" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                         </a>
                     </td>
@@ -80,42 +52,4 @@
     <div class="px-4 py-6 md:px-6 xl:px-7.5">
         {{$import_products->links('admin.layouts.custom-pagination')}}
     </div>
-    <div class="hidden" data-modal-target="popup-delete-multiple-item" data-modal-toggle="popup-delete-multiple-item"></div>
-    <div class="hidden" data-modal-target="popup-warning" data-modal-toggle="popup-warning"></div>
-    @include('admin.layouts.confirm-delete')
-    @include('admin.layouts.confirm-delete-multiple')
-    @include('admin.layouts.pop-up-warning')
-
-    <script>
-        function checkDeleteMultiple(nameInput){
-            let checkboxes = document.getElementsByName(nameInput);
-            let countChecked = 0;
-            for (let i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    countChecked++;
-                }
-            }
-            if (countChecked == 0) {
-                const popupWarning = document.querySelector('[data-modal-target="popup-warning"]');
-                popupWarning.click();
-                parseInfoWarning('Bạn chưa chọn mục nào để xóa');
-            } else {
-                const popupDeleteMultiple = document.querySelector('[data-modal-target="popup-delete-multiple-item"]');
-                popupDeleteMultiple.click();
-                parseInfoDeleteMultiple('deleteListCheckbox()');
-            }
-        }
-        
-    </script>
-    @script
-        <script>
-            $wire.on('error', (data) => {
-                const popupWarning = document.querySelector('[data-modal-target="popup-warning"]');
-                setTimeout(() => {
-                    popupWarning.click();
-                    parseInfoWarning(data[0].error);
-                }, 500);
-            });
-        </script>
-    @endscript
 </div>

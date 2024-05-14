@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
+            <div class="px-4 py-6 md:px-6 xl:px-7.5">
                 @livewire('admin.inventory.add-import-product')
             </div>
         </div>
