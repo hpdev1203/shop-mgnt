@@ -15,4 +15,19 @@ class ImportProductDetail extends Model
     {
         return $this->belongsTo(ImportProduct::class, 'import_product_id', 'id');
     }
+
+    public function product()
+    {
+        return $this->HasOne(Product::class, 'id', 'product_id');
+    }
+
+    public function product_detail()
+    {
+        return $this->HasOne(ProductDetail::class, 'id', 'product_detail_id');
+    }
+
+    public function product_size()
+    {
+        return $this->HasOne(ProductSize::class, 'id', 'size_id');
+    }
 }
