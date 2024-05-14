@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit='storeBrand'>
+    <form wire:submit='store'>
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-6">
@@ -17,6 +17,34 @@
                         <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Mô tả</label>
                         <div class="mt-2">
                             <textarea wire:model="description" id="description" name="description" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                    <div class="col-span-1 sm:col-span-2 md:col-span-3">
+                        <label for="italic_text" class="block text-sm font-medium leading-6 text-gray-900">Dòng chữ style dưới</label>
+                        <div class="mt-2">
+                            <input wire:model="italic_text" type="italic_text" name="italic_text" id="italic_text" autocomplete="italic_text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                    <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                    <div class="col-span-1 sm:col-span-2 md:col-span-3">
+                        <label for="link" class="block text-sm font-medium leading-6 text-gray-900">Liên kết</label>
+                        <div class="mt-2">
+                            <input wire:model="link" type="text" name="link" id="link" autocomplete="link" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                    <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                    <div class="col-span-1 sm:col-span-2 md:col-span-3">
+                        <label for="button_text" class="block text-sm font-medium leading-6 text-gray-900">Nhãn liên kết hiển thị</label>
+                        <div class="mt-2">
+                            <input wire:model="button_text" type="text" name="button_text" id="button_text" autocomplete="button_text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                    <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                    <div class="col-span-1 sm:col-span-2 md:col-span-3">
+                        <label for="status" class="block text-sm font-medium leading-6 text-gray-900">Trạng thái hoạt động</label>
+                        <div class="mt-2">
+                            <input wire:model="status" type="checkbox" name="status" id="status" class="rounded-md border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </div>
                     </div>
                     <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>

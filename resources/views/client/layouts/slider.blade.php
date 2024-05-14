@@ -3,7 +3,7 @@
 <div id="default-carousel" class="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl" data-carousel="slide">
     <!-- Carousel wrapper -->
     <div class="relative h-96 overflow-hidden">
-        @for ($i = 0; $i < 1; $i++)
+        @foreach ($sliders as $slide)
             <div class="hidden duration-700 ease-in-out bg-cyan-900" data-carousel-item>
                 <div class="hidden lg:flex">
                     <img src="{{asset('library/images/shape-1.png')}}" class="absolute right-0 top-0 opacity-5">
@@ -11,26 +11,26 @@
                     <img src="{{asset('library/images/shape-3.png')}}" class="absolute right-1/3 top-8 ">
                     <img src="{{asset('library/images/shape-4.png')}}" class="absolute left-24 top-24">
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 inline-block align-middle h-full">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 align-middle h-full">
                     <div class="col-span-1 lg:col-span-1 flex flex-col justify-center align-middle ml-2 lg:ml-6">
-                        <h3 class="font-bold text-white text-4xl leading-snug">The best note book collection 2023</h3>
-                        <p class="font-oregano text-white text-2xl"> Exclusive offer <span class="text-yellow-600 font-medium text-2xl">-10%</span> off this week </p>
+                        <h3 class="font-bold text-white text-4xl leading-snug">{{$slide->description}}</h3>
+                        <p class="font-oregano text-white text-2xl"> {{$slide->italic_text}} </p>
                         <div class="mt-3 ">
-                            <a href="/products" class="tp-btn tp-btn-2 tp-btn-white px-3 py-2 round-md bg-white text-black">
-                                Shop Now
+                            <a href="{{$slide->link}}" class="tp-btn tp-btn-2 tp-btn-white px-3 py-2 round-md bg-white text-black">
+                                {{$slide->button_text}}
                             </a>
                         </div>
                     </div>
                     <div class="col-span-1 lg:col-span-1 flex flex-col justify-center align-middle">
-                        <img src="https://shofy.botble.com/storage/main/sliders/slider-2.png" class="animate-fade-left" alt="...">
+                        <img src="{{asset('storage/images/slides/' . $slide->image)}}" class="animate-fade-left" alt="...">
                     </div>
                 </div>
             </div>
-        @endfor
+        @endforeach
     </div>
     <!-- Slider indicators -->
     <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        @for ($i = 0; $i < 3; $i++)
+        @for ($i = 0; $i < count($sliders); $i++)
             <button type="button" class="w-3 h-3 rounded-full" aria-current="{{$i == 0 ? 'true' : 'false'}}" aria-label="Slide {{$i+1}}" data-carousel-slide-to="{{$i}}"></button>
         @endfor
     </div>
