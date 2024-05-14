@@ -1,5 +1,5 @@
 
-
+@if(count($sliders) > 0)
 <div id="default-carousel" class="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl" data-carousel="slide">
     <!-- Carousel wrapper -->
     <div class="relative h-96 overflow-hidden">
@@ -52,3 +52,4 @@
         </span>
     </button>
 </div>
+@endif
