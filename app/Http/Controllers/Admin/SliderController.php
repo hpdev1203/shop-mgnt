@@ -14,7 +14,7 @@ class SliderController extends Controller
 
     public function add()
     {
-        return view('admin.dashboard.slider.add');
+        return view('admin.dashboard.slider.add_slide');
     }
 
     public function edit($id)
