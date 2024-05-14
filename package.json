@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^41.3.1",
+        "@ckeditor/ckeditor5-font": "^41.3.1",
         "@ckeditor/ckeditor5-image": "^41.3.1",
         "codemirror": "^6.0.1",
         "flowbite": "^2.3.0",
