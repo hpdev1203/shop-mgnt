@@ -1,5 +1,5 @@
 
-<form wire:submit='updateInfoUser' class="bg-white py-5">
+<form wire:submit='updateInfoUser' class="bg-white py-5 px-4">
     <div class="lg:flex no-wrap lg:-mx-2">
         <div class="w-full lg:w-3/12 lg:mx-2">
             <div class="bg-white p-3">
