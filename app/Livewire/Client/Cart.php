@@ -30,6 +30,8 @@ class Cart extends Component
     public $product_size;
     public $total_amount = 0;
     public $update = []; 
+    public $div_loading = "";
+    public $on_saving = false;
 
 
     public function mount()
@@ -42,12 +44,14 @@ class Cart extends Component
     }
 
     function load(){
+        $start_time = time();
         $this->Carts =  CartMD::where('user_id', '=', Auth::user()->id)->first();
  
         if($this->Carts != null &&  $this->Carts->cart_item != null){
             $this->CartItems = $this->Carts->cart_item;
             $this->total_amount = $this->Carts->cart_item->sum("total_amount");
         }
+        $this->dispatch('hide_loading');
     }
 
     public function deleteCartItem($id){
@@ -65,15 +69,15 @@ class Cart extends Component
     
     public function updated() {
 
-        $this->dispatch('$refresh');
-        //$this->load();
+        return redirect()->route('cart');
        
     }
 
     public function addQTY($id,$method,$value){
   
         $cart_item = CartItem::where('id', $id)->first();
-        if($cart_item){
+        if($cart_item && $this->on_saving == false){
+            $this->on_saving = true;
             $available_quantity = $cart_item->warehouse->totalProductAvailable($cart_item->product_id, $cart_item->product_detail_id, $cart_item->size_id);
           
             if($method == "plus"){
@@ -99,19 +103,12 @@ class Cart extends Component
             }
             if($cart_item->quantity > $available_quantity){
                 $this->dispatch('alertError', [$available_quantity]);
-
                 return;
-                //session()->flash('success', "Currency changed to");
-                //return redirect(request()->header('Referer'));
             }
             
             $cart_item->total_amount = $cart_item->unit_price_at_time * $cart_item->quantity;
             $cart_item->save();
-            //return redirect(request()->header('Referer'));
-
-            // $this->dispatch('cartUpdated', $cart_item->count());
-            // $this->render();
-
+            $this->updated();
         }
     }
 

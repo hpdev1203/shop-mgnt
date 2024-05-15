@@ -20,9 +20,24 @@
                                 </div>
                             </div>
                         </div>
+            
+                        <div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full div_loading ">
+                            <div class="pb-4 md:pb-8 w-40 h-40 md:w-40 mx-auto image-background">
+                                
+                            </div>
+                            <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full h-full pb-8 space-y-4 md:space-y-0">
+                                <div class="w-full flex flex-col justify-start items-start space-y-8">
+                                    <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800 animated-background"> </div>
+                                    <div class="flex text-sm flex-row dark:text-white leading-none text-gray-800 animated-background"></div>
+                                </div>
+                            </div>
+                        </div>
+                      
+                
+
                         @foreach ($CartItems as $index => $item)
                         
-                        <div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
+                        <div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full div_result">
                             <div class="pb-4 md:pb-8 w-40 h-40 md:w-40 mx-auto">
                                     @if ( $item->product_detail->image)
                                         @php
@@ -135,6 +150,8 @@
         </div>
     </div>
         <script>
+        
+
             window.addEventListener('cartUpdated', event => {
                 const cartCount = event.detail[0];
                 
@@ -199,9 +216,32 @@
                     }, 3000);
                 }
             })
+            window.addEventListener('hide_loading', event => { 
+                setTimeout(() => {
+                    
+                    var sections = document.querySelectorAll('.div_loading');
+                    for (i = 0; i < sections.length; i++){
+                        let element = sections[i];
+                        element.classList.add('div_hide');
+                    }
+                    var div_result = document.querySelectorAll('.div_result');
+                    for (k = 0; k < div_result.length; k++){
+                        let element = div_result[k];
+                        element.style.display = 'flex';
+                        console.log(element.style.display);
+                    }
+                    
+                }, 500);
 
+            })
         </script>
         <style>
+            .div_result{
+                display:none;
+            }
+            .div_hide{
+                display:none;
+            }
             .cart-item-quantity .quantity-box{
                 border: 1px solid #d9d9d9;
                 border-radius: 100vmax;
@@ -231,6 +271,40 @@
                 color: #242424;
                 padding: 0;
                 cursor: pointer;
+            }
+            .image-background {
+                animation-duration: 2s;
+                animation-fill-mode: forwards;
+                animation-iteration-count: infinite;
+                animation-name: placeHolderShimmer;
+                animation-timing-function: linear;
+                background-color: #f6f7f8;
+                background: linear-gradient(to right, #eeeeee 8%, #bbbbbb 18%, #eeeeee 33%);
+                background-size: 800px 104px;
+                height: 100%;
+                
+                position: relative;
+            }
+            .animated-background {
+                animation-duration: 2s;
+                animation-fill-mode: forwards;
+                animation-iteration-count: infinite;
+                animation-name: placeHolderShimmer;
+                animation-timing-function: linear;
+                background-color: #f6f7f8;
+                background: linear-gradient(to right, #eeeeee 8%, #bbbbbb 18%, #eeeeee 33%);
+                background-size: 800px 104px;
+                height: 70px;
+                width: 100%;
+                position: relative;
+            }
+            @keyframes placeHolderShimmer {
+                0% {
+                    background-position: -800px 0
+                }
+                100% {
+                    background-position: 800px 0
+                }
             }
         </style>
 </div>
