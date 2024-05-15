@@ -29,7 +29,7 @@ class Cart extends Component
     public $product_detail;
     public $product_size;
     public $total_amount = 0;
-
+    public $update = []; 
 
 
     public function mount()
@@ -37,7 +37,11 @@ class Cart extends Component
         if(!Auth::check()){
             return redirect()->route('login');
         }
+        $this->load();
+        
+    }
 
+    function load(){
         $this->Carts =  CartMD::where('user_id', '=', Auth::user()->id)->first();
  
         if($this->Carts != null &&  $this->Carts->cart_item != null){
@@ -57,23 +61,13 @@ class Cart extends Component
         $this->deleteCartItem($id);
         $this->mount();
     }
-    public function updateProductSize($id){
-        
-        $cart_item = CartItem::find($id);
+  
+    
+    public function updated() {
 
-        $cart_item->size_id = $this->product_size;
-        $cart_item->quantity = 2;
-        $cart_item->save();
-        $this->mount();
-    }
-
-    public function updateProductdetail($id){
-        
-        $cart_item = CartItem::find($id);
-
-        $cart_item->product_detail_id = $this->product_detail;
-        $cart_item->save();
-        $this->mount();
+        $this->dispatch('$refresh');
+        //$this->load();
+       
     }
 
     public function addQTY($id,$method,$value){
@@ -89,28 +83,53 @@ class Cart extends Component
             }elseif ($method == "change"){
                
                 if(is_numeric($value) == false){
-                    $this->dispatch('alertError', [$available_quantity]);;
-                    return redirect(request()->header('Referer'));
+                    $this->dispatch('successPayment', [
+                        'title' => 'Thất bại',
+                        'message' => 'Vui lòng nhập chữ số',
+                        'type' => 'errorNum'
+                    ]);
+                    return;
+                }else{
+                    $cart_item->quantity =  $value;
                 }
-                $cart_item->quantity =  $value;
+                
             }
             if($cart_item->quantity == 0){
                 $this->handleDetele($id);
             }
-            if($cart_item->quantity >= $available_quantity){
+            if($cart_item->quantity > $available_quantity){
                 $this->dispatch('alertError', [$available_quantity]);
-                return redirect(request()->header('Referer'));
+
+                return;
+                //session()->flash('success', "Currency changed to");
+                //return redirect(request()->header('Referer'));
             }
             
             $cart_item->total_amount = $cart_item->unit_price_at_time * $cart_item->quantity;
             $cart_item->save();
-            return redirect(request()->header('Referer'));
+            //return redirect(request()->header('Referer'));
 
             // $this->dispatch('cartUpdated', $cart_item->count());
             // $this->render();
 
         }
     }
+
+    public function submit(){
+        if (count($this->CartItems) == 0) {
+            $this->dispatch('successPayment', [
+                'title' => 'Thất bại',
+                'message' => 'Vui lòng chọn sản phẩm cho đơn hàng',
+                'type' => 'error'
+            ]);
+            return;
+        }else{
+            return redirect()->route('payment');
+        }
+        
+    }
+
+
 
     public function render()
     {

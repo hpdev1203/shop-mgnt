@@ -65,7 +65,7 @@
                                                         <g ><line  stroke-width="1.5" id="svg_6" y2="8" x2="10" y1="8" x1="5" stroke="#000000" fill="none"></line></g>
                                                     </svg>
                                                 </button> 
-                                                <input  type="text" id="input_quantity{{$index}}"  wire:change="addQTY({{$item->id}},'change',document.getElementById('input_quantity{{$index}}').value)"  name="input_quantity" class="w-16 text-center" value="{{$item->quantity}}"> 
+                                                <input  type="text" autocomplete="off" id="input_quantity{{$index}}"  wire:change="addQTY({{$item->id}},'change',document.getElementById('input_quantity{{$index}}').value)"  name="input_quantity{{$index}}" class="w-16 text-center" value="{{$item->quantity}}"> 
                                                 <button  class="quantity-box__increase" wire:click="addQTY({{$item->id}},'plus',1)">
                                                     <svg  width="16" height="16" xmlns="http://www.w3.org/2000/svg">
                                                         <g ><line  stroke-width="1.5" y2="8" x2="12.9695" y1="8" x1="3.0305" stroke="#000000" fill="none"></line> <line  stroke-width="1.5" transform="rotate(90, 8, 8)" y2="8" x2="13" y1="8" x1="3" stroke="#000000" fill="none"></line></g>
@@ -107,9 +107,10 @@
                             <p class="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">{{number_format($total_amount)}}</p>
                         </div>
                     </div>
-                    <div class="flex justify-between xl:h-full items-stretch w-full flex-col mt-6 md:mt-0">
+                    <div class="flex justify-between xl:h-full items-stretch w-full flex-col mt-6 md:mt-0 px-6">
                         <div class="flex w-full justify-center items-center md:justify-start md:items-start">
-                            <a href="{{route('payment')}}" class="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800 text-center">Thanh Toán</a>
+                            <button wire:click="submit()" class="min-w-[150px] px-6 py-3.5 text-sm bg-green-400 text-white rounded-md hover:bg-green-700">Thanh Toán</button>
+                            {{-- <a href="{{route('payment')}}"  class="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800 text-center">Thanh Toán</a> --}}
                         </div>
                     </div>
                 </div>
@@ -149,7 +150,7 @@
                     modal.click();
                     updateCartNumber(cartCount);
                 }, 200);
-            })
+            });
             window.addEventListener('alertError', event => {
                 const available_quantity = event.detail[0];
                 const modal = document.getElementById("modal_success");
@@ -163,7 +164,42 @@
                     svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-red-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>'
                     modal.click();
                 }, 200);
+                setTimeout(() => {
+                    window.location.href = "{{route('cart')}}";
+                }, 3000);
+            });
+            window.addEventListener('successPayment', event => {
+                const btn = document.getElementById('modal_success');
+                const title = document.getElementById('title-message');
+                const message = document.getElementById('message');
+                const svgIcon = document.getElementById('svg-icon');
+                setTimeout(() => {
+                    message.innerHTML = event.detail[0].message;
+                    title.innerHTML = event.detail[0].title;
+                    if(event.detail[0].type == 'success'){
+                        svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+                    }else{
+                        svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-red-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+                    }
+                    btn.click(); 
+                }, 500);
+                if(event.detail[0].type == 'success'){
+                    setTimeout(() => {
+                        window.location.href = "{{route('order_summaries')}}";
+                    }, 3000);
+                }
+                if(event.detail[0].type == 'errorNum'){
+                    setTimeout(() => {
+                        window.location.href = "{{route('cart')}}";
+                    }, 3000);
+                }
+                if(event.detail[0].type == 'error'){
+                    setTimeout(() => {
+                        window.location.href = "{{route('index')}}";
+                    }, 3000);
+                }
             })
+
         </script>
         <style>
             .cart-item-quantity .quantity-box{
