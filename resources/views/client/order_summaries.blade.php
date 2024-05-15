@@ -3,33 +3,34 @@
 @section('title', 'Thông tin đơn hàng')
 
 @section('content')
-<div class="py-6 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
+<div class="max-w-7xl sm:px-6 lg:px-8 mx-auto">
+    <div class="py-6 bg-white px-4">
         <div class="flex justify-start item-start space-y-2 flex-col">
             <h1 class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Thông tin đơn hàng</h1>
         </div> 
         <div class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
             <div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-                <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 p-4 w-full">
+                <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-100 p-4 w-full">
                     <p class="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800 mb-4">Đơn hàng đã đặt</p>
                     @if (count($orders) == 0)
                         <p class="text-base dark:text-white leading-4 text-gray-800">Không có dữ liệu</p>
                     @else
-                        <div class="w-full">
+                        <div class="w-full bg-gray-50">
                             <div class="overflow-x-auto">
-                                <div class="inline-block w-full shadow rounded-lg overflow-auto lg:max-h-[400px] md:max-h-[490px] max-h-[550px]">
+                                <div class="inline-block w-full overflow-auto lg:max-h-[400px] md:max-h-[490px] max-h-[550px]">
                                     <table class="w-full leading-normal">
                                         <thead>
                                             <tr>
-                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
+                                                <th class="px-3 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
                                                     Mã đơn hàng
                                                 </th>
-                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
+                                                <th class="px-3 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
                                                     Ngày đặt
                                                 </th>
-                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
+                                                <th class="px-3 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
                                                     Tổng tiền
                                                 </th>
-                                                <th class="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
+                                                <th class="px-3 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-nowrap">
                                                     Trạng thái
                                                 </th>
                                             </tr>
@@ -37,20 +38,20 @@
                                         <tbody>
                                             @foreach ($orders as $order)
                                                 <tr>
-                                                    <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
+                                                    <td class="px-3 py-2 border-b border-gray-200 text-sm">
                                                         <a href="{{route('order_history', $order->id)}}" class="text-green-500 hover:text-green-800">{{ $order->code }}</a>
                                                     </td>
-                                                    <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
+                                                    <td class="px-3 py-2 border-b border-gray-200 text-sm">
                                                         <p class="text-gray-900 whitespace-no-wrap">
                                                             {{date('d/m/Y', strtotime($order->order_date))}}
                                                         </p>
                                                     </td>
-                                                    <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
+                                                    <td class="px-3 py-2 border-b border-gray-200 text-sm">
                                                         <p class="text-gray-900 whitespace-no-wrap">
                                                             {{number_format($order->total_amount)}}
                                                         </p>
                                                     </td>
-                                                    <td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">
+                                                    <td class="px-3 py-2 border-b border-gray-200 text-sm">
                                                         @if ($order->status == "pending")
                                                             <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 text-nowrap">Chờ xác nhận</span>
                                                         @elseif ($order->status == "confirmed")
@@ -75,7 +76,7 @@
                     @endif
                 </div>
                 <div class="flex justify-center flex-col md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
-                    <div class="flex flex-col px-4 py-6 md:p-6 xl:p-6 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
+                    <div class="flex flex-col px-4 py-6 md:p-6 xl:p-6 w-full bg-gray-100 dark:bg-gray-800 space-y-6">
                         <div class="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
                             <div class="flex justify-between w-full">
                                 <p class="text-base dark:text-white leading-4 text-gray-800">Đã thanh toán</p>
@@ -93,7 +94,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 dark:bg-gray-800 w-full xl:w-96 flex justify-between items-center md:items-start px-4 py-6 md:p-6 xl:p-6 flex-col">
+            <div class="bg-gray-100 dark:bg-gray-800 w-full xl:w-96 flex justify-between items-center md:items-start px-4 py-6 md:p-6 xl:p-6 flex-col">
                 <h3 class="text-xl dark:text-white font-semibold leading-5 text-gray-800">Thông tin cá nhân</h3>
                 <div class="flex flex-col md:flex-row xl:flex-col justify-start items-stretch h-full w-full md:space-x-6 lg:space-x-8 xl:space-x-0">
                     <div class="flex flex-col justify-start items-start flex-shrink-0">
@@ -132,5 +133,5 @@
             </div>
         </div>
     </div>
-
+</div>
 @endsection

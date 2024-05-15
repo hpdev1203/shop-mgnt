@@ -1,8 +1,8 @@
 
-<form wire:submit='updateInfoUser'>
+<form wire:submit='updateInfoUser' class="bg-white py-5 px-4">
     <div class="lg:flex no-wrap lg:-mx-2">
         <div class="w-full lg:w-3/12 lg:mx-2">
-            <div class="bg-white p-3 border-t-4 border-green-400">
+            <div class="bg-white p-3">
                 <div class="image overflow-hidden">
                     @if ($photo || $existedPhoto)
                         @if ($photo)
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="w-full lg:w-9/12 lg:mx-2">
-            <div class="bg-white p-3 shadow-sm rounded-sm">
+            <div class="bg-white p-3">
                 <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                     <span clas="text-green-500">
                         <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
