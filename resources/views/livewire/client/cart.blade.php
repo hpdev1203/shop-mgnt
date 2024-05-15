@@ -1,11 +1,12 @@
 
-<div class="py-14 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
+<div class="max-w-7xl sm:px-6 lg:px-8 mx-auto">
+    <div class="bg-white py-8 bg-white px-4">
         <div class="flex justify-start item-start space-y-2 flex-col">
             <h1 class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Giỏ hàng</h1>
         </div> 
         <div class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
             <div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-                <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-6 w-full lg:overflow-auto lg:h-[430px]">
+                <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-100 px-4 py-4 md:py-6 md:p-6 xl:p-6 w-full lg:overflow-auto lg:h-[430px]">
                         <div class="hidden lg:flex mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full border-b border-gray-200">
                             
                             <div class="md:flex-row flex-col flex justify-between items-start w-full space-y-4 md:space-y-0">
@@ -82,10 +83,10 @@
                 </div>
               
             </div>
-            <div class="bg-gray-50 dark:bg-gray-800 w-full xl:w-96 flex justify-between items-center md:items-start px-4 py-6 md:p-6 xl:p-6 flex-col">
+            <div class="bg-gray-100 dark:bg-gray-800 w-full xl:w-96 flex justify-between items-center md:items-start px-4 py-6 md:p-6 xl:p-6 flex-col">
                
                 <div class="flex flex-col md:flex-row xl:flex-col justify-start items-stretch h-full w-full md:space-x-6 lg:space-x-8 xl:space-x-0">
-                    <div class="flex flex-col px-4 py-6 md:p-6 xl:p-6 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
+                    <div class="flex flex-col px-4 py-6 md:p-6 xl:p-6 w-full bg-gray-100 dark:bg-gray-800 space-y-6">
                         
                         <div class="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
                             <div class="flex justify-between w-full">
@@ -131,6 +132,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <script>
             window.addEventListener('cartUpdated', event => {
                 const cartCount = event.detail[0];

@@ -1,17 +1,17 @@
 <form wire:submit='contact'>
     <div class="relative mb-6">
         <input wire:model="name_contact" type="text"
-        class="peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear peer-focus:text-primary motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary "
+        class="peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear peer-focus:text-primary motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary text-gray-900"
         id="name_contact" name="name_contact" placeholder="Tên" readonly/>
     </div>
     <div class="relative mb-6">
         <input wire:model="email_contact" type="email"
-        class="peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear peer-focus:text-primary motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary"
+        class="peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear peer-focus:text-primary motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary text-gray-900"
         id="email_contact" name="email_contact" placeholder="Email" readonly/>
     </div>
     <div wire:model="subject_contact" class="relative mb-6">
         <input type="text"
-        class="peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear peer-focus:text-primary motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary "
+        class="peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear peer-focus:text-primary motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary text-gray-900"
         id="subject_contact" name="subject_contact" placeholder="Tiêu đề liên hệ" />
         @error('subject_contact')
             <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
@@ -19,7 +19,7 @@
     </div>
     <div class="relative mb-6">
         <textarea wire:model="content_contact"
-        class="peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200"
+        class="peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 text-gray-900"
         id="content_contact" name="content_contact" rows="4" placeholder="Nội dung liên hệ"></textarea>
         @error('content_contact')
             <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
