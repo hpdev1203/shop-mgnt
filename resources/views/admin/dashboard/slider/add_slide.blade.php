@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Slide')
+@section('title', 'Thêm slide')
 @section('menu', 'slideposts')
 
 @section('content')
@@ -13,11 +13,11 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <a href="{{ route('admin.brands') }}" class="text-blue-500 hover:text-blue-700">Bài đăng slide</a>
+                    <a href="{{ route('admin.sliders') }}" class="text-blue-500 hover:text-blue-700">Quản lý slide</a>
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">Thêm bài đăng slide</span>
+                    <span class="text-gray-700">Thêm slide</span>
                 </li>
             </ol>
         </nav>

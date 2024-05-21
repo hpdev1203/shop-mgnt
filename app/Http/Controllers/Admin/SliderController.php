@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Slide;
 
 class SliderController extends Controller
 {
@@ -19,6 +20,7 @@ class SliderController extends Controller
 
     public function edit($id)
     {
-        return view('admin.dashboard.slider.edit', compact('id'));
+        $slide = Slide::find($id);
+        return view('admin.dashboard.slider.edit_slide',['slide' => $slide]);
     }
 }
