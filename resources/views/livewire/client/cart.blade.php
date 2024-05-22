@@ -13,9 +13,9 @@
                                 <div class="w-full flex flex-col justify-start items-start space-y-8 uppercase">Mô tả sản phẩm</div>
                                 
                                 
-                                <div class="flex justify-between space-x-8 items-start w-96">
+                                <div class="flex justify-end space-x-8 items-start w-96">
                                     
-                                    <div class="uppercase">Số Lượng</div>
+                                    {{-- <div class="uppercase">Số Lượng</div> --}}
                                     <div class="uppercase">Giá</div>
                                 </div>
                             </div>
@@ -36,13 +36,25 @@
                 
 
                         @foreach ($CartItems as $index => $item)
-                        
+                        @php
+                            $details = DB::select('
+                            SELECT prd.title, sum(crt.quantity) as qty,size.size,prd.image
+                            FROM cart_item crt
+                            INNER JOIN product_detail prd on crt.product_detail_id = prd.id
+                            INNER JOIN product_size size on crt.size_id = size.id
+                            
+                            WHERE crt.cart_id = '.$item->cart_id.'
+                            and crt.product_id = '.$item->product_id.'
+                            group by prd.title,size.size,prd.image');
+                           
+                            $details_first = $details[0];
+                        @endphp
                         <div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full div_result">
                             <div class="pb-4 md:pb-8 w-40 h-40 md:w-40 mx-auto">
-                                    @if ( $item->product_detail->image)
+                                    @if ( $details_first->image)
                                         @php
-                                            $imageThumbnailCheck = json_decode($item->product_detail->image);   
-                                            $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $item->product_detail->image;
+                                            $imageThumbnailCheck = json_decode($details_first->image);   
+                                            $imageThumbnail = $imageThumbnailCheck ? $imageThumbnailCheck[0] : $details_first->image;
                                         @endphp
                                         <img  class="hover:grow hover:shadow-lg w-full h-full object-cover bg-cover" src="{{ asset('storage/images/products/' . $imageThumbnail) }}" alt="Hình ảnh sản phẩm">
                                     @else
@@ -50,47 +62,71 @@
                                     @endif
                             </div>
                             <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full h-full pb-8 space-y-4 md:space-y-0">
-                                <div class="w-full flex flex-col justify-start items-start space-y-8">
-                                    <h3 class="text-sm dark:text-white xl:text-sm font-semibold leading-6 text-gray-800"><a href="{{route('product-detail',['id'=>$item->product->id,'slug'=>$item->product->slug])}}" >{{$item->product->name}}</a></h3>
-                                    <div class="flex justify-start items-start flex-col space-y-2">
-                                        <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800">
+                                <div class="w-full flex flex-col justify-start items-start space-y-2 w-full">
+                                    
+                                    {{-- <div class="flex justify-start items-start flex-col space-y-2">
+                                       <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800">
                                             <div class="flex justify-start items-start flex-col space-y-2">
                                                 <p class="text-sm dark:text-white leading-none text-gray-800"><span class="dark:text-gray-400 text-gray-300">Size: </span> {{$item->productsize->size}}</p>
                                                 <p class="text-sm dark:text-white leading-none text-gray-800"><span class="dark:text-gray-400 text-gray-300">Mẫu: </span> {{$item->product_detail->title}}</p>
                                             </div>
                                         </div>
-                                        <div class="flex text-sm flex-row dark:text-white leading-none text-gray-800">
-                                            <button data-v-3c227870="" class="cart-item-remove" wire:click="handleDetele({{$item->id}})">
-                                                <svg data-v-3c227870="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-3c227870="" d="M12.668 4.668a.667.667 0 0 0-.667.667v7.46a1.28 1.28 0 0 1-1.34 1.206h-5.32a1.28 1.28 0 0 1-1.34-1.206v-7.46a.667.667 0 0 0-1.333 0v7.46a2.612 2.612 0 0 0 2.673 2.54h5.32a2.612 2.612 0 0 0 2.674-2.54v-7.46a.667.667 0 0 0-.667-.667ZM13.333 2.668h-2.666V1.335A.667.667 0 0 0 10 .668H6a.667.667 0 0 0-.667.667v1.333H2.667a.667.667 0 0 0 0 1.333h10.666a.667.667 0 1 0 0-1.333Zm-6.666 0v-.667h2.666v.667H6.667Z" fill="#242424"></path> 
-                                                    <path data-v-3c227870="" d="M7.333 11.333V6.667a.667.667 0 1 0-1.333 0v4.666a.667.667 0 1 0 1.333 0ZM10.001 11.333V6.667a.667.667 0 0 0-1.333 0v4.666a.667.667 0 1 0 1.333 0Z" fill="#242424"></path>
-                                                </svg> 
-                                                <span data-v-3c227870="">Xóa</span>
-                                            </button>
+                                        
+                                        
+                                        
+                                    </div> --}}
+                                    <div class="flex justify-between space-x-8 items-start w-full">
+                                    
+                                        {{-- <div class="text-base dark:text-white xl:text-lg leading-6 text-gray-800">
+                                            <div class="cart-item-quantity">
+                                                <div data-v-3c227870="" class="flex quantity-box">
+                                                    <button class="quantity-box__decrease" wire:click="addQTY({{$item->id}},'minus',1)">
+                                                        <svg  width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                                            <g ><line  stroke-width="1.5" id="svg_6" y2="8" x2="10" y1="8" x1="5" stroke="#000000" fill="none"></line></g>
+                                                        </svg>
+                                                    </button> 
+                                                    <input  type="text" autocomplete="off" id="input_quantity{{$index}}"  wire:change="addQTY({{$item->id}},'change',document.getElementById('input_quantity{{$index}}').value)"  name="input_quantity{{$index}}" class="w-16 text-center" value="{{$item->quantity}}"> 
+                                                    <button  class="quantity-box__increase" wire:click="addQTY({{$item->id}},'plus',1)">
+                                                        <svg  width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                                            <g ><line  stroke-width="1.5" y2="8" x2="12.9695" y1="8" x1="3.0305" stroke="#000000" fill="none"></line> <line  stroke-width="1.5" transform="rotate(90, 8, 8)" y2="8" x2="13" y1="8" x1="3" stroke="#000000" fill="none"></line></g>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>    
+                                        </div> --}}
+                                        <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800 w-full" title="Xem Chi Tiết">
+                                            <h3 class="text-sm dark:text-white xl:text-sm font-semibold leading-6 text-gray-800"><a href="{{route('product-detail',['id'=>$item->product_id,'slug'=>$item->slug])}}" >{{$item->name}}</a></h3>
+                                            <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <div class="show_detail_{{$index}}">
+                                                @foreach ($details as $idx => $detail)
+                                                    <div class="flex">
+                                                        <div class="w-24 pt-2">Size: {{$detail->size}}</div>
+                                                        <div class="w-36 pt-2">Số lượng: {{$detail->qty}} </div>
+                                                        <div class="w-full pt-2">{{$detail->title}}  </div>
+                                                    
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        <div class="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">
+                                            <div>{{number_format($item->total)}}</div>
+                                            <div class="flex text-sm justify-end pt-2 flex-row dark:text-white leading-none text-gray-800">
+                                                <button data-v-3c227870="" class="cart-item-remove" wire:click="handleDetele({{$item->id}})">
+                                                    <svg data-v-3c227870="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-3c227870="" d="M12.668 4.668a.667.667 0 0 0-.667.667v7.46a1.28 1.28 0 0 1-1.34 1.206h-5.32a1.28 1.28 0 0 1-1.34-1.206v-7.46a.667.667 0 0 0-1.333 0v7.46a2.612 2.612 0 0 0 2.673 2.54h5.32a2.612 2.612 0 0 0 2.674-2.54v-7.46a.667.667 0 0 0-.667-.667ZM13.333 2.668h-2.666V1.335A.667.667 0 0 0 10 .668H6a.667.667 0 0 0-.667.667v1.333H2.667a.667.667 0 0 0 0 1.333h10.666a.667.667 0 1 0 0-1.333Zm-6.666 0v-.667h2.666v.667H6.667Z" fill="#242424"></path> 
+                                                        <path data-v-3c227870="" d="M7.333 11.333V6.667a.667.667 0 1 0-1.333 0v4.666a.667.667 0 1 0 1.333 0ZM10.001 11.333V6.667a.667.667 0 0 0-1.333 0v4.666a.667.667 0 1 0 1.333 0Z" fill="#242424"></path>
+                                                    </svg> 
+                                                    <span data-v-3c227870="">Xóa</span>
+                                                </button>
+                                            </div>
                                         </div>
                                         
                                     </div>
                                 </div>
-                                <div class="flex justify-between space-x-8 items-start lg:w-96">
-                                    
-                                    <div class="text-base dark:text-white xl:text-lg leading-6 text-gray-800">
-                                        <div class="cart-item-quantity">
-                                            <div data-v-3c227870="" class="flex quantity-box">
-                                                <button class="quantity-box__decrease" wire:click="addQTY({{$item->id}},'minus',1)">
-                                                    <svg  width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                                                        <g ><line  stroke-width="1.5" id="svg_6" y2="8" x2="10" y1="8" x1="5" stroke="#000000" fill="none"></line></g>
-                                                    </svg>
-                                                </button> 
-                                                <input  type="text" autocomplete="off" id="input_quantity{{$index}}"  wire:change="addQTY({{$item->id}},'change',document.getElementById('input_quantity{{$index}}').value)"  name="input_quantity{{$index}}" class="w-16 text-center" value="{{$item->quantity}}"> 
-                                                <button  class="quantity-box__increase" wire:click="addQTY({{$item->id}},'plus',1)">
-                                                    <svg  width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                                                        <g ><line  stroke-width="1.5" y2="8" x2="12.9695" y1="8" x1="3.0305" stroke="#000000" fill="none"></line> <line  stroke-width="1.5" transform="rotate(90, 8, 8)" y2="8" x2="13" y1="8" x1="3" stroke="#000000" fill="none"></line></g>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <div class="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">{{number_format($item->total_amount)}}</div>
-                                </div>
+                           
                             </div>
                         </div>
                         @endforeach
