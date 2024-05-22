@@ -26,10 +26,12 @@ class ProductDetail extends Component
     public $product_size_selected;
     public $available_quantity = 0;
     public $product_route;
+    public $product_id;
 
     public function mount($id)
     {
         $this->product = Product::find($id);
+        $this->product_id = $id;
         $this->product_route = route('product-detail', ['id' => $id, 'slug' => $this->product->slug]);
         $this->product_details = $this->product->productDetails;
         $this->product_sizes = $this->product->productSizes;
@@ -83,50 +85,6 @@ class ProductDetail extends Component
         }else{
             $this->available_quantity = 0;
         }
-    }
-
-    public function addToCart(){
-        if(!Auth::check()){
-            return redirect()->route('login', ['redirect' => $this->product_route]);
-        }
-        $cart = CartMD::where('user_id', Auth::user()->id)->first();
-        if(!$cart){
-            $cart = new CartMD();
-        }
-        $cart->user_id = Auth::user()->id;
-        $cart->save();
-
-        $cart_item = CartItem::where('cart_id', $cart->id)
-            ->where('product_id', $this->product->id)
-            ->where('product_detail_id', $this->product_detail_id_selected)
-            ->where('warehouse_id', $this->warehouse_id_selected)
-            ->where('size_id', $this->product_size_id_selected)
-            ->first();
-        if($cart_item){
-            if($cart_item->quantity >= $this->available_quantity){
-                $this->dispatch('alertError', [$this->available_quantity]);
-                return;
-            }
-            $cart_item->quantity += 1;
-            $cart_item->total_amount = $cart_item->unit_price_at_time * $cart_item->quantity;
-            $cart_item->save();
-            $cart_items = $cart->cart_item;
-            $this->dispatch('cartUpdated', $cart_items->count());
-            return;
-        }
-        $cart_item = new CartItem();
-        $cart_item->cart_id = $cart->id;
-        $cart_item->product_id = $this->product->id;
-        $cart_item->product_detail_id = $this->product_detail_id_selected;
-        $cart_item->warehouse_id = $this->warehouse_id_selected;
-        $cart_item->size_id = $this->product_size_id_selected;
-        $cart_item->unit_price_at_time = $this->product_detail_selected->retail_price;
-        $cart_item->quantity = 1;
-        $cart_item->total_amount = $this->product_detail_selected->retail_price;
-        $cart_item->save();
-
-        $cart_items = $cart->cart_item;
-        $this->dispatch('cartUpdated', $cart_items->count());
     }
 
     public function render()

@@ -69,6 +69,7 @@
         @include('client.layouts.menu')
         @yield('content')
         @include('client.layouts.footer')
+        @livewire('wire-elements-modal')
     </body>
     @livewireScripts
     <script>

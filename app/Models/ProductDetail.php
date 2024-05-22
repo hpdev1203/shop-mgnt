@@ -12,4 +12,9 @@ class ProductDetail extends Model implements Auditable
     use HasFactory;
     protected $table = 'product_detail';
     protected $fillable = ['product_id', 'image', 'color', 'short_description'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
