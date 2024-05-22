@@ -79,12 +79,16 @@
                     </div>
                     <div class="pt-2 mb-4 text-center">
                         @if(count($product_warehouses) > 0 && $available_quantity > 0)
-                            <button wire:click="$dispatch('openModal', { component: 'client.modal-add-product-to-cart', arguments : { product_id : {{$product_id}}, warehouse_id_selected : {{$warehouse_id_selected}}, product_detail_id_selected : {{$product_detail_id_selected}} } })" type="button" class="flex items-center bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 py-2 px-6 rounded-full font-bold hover:bg-gray-700 dark:hover:bg-gray-300">
-                                <svg class="w-6 h-6 text-white dark:text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                </svg>
-                                THÊM VÀO GIỎ HÀNG
-                            </button>
+                            @if(Auth::check())
+                                <button wire:click="$dispatch('openModal', { component: 'client.modal-add-product-to-cart', arguments : { product_id : {{$product_id}}, warehouse_id_selected : {{$warehouse_id_selected}}, product_detail_id_selected : {{$product_detail_id_selected}} } })" type="button" class="flex items-center bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 py-2 px-6 rounded-full font-bold hover:bg-gray-700 dark:hover:bg-gray-300">
+                                    <svg class="w-6 h-6 text-white dark:text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                    THÊM VÀO GIỎ HÀNG
+                                </button>
+                            @else
+                                <span class="text-red-500 font-bold">VUI LÒNG ĐĂNG NHẬP ĐỂ MUA HÀNG</span>
+                            @endif
                         @else
                             <span class="text-red-500 font-bold">HẾT HÀNG !</span>
                         @endif

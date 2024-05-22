@@ -57,6 +57,7 @@ class ModalAddProductToCart extends ModalComponent
         $this->updateTotal();
     }
 
+
     public function changeQty($product_size_id)
     {
         $this->listProductAddedError[$product_size_id] = "";
@@ -77,6 +78,10 @@ class ModalAddProductToCart extends ModalComponent
     }
 
     public function addToCart(){
+        if($this->totalQuantity == 0){
+            session()->flash('error', 'Vui lòng chọn số lượng sản phẩm');
+            return;
+        }
         $cart = CartMD::where('user_id', Auth::user()->id)->first();
         if(!$cart){
             $cart = new CartMD();
