@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Request;
 use App\Models\CartMD;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class Cart extends Component
@@ -51,12 +52,30 @@ class Cart extends Component
             $this->CartItems = $this->Carts->cart_item;
             $this->total_amount = $this->Carts->cart_item->sum("total_amount");
         }
+        $this->CartItems = DB::select('
+        SELECT crt.product_id,SUM(crt.total_amount) as total,prd.name,crt.product_id as id,prd.slug,crt.cart_id 
+        FROM cart_item crt
+        INNER JOIN products prd on crt.product_id = prd.id
+        
+        WHERE crt.cart_id = '.$this->Carts->id.'
+        GROUP BY crt.product_id,prd.name,prd.slug,crt.cart_id ');
+
+
+
+        // $results = DB::table('cart_item')
+        // ->select('product_id', DB::raw('SUM(total_amount) as total'))
+        // ->groupBy('product_id')
+        // ->get();
+
         $this->dispatch('hide_loading');
     }
 
     public function deleteCartItem($id){
-        $cart_item = CartItem::find($id);
-        $cart_item->delete();
+        $cart_item =  DB::select('
+        DELETE 
+        FROM cart_item 
+        WHERE cart_id = '.$this->Carts->id.'
+        AND product_id = '.$id);
         
     }
 
