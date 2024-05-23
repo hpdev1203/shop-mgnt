@@ -47,18 +47,20 @@ class Cart extends Component
     function load(){
         $start_time = time();
         $this->Carts =  CartMD::where('user_id', '=', Auth::user()->id)->first();
- 
-        if($this->Carts != null &&  $this->Carts->cart_item != null){
-            $this->CartItems = $this->Carts->cart_item;
-            $this->total_amount = $this->Carts->cart_item->sum("total_amount");
+        if($this->Carts != null){
+            if($this->Carts != null &&  $this->Carts->cart_item != null){
+                $this->CartItems = $this->Carts->cart_item;
+                $this->total_amount = $this->Carts->cart_item->sum("total_amount");
+            }
+            $this->CartItems = DB::select('
+            SELECT crt.product_id,SUM(crt.total_amount) as total,prd.name,crt.product_id as id,prd.slug,crt.cart_id 
+            FROM cart_item crt
+            INNER JOIN products prd on crt.product_id = prd.id
+            
+            WHERE crt.cart_id = '.$this->Carts->id.'
+            GROUP BY crt.product_id,prd.name,prd.slug,crt.cart_id ');
         }
-        $this->CartItems = DB::select('
-        SELECT crt.product_id,SUM(crt.total_amount) as total,prd.name,crt.product_id as id,prd.slug,crt.cart_id 
-        FROM cart_item crt
-        INNER JOIN products prd on crt.product_id = prd.id
         
-        WHERE crt.cart_id = '.$this->Carts->id.'
-        GROUP BY crt.product_id,prd.name,prd.slug,crt.cart_id ');
 
 
 
