@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Category;
 
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Product;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
@@ -33,9 +34,16 @@ class ListCategory extends Component
     }
 
     public function deleteCategory($id){
-        $category = Category::find($id);
-        $category->delete();
-        session()->flash('success', 'Category deleted successfully');
+        $checkProduct = Product::where('category_id','=',$id)->first();
+        if($checkProduct != null){
+            $this->dispatch('error', ['error' => 'Nhãn hàng đã được đặt hàng, vì vậy không thể xóa.']);
+            return;
+        }else{
+            $category = Category::find($id);
+            $category->delete();
+            session()->flash('success', 'Category deleted successfully');
+        }
+        
     }
 
     public function handleDetele($id)

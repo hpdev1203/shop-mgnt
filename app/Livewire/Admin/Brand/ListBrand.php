@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Brand;
 
 use Livewire\Component;
 use App\Models\Brand;
+use App\Models\Product;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
@@ -33,15 +34,22 @@ class ListBrand extends Component
     }
 
     public function deleteBrand($id){
-        $brand = Brand::find($id);
-        $brand->delete();
+        $checkProduct = Product::where('brand_id','=',$id)->first();
+        if($checkProduct != null){
+            $this->dispatch('error', ['error' => 'Danh Mục đã được đặt hàng, vì vậy không thể xóa.']);
+            return;
+        }else{
+            $brand = Brand::find($id);
+            $brand->delete();
+        }
+       
        
     }
 
     public function handleDetele($id)
     {
         $this->deleteBrand($id);
-        $this->mount();
+        //$this->mount();
     }
     
     public function render()
