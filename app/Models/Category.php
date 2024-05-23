@@ -17,4 +17,8 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id')->with('children');
     }
+    public function hasProduct()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id')->count() > 0;
+    }
 }

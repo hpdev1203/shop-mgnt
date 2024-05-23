@@ -53,4 +53,10 @@ class Product extends Model implements Auditable
         $listWarehouseId = array_unique($listWarehouseId);
         return Warehouse::whereIn('id', $listWarehouseId)->get();
     }
+    public function hasOrder(){
+        return $this->orderDetails()->count() > 0;
+    }
+    public function hasImport(){
+        return $this->importProducts()->count() > 0;
+    }
 }

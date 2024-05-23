@@ -51,4 +51,12 @@ class User extends Authenticatable implements Auditable
             'password' => 'hashed',
         ];
     }
+    public function hasOrder()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id')->count() > 0;
+    }
+    public function hasContact()
+    {
+        return $this->hasMany(ContactUser::class, 'user_id', 'id')->count() > 0;
+    }
 }

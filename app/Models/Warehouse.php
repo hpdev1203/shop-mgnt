@@ -81,4 +81,8 @@ class Warehouse extends Model implements Auditable
 
         return $totalImported - $totalOrdered + $totalTransferTo - $totalTransferFrom;
     }
+    public function hasImportProduct()
+    {
+        return $this->hasMany(ImportProduct::class, 'warehouse_id', 'id')->count() > 0;
+    }
 }

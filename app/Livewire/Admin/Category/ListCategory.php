@@ -23,27 +23,35 @@ class ListCategory extends Component
 
     public function deleteListCheckbox()
     {
+        $list_has_product = [];
         foreach ($this->selected_index as $key => $checked) {
             if($checked == true){
                 $category_id = $this->list_category[$key]['id'];
-                $this->deleteCategory($category_id);
+                $category = Category::find($category_id);
+                $product = Product::where('category_id', $category_id)->first();
+                if($product){
+                    array_push($list_has_product, $category->name);
+                }else{
+                    $category->delete();
+                }
             }
         }
         $this->selected_index = [];
+        if(count($list_has_product) > 0){
+            $list_has_product = implode(', ', $list_has_product);
+            $this->dispatch('error', ['error' => 'Danh mục <b>'.$list_has_product.'</b> đã có sản phẩm, vì vậy không thể xóa.']);
+        }
         $this->render();
     }
 
     public function deleteCategory($id){
-        $checkProduct = Product::where('category_id','=',$id)->first();
-        if($checkProduct != null){
-            $this->dispatch('error', ['error' => 'Nhãn hàng đã được đặt hàng, vì vậy không thể xóa.']);
-            return;
+        $category = Category::find($id);
+        $product = Product::where('category_id', $id)->first();
+        if($product){
+            $this->dispatch('error', ['error' => 'Danh mục <b>'.$category->name.'</b> đã có sản phẩm, vì vậy không thể xóa.']);
         }else{
-            $category = Category::find($id);
             $category->delete();
-            session()->flash('success', 'Category deleted successfully');
         }
-        
     }
 
     public function handleDetele($id)

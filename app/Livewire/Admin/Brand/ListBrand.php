@@ -23,26 +23,37 @@ class ListBrand extends Component
 
     public function deleteListCheckbox()
     {
+        $list_has_product = [];
         foreach ($this->selected_index as $key => $checked) {
             if($checked == true){
                 $brand_id = $this->list_brand[$key]['id'];
-                $this->deleteBrand($brand_id);
+                $brand = Brand::find($brand_id);
+                $checkProduct = Product::where('brand_id','=',$brand_id)->first();
+                if($checkProduct != null){
+                    array_push($list_has_product, $brand->name);
+                }else{
+                    $brand->delete();
+                }
             }
         }
         $this->selected_index = [];
+        if(count($list_has_product) > 0){
+            $list_has_product = implode(', ', $list_has_product);
+            $this->dispatch('error', ['error' => 'Nhãn hàng <b>'.$list_has_product.'</b> đã có sản phẩm, vì vậy không thể xóa.']);
+        }
         $this->render();
     }
 
     public function deleteBrand($id){
+        $brand = Brand::find($id);
         $checkProduct = Product::where('brand_id','=',$id)->first();
         if($checkProduct != null){
-            $this->dispatch('error', ['error' => 'Danh Mục đã được đặt hàng, vì vậy không thể xóa.']);
+            $this->dispatch('error', ['error' => 'Nhãn hàng <b>'.$brand->name.'</b> đã có sản phẩm, vì vậy không thể xóa.']);
             return;
         }else{
             $brand = Brand::find($id);
             $brand->delete();
         }
-       
        
     }
 

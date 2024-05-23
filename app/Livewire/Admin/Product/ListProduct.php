@@ -36,11 +36,6 @@ class ListProduct extends Component
 
     public function deleteProduct($id){
         $product = Product::find($id);
-        $checkOrder = $product->orderDetails;
-        if(count($checkOrder) > 0){
-            $this->dispatch('error', ['error' => 'Sản phẩm '.$product->name.' đã được đặt hàng, vì vậy không thể xóa. Vui lòng chỉ ẩn để đảm bảo tính đúng đắn của dử liệu.']);
-            return;
-        }
         $product_size = ProductSize::where('product_id', $id)->get();
         foreach ($product_size as $item) {
             $item->delete();
