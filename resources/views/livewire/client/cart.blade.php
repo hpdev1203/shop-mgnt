@@ -62,7 +62,7 @@
                                     @endif
                             </div>
                             <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full h-full pb-8 space-y-4 md:space-y-0">
-                                <div class="w-full flex flex-col justify-start items-start space-y-2 w-full">
+                                <div class="flex flex-col justify-start items-start space-y-2 w-full">
                                     
                                     {{-- <div class="flex justify-start items-start flex-col space-y-2">
                                        <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800">
@@ -96,18 +96,17 @@
                                         </div> --}}
                                         <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800 w-full" title="Xem Chi Tiết">
                                             <h3 class="text-sm dark:text-white xl:text-sm font-semibold leading-6 text-gray-800"><a href="{{route('product-detail',['id'=>$item->product_id,'slug'=>$item->slug])}}" >{{$item->name}}</a></h3>
-                                            <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                            <div class="show_detail_{{$index}}">
+                                            <div class="icon_detail cursor-pointer" onclick="showhide('show_detail_{{$index}}')">
+                                                <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </div>
+                                            <div class="show_detail_{{$index}} hidden">
                                                 @foreach ($details as $idx => $detail)
                                                     <div class="flex">
-                                                        <div class="w-24 pt-2">Size: {{$detail->size}}</div>
-                                                        <div class="w-36 pt-2">Số lượng: {{$detail->qty}} </div>
-                                                        <div class="w-full pt-2">{{$detail->title}}  </div>
-                                                    
+                                                        <div class="w-full pt-2">{{$detail->size}} ({{$detail->qty}}) {{$detail->title}}  </div>
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -269,7 +268,21 @@
                     
                 }, 500);
 
-            })
+            });
+            function showhide(cls){
+                
+                let div_detail = document.getElementsByClassName(cls);
+                console.log(div_detail);
+                for (let k = 0; k < div_detail.length; k++){
+                        let element = div_detail[k];
+                        if(element.classList.contains('hidden')){
+                            element.classList.remove('hidden');
+                        }else{
+                            element.classList.add('hidden');
+                        };
+                    }
+            }
+            
         </script>
         <style>
             .div_result{
