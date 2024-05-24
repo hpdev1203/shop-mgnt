@@ -25,9 +25,6 @@ class SpotlightController extends Controller
     public function search()
     {
         $input_search = $_GET['input_search'];
-        if($_GET['input_search2'] != ""){
-                $input_search = $_GET['input_search2'];
-        }
         return redirect()->route('spotlight',['search'=>$input_search]);
     }
 }

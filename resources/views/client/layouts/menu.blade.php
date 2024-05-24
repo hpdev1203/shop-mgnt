@@ -1,9 +1,8 @@
 <div class="bg-white">
 	<header class="relative bg-white">
-		<p class="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">Get free delivery on orders over $100</p>
 		<nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 			<div class="border-b border-gray-200">
-                <div class="flex h-20 items-center">
+                <div class="flex justify-between h-20 items-center">
 					<!-- Logo -->
 					<div class="flex">
 						<a href="{{ route('index') }}">
@@ -15,11 +14,13 @@
                             @endif
 						</a>
 					</div>
-					<div class="ml-auto flex items-center">
-						<!-- Search -->
-                        <form action="{{ route('spotlight.search') }}">
-						    @livewire('client.search')
-                        </form>
+                    <div class="justify-start items-center hidden sm:flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-red-400">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                        </svg>
+                        <span class=" ml-2">Hotline:</span> <a href="tel:{{$system_info->phone}}" class="ml-2 text-green-500">{{$system_info->phone}}</a>
+                    </div>
+					<div class="flex items-center">
 						<!-- Cart -->
 						<div class="ml-4 flow-root lg:ml-6">
 							<a href="{{ route('cart') }}" class="group -m-2 flex items-center p-2">
@@ -55,85 +56,50 @@
 						</div>
 					</div>
 				</div>
-				<div class="flex h-12 items-center border-t">
-					<!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
-                    <div class="relative z-40 lg:hidden" x-data="{ isOpenMenu: false }">
-                        <button type="button" @click="isOpenMenu = !isOpenMenu" aria-expanded="false" class="relative rounded-md bg-blue-600 p-2 text-white lg:hidden">
-                            <span class="absolute -inset-0.5"></span>
-                            <span class="sr-only">Open menu</span>
-                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                            </svg>
-                        </button>
-                        <div class="fixed inset-0 z-40 flex" x-show="isOpenMenu" aria-hidden="true">
-                            <div class="relative flex w-full max-w-xs flex-col bg-gray-100 pb-12 shadow-xl">
-                                <div class="flex px-4 pb-2 pt-2 border-b">
-                                    <button type="button" class="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400" @click="isOpenMenu = false" aria-expanded="true">
-                                        <span class="absolute -inset-0.5"></span>
-                                        <span class="sr-only">Close menu</span>
-                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <!-- Links -->
-                                <div>
-                                    <div class="border-b border-gray-200">
-                                        <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
-                                            <button class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium uppercase">Danh mục</button>
-                                        </div>
+				<div class="flex justify-between h-12 items-center border-t relative">
+					<!-- Flyout menus -->
+					<div class="block" x-data="{ isOpenCategory: false }">
+						<div class="flex h-full items-center cursor-pointer text-black text-md hover:text-blue-600" @click="isOpenCategory = !isOpenCategory" aria-expanded="false">
+                            <span class="hidden sm:block">
+                                Tất cả danh mục
+                            </span>
+                            <button type="button" @click="isOpenMenu = !isOpenMenu" aria-expanded="false" class="rounded-md bg-blue-600 p-1 text-white sm:hidden">
+                                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                </svg>
+                            </button>
+						</div>
+                        <div class="absolute w-full left-0 top-full z-50 max-h-80 shadow-inner bg-white rounded overflow-auto" x-show="isOpenCategory">
+                            <div class="relative text-center py-4">
+                                <b class="text-blue-500">TẤT CẢ DANH MỤC</b>
+                                <button class="absolute top-4 right-4 text-red-400" @click="isOpenCategory = false" aria-expanded="true">
+                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="flex items-center flex-wrap">
+                                @foreach($categories as $category)
+                                    <div class="w-1/2 md:w-1/3 lg:w-1/4 p-4 flex flex-col items-center">
+                                        <a href="{{route('collection',['slug'=>$category->slug])}}" class="w-auto text-blue-400 lg:hover:text-red-400 text-center items-center">
+                                            <div class="mb-4 w-15 h-15 mx-auto">
+                                                @if ($category->image)
+                                                    <img src="{{ asset('storage/images/categories/' . $category->image) }}" alt="{{$category->name}}" class="w-full h-full rounded-full object-cover">
+                                                @else
+                                                    <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Category Logo" class="w-full h-full rounded-full">
+                                                @endif
+                                            </div>
+                                            <p class="text-sm">{{$category->name}}</p>
+                                        </a>
                                     </div>
-                                    <div class="space-y-10 px-4 pb-8 pt-4" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
-                                        <ul class="row-start-1 grid grid-cols-1 gap-x-4 gap-y-2 text-sm">
-                                            @foreach($categories as $category)
-                                                @include('client.layouts.sub-menu', ['category' => $category])
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
-					<!-- Flyout menus -->
-					<div class="hidden lg:block lg:self-stretch">
-						<div class="flex h-full space-x-8">
-							<div class="flex" x-data="{ isOpenCategory: false }">
-								<div class="relative flex items-center w-64 bg-blue-700 hover:bg-black text-white cursor-pointer"  @mouseenter="isOpenCategory = true" @mouseleave="isOpenCategory = false" aria-expanded="false" >
-                                    <button type="button" class="ml-4 border-transparent  hover:text-gray-200 relative z-10 -mb-px flex items-center border-b-2 pt-px text-md font-medium transition-colors duration-200 ease-out">
-                                        <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1C0 0.447715 0.447715 0 1 0H15C15.5523 0 16 0.447715 16 1C16 1.55228 15.5523 2 15 2H1C0.447715 2 0 1.55228 0 1ZM0 7C0 6.44772 0.447715 6 1 6H17C17.5523 6 18 6.44772 18 7C18 7.55228 17.5523 8 17 8H1C0.447715 8 0 7.55228 0 7ZM1 12C0.447715 12 0 12.4477 0 13C0 13.5523 0.447715 14 1 14H11C11.5523 14 12 13.5523 12 13C12 12.4477 11.5523 12 11 12H1Z" fill="currentColor"></path>
-                                        </svg>
-                                        <span class="ml-2 text-sm">
-                                            Danh mục
-                                        </span>
-                                    </button>    
-                                    <span class="absolute ml-2 right-4">
-                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                        </svg>
-                                    </span>                            
-                                    <div class="animate-fade-up absolute w-64 inset-x-0 z-50 top-full text-sm text-gray-500" x-show="isOpenCategory" @mouseenter="isOpenCategory = true" @mouseleave="isOpenCategory = false" aria-hidden="true">
-                                        <div class="absolute inset-0 top-1/2 bg-white shadow"></div>
-                                        <div class="relative bg-white">
-                                            <div class="mx-auto max-w-7xl">
-                                                <ul class="row-start-1 gap-x-4 gap-y-4 text-sm">
-                                                    @foreach($categories as $category)
-                                                        @include('client.layouts.sub-menu', ['category' => $category])
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-							</div>
-                            <a href="{{route('contact')}}" class="flex items-center text-sm font-medium text-gray-900 hover:text-gray-800">Liên hệ</a>
-						</div>
 					</div>
-					<div class="ml-auto flex items-center">
-                        <div class="flex mr-3">
-                            <span class="text-gray-800 text-sm font-medium">Hotline: {{$system_info->phone}}</span>
-                        </div>
-					</div>
+                    <!-- Search -->
+                    <form action="{{ route('spotlight.search') }}">
+                        @livewire('client.search')
+                    </form>
 				</div>
 			</div>
 		</nav>
