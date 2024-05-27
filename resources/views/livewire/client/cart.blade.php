@@ -95,8 +95,9 @@
                                             </div>    
                                         </div> --}}
                                         <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800 w-full" title="Xem Chi Tiết">
-                                            <h3 class="text-sm dark:text-white xl:text-sm font-semibold leading-6 text-gray-800"><a href="{{route('product-detail',['id'=>$item->product_id,'slug'=>$item->slug])}}" >{{$item->name}}</a></h3>
-                                            <div class="icon_detail cursor-pointer" onclick="showhide('show_detail_{{$index}}')">
+                                            <h3 class="text-sm dark:text-white xl:text-sm font-semibold leading-6 text-gray-800"><a href="{{route('product-detail',['id'=>$item->product_id,'slug'=>$item->slug])}}" >{{$item->name}} ({{$item->dt_name}})</a></h3>
+                                            <div class="icon_detail cursor-pointer flex pt-2" onclick="showhide('show_detail_{{$index}}')">
+                                                <div class="flex justify-center items-center pr-4">{{number_format($item->retail_price)}} x {{$item->qty}}</div>
                                                 <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -106,7 +107,7 @@
                                             <div class="show_detail_{{$index}} hidden">
                                                 @foreach ($details as $idx => $detail)
                                                     <div class="flex">
-                                                        <div class="w-full pt-2">{{$detail->size}} ({{$detail->qty}}) {{$detail->title}}  </div>
+                                                        <div class="w-full pt-2">{{$detail->size}} ({{$detail->qty}}) </div>
                                                     </div>
                                                 @endforeach
                                             </div>
