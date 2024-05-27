@@ -44,7 +44,7 @@
                             INNER JOIN product_size size on crt.size_id = size.id
                             
                             WHERE crt.cart_id = '.$item->cart_id.'
-                            and crt.product_id = '.$item->product_id.'
+                            and crt.product_detail_id = '.$item->product_detail_id.'
                             group by prd.title,size.size,prd.image');
                            
                             $details_first = $details[0];
