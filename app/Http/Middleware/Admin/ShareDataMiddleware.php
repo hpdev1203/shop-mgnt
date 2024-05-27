@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\CartMD;
 use App\Models\Order;
 use App\Models\ContactUser;
+use Illuminate\Support\Facades\DB;
 
 class ShareDataMiddleware
 {
@@ -27,7 +28,7 @@ class ShareDataMiddleware
         $cart = CartMD::where('user_id', auth()->id())->first();
         $countCart = 0;
         if($cart){
-            $cate_items = CartItem::where('cart_id', $cart->id)->get();
+            $cate_items = CartItem::select('product_detail_id', DB::raw('count(*) as total'))->where('cart_id', $cart->id)->groupBy('product_detail_id')->get();
             $countCart = count($cate_items);
         }
         $notifications = Order::where('status', 'pending')->orderBy('order_date','desc')->get();

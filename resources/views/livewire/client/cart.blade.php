@@ -44,7 +44,7 @@
                             INNER JOIN product_size size on crt.size_id = size.id
                             
                             WHERE crt.cart_id = '.$item->cart_id.'
-                            and crt.product_id = '.$item->product_id.'
+                            and crt.product_detail_id = '.$item->product_detail_id.'
                             group by prd.title,size.size,prd.image');
                            
                             $details_first = $details[0];
@@ -95,8 +95,9 @@
                                             </div>    
                                         </div> --}}
                                         <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800 w-full" title="Xem Chi Tiết">
-                                            <h3 class="text-sm dark:text-white xl:text-sm font-semibold leading-6 text-gray-800"><a href="{{route('product-detail',['id'=>$item->product_id,'slug'=>$item->slug])}}" >{{$item->name}}</a></h3>
-                                            <div class="icon_detail cursor-pointer" onclick="showhide('show_detail_{{$index}}')">
+                                            <h3 class="text-sm dark:text-white xl:text-sm font-semibold leading-6 text-gray-800"><a href="{{route('product-detail',['id'=>$item->product_id,'slug'=>$item->slug])}}" >{{$item->name}} ({{$item->dt_name}})</a></h3>
+                                            <div class="icon_detail cursor-pointer flex pt-2" onclick="showhide('show_detail_{{$index}}')">
+                                                <div class="flex justify-center items-center pr-4">{{number_format($item->retail_price)}} x {{$item->qty}}</div>
                                                 <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -106,7 +107,7 @@
                                             <div class="show_detail_{{$index}} hidden">
                                                 @foreach ($details as $idx => $detail)
                                                     <div class="flex">
-                                                        <div class="w-full pt-2">{{$detail->size}} ({{$detail->qty}}) {{$detail->title}}  </div>
+                                                        <div class="w-full pt-2">{{$detail->size}} ({{$detail->qty}}) </div>
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -114,7 +115,7 @@
                                         <div class="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">
                                             <div>{{number_format($item->total)}}</div>
                                             <div class="flex text-sm justify-end pt-2 flex-row dark:text-white leading-none text-gray-800">
-                                                <button data-v-3c227870="" class="cart-item-remove" wire:click="handleDetele({{$item->id}})">
+                                                <button data-v-3c227870="" class="cart-item-remove" wire:click="handleDetele({{$item->product_detail_id}})">
                                                     <svg data-v-3c227870="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-3c227870="" d="M12.668 4.668a.667.667 0 0 0-.667.667v7.46a1.28 1.28 0 0 1-1.34 1.206h-5.32a1.28 1.28 0 0 1-1.34-1.206v-7.46a.667.667 0 0 0-1.333 0v7.46a2.612 2.612 0 0 0 2.673 2.54h5.32a2.612 2.612 0 0 0 2.674-2.54v-7.46a.667.667 0 0 0-.667-.667ZM13.333 2.668h-2.666V1.335A.667.667 0 0 0 10 .668H6a.667.667 0 0 0-.667.667v1.333H2.667a.667.667 0 0 0 0 1.333h10.666a.667.667 0 1 0 0-1.333Zm-6.666 0v-.667h2.666v.667H6.667Z" fill="#242424"></path> 
                                                         <path data-v-3c227870="" d="M7.333 11.333V6.667a.667.667 0 1 0-1.333 0v4.666a.667.667 0 1 0 1.333 0ZM10.001 11.333V6.667a.667.667 0 0 0-1.333 0v4.666a.667.667 0 1 0 1.333 0Z" fill="#242424"></path>
                                                     </svg> 

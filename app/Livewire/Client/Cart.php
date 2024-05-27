@@ -53,12 +53,12 @@ class Cart extends Component
                 $this->total_amount = $this->Carts->cart_item->sum("total_amount");
             }
             $this->CartItems = DB::select('
-            SELECT crt.product_id,SUM(crt.total_amount) as total,prd.name,crt.product_id as id,prd.slug,crt.cart_id 
+            SELECT crt.product_id,crt.product_detail_id,SUM(crt.total_amount) as total,prd_dt.title as dt_name,crt.product_id as id,prd.slug,crt.cart_id, prd.name,sum(crt.quantity) as qty,prd_dt.retail_price
             FROM cart_item crt
-            INNER JOIN products prd on crt.product_id = prd.id
-            
+            INNER JOIN product_detail prd_dt on crt.product_detail_id = prd_dt.id
+            INNER JOIN products prd on prd_dt.product_id = prd.id
             WHERE crt.cart_id = '.$this->Carts->id.'
-            GROUP BY crt.product_id,prd.name,prd.slug,crt.cart_id ');
+            GROUP BY crt.product_id,crt.product_detail_id,prd_dt.title,prd.slug,crt.cart_id, prd.name,prd_dt.retail_price ');
         }
         
 
@@ -77,7 +77,7 @@ class Cart extends Component
         DELETE 
         FROM cart_item 
         WHERE cart_id = '.$this->Carts->id.'
-        AND product_id = '.$id);
+        AND product_detail_id = '.$id);
         
     }
 
