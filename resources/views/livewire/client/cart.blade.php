@@ -115,7 +115,7 @@
                                         <div class="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">
                                             <div>{{number_format($item->total)}}</div>
                                             <div class="flex text-sm justify-end pt-2 flex-row dark:text-white leading-none text-gray-800">
-                                                <button data-v-3c227870="" class="cart-item-remove" wire:click="handleDetele({{$item->id}})">
+                                                <button data-v-3c227870="" class="cart-item-remove" wire:click="handleDetele({{$item->product_detail_id}})">
                                                     <svg data-v-3c227870="" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-3c227870="" d="M12.668 4.668a.667.667 0 0 0-.667.667v7.46a1.28 1.28 0 0 1-1.34 1.206h-5.32a1.28 1.28 0 0 1-1.34-1.206v-7.46a.667.667 0 0 0-1.333 0v7.46a2.612 2.612 0 0 0 2.673 2.54h5.32a2.612 2.612 0 0 0 2.674-2.54v-7.46a.667.667 0 0 0-.667-.667ZM13.333 2.668h-2.666V1.335A.667.667 0 0 0 10 .668H6a.667.667 0 0 0-.667.667v1.333H2.667a.667.667 0 0 0 0 1.333h10.666a.667.667 0 1 0 0-1.333Zm-6.666 0v-.667h2.666v.667H6.667Z" fill="#242424"></path> 
                                                         <path data-v-3c227870="" d="M7.333 11.333V6.667a.667.667 0 1 0-1.333 0v4.666a.667.667 0 1 0 1.333 0ZM10.001 11.333V6.667a.667.667 0 0 0-1.333 0v4.666a.667.667 0 1 0 1.333 0Z" fill="#242424"></path>
                                                     </svg> 

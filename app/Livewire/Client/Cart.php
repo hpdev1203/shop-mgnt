@@ -77,7 +77,7 @@ class Cart extends Component
         DELETE 
         FROM cart_item 
         WHERE cart_id = '.$this->Carts->id.'
-        AND product_id = '.$id);
+        AND product_detail_id = '.$id);
         
     }
 
