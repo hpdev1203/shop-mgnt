@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use App\Models\Slide;
+use App\Models\Brand;
 
 class IndexController extends Controller
 {
@@ -21,7 +21,7 @@ class IndexController extends Controller
     {   
         $new_products = Product::orderBy('id', 'desc')->limit(8)->get();
         $best_seller_products = OrderDetail::select('product_id', DB::raw('SUM(quantity) as total_quantity'))->groupBy('product_id')->orderBy('total_quantity', 'desc')->limit(8)->get();
-        $sliders = Slide::where('is_active', true)->get();
-        return view('client.index', ['new_products' => $new_products, 'best_seller_products' => $best_seller_products, 'sliders' => $sliders]);
+        $brands = Brand::orderBy('id', 'desc')->limit(8)->get();
+        return view('client.index', ['new_products' => $new_products, 'best_seller_products' => $best_seller_products, 'brands' => $brands]);
     }
 }
