@@ -3,8 +3,8 @@
 @section('title', 'Trang chủ')
 
 @section('content')
-    @include('client.layouts.slider')
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        @include('client.layouts.brand')
         <section class="bg-white py-2">
             <div class="container mx-auto flex items-center flex-wrap pt-4 pb-2">
                 <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3 bg-cyan-900">

@@ -38,6 +38,7 @@ use App\Http\Controllers\Client\OrderHistoryController;
 use App\Http\Controllers\Admin\InfoAdminController;
 use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Client\BrandController as ClientBrandController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -155,3 +156,5 @@ Route::get('/quen-mat-khau', [IndexController::class, 'forgot_password'])->name(
 Route::get('/collection/{slug}', [CollectionController::class, 'index'])->name('collection');
 Route::get('/spotlight', [SpotlightController::class, 'index'])->name('spotlight');
 Route::get('/spotlight/search', [SpotlightController::class, 'search'])->name('spotlight.search');
+
+Route::get('/nhan-hang/{slug}', [ClientBrandController::class, 'index'])->name('brand');

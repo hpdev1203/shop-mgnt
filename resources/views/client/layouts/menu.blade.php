@@ -59,17 +59,20 @@
 				<div class="flex justify-between h-12 items-center border-t relative">
 					<!-- Flyout menus -->
 					<div class="block" x-data="{ isOpenCategory: false }">
-						<div class="flex h-full items-center cursor-pointer text-black text-md hover:text-blue-600" @click="isOpenCategory = !isOpenCategory" aria-expanded="false">
-                            <span class="hidden sm:block">
-                                Tất cả danh mục
-                            </span>
+						<div class="flex h-full items-center cursor-pointer text-white text-md hover:text-lime-400" @click="isOpenCategory = !isOpenCategory" aria-expanded="false">
+                            <div class="hidden sm:flex bg-blue-600 p-2">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                </svg>
+                                <span class="pl-2">Tất cả danh mục</span>
+                            </div>
                             <button type="button" @click="isOpenMenu = !isOpenMenu" aria-expanded="false" class="rounded-md bg-blue-600 p-1 text-white sm:hidden">
                                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                                 </svg>
                             </button>
 						</div>
-                        <div class="absolute w-full left-0 top-full z-50 max-h-80 shadow-inner bg-white rounded overflow-auto" x-show="isOpenCategory">
+                        <div class="absolute w-full left-0 top-full z-50 max-h-80 shadow-inner bg-white rounded overflow-auto border-b-4" x-show="isOpenCategory">
                             <div class="relative text-center py-4">
                                 <b class="text-blue-500">TẤT CẢ DANH MỤC</b>
                                 <button class="absolute top-4 right-4 text-red-400" @click="isOpenCategory = false" aria-expanded="true">
