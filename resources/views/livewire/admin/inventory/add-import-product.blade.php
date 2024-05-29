@@ -129,6 +129,23 @@
         <a href="{{route('admin.import-product')}}" class="text-sm font-semibold leading-6 text-gray-900">Hủy</a>
         <button class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Lưu</button>
     </div>
+    <button id="modal_success" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="hidden block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    </button>
+    <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="p-4 md:p-5 text-center">
+                    <div id="svg-icon" class="text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"><span id="title-message"></span></h3>
+                    <p id="message" class="mb-5 text-sm text-gray-500 dark:text-gray-400"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 
 @script
@@ -138,5 +155,26 @@
                 convertSelectsToDropdowns()
             }, 100);
         })
+        window.addEventListener('successImportProduct', event => {
+            const btn = document.getElementById('modal_success');
+            const title = document.getElementById('title-message');
+            const message = document.getElementById('message');
+            const svgIcon = document.getElementById('svg-icon');
+            setTimeout(() => {
+                message.innerHTML = event.detail[0].message;
+                title.innerHTML = event.detail[0].title;
+                if(event.detail[0].type == 'success'){
+                    svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+                }else{
+                    svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-red-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+                }
+                btn.click(); 
+            }, 500);
+            if(event.detail[0].type == 'error'){
+                setTimeout(() => {
+                    window.location.href = "{{route('admin.import-product.add')}}";
+                }, 2000);
+            }
+        })
     </script>
-    @endscript
+@endscript
