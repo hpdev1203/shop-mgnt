@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-gray-100 dark:bg-gray-800 py-8">
+    <div class="bg-white dark:bg-gray-800 py-8">
         <div class="max-w-6xl mx-auto px-3 lg:px-0">
             <div class="flex flex-col md:flex-row -mx-4">
                 <div class="md:flex-1 px-4">
@@ -24,16 +24,6 @@
                             @else
                                 <span class="text-red-500 text-sm">Đăng nhập để xem giá</span>
                             @endif
-                        </div>
-                        <div>
-                            <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Tồn kho:</span>
-                            <span class="text-gray-600 dark:text-gray-300">
-                                @if(Auth::check())
-                                    {{$available_quantity}}
-                                @else
-                                <span class="text-red-500 text-sm">Đăng nhập để xem</span>
-                                @endif
-                            </span>
                         </div>
                     </div>
                     <div class="mb-4">
@@ -63,19 +53,6 @@
                         <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 mt-4">
                             {{$product_detail_selected->short_description}}
                         </p>
-                    </div>
-                    <div class="mb-4">
-                        <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Size</span>
-                        <div class="flex items-center mt-2">
-                            @if(count($product_sizes) > 0)
-                                @foreach ($product_sizes as $product_size)
-                                    <button class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600
-                                    {{$product_size->id == $product_size_id_selected ? 'bg-gray-400 dark:bg-gray-600' : ''}}" wire:click="updateProductSize({{$product_size->id}})">{{$product_size->size}}</button>
-                                @endforeach
-                            @else
-                                <button class=" text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600 bg-gray-400 dark:bg-gray-600">ZERO</button>
-                            @endif
-                        </div>
                     </div>
                     <div class="pt-2 mb-4 text-center">
                         @if(count($product_warehouses) > 0 && $available_quantity > 0)
