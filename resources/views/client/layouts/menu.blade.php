@@ -75,8 +75,8 @@
                             </button>
 						</div>
                         <div class="absolute w-full left-0 top-full z-50 max-h-80 shadow-inner bg-cyan-800 overflow-auto border-b-4" x-show="isOpenCategory">
-                            <div class="relative text-center py-4">
-                                <b class="text-cyan-800">TẤT CẢ DANH MỤC</b>
+                            <div class="relative text-center py-4 border border-b">
+                                <b class="text-white">TẤT CẢ DANH MỤC</b>
                                 <button class="absolute top-4 right-4 text-red-400" @click="isOpenCategory = false" aria-expanded="true">
                                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -94,7 +94,7 @@
                                                     <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Category Logo" class="w-full h-full rounded-full">
                                                 @endif
                                             </div>
-                                            <p class="text-gray-900 font-medium text-sm uppercase">{{$category->name}}</p>
+                                            <p class="text-white font-medium text-sm uppercase">{{$category->name}}</p>
                                         </a>
                                     </div>
                                 @endforeach
