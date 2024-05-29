@@ -74,7 +74,7 @@
                                 </svg>
                             </button>
 						</div>
-                        <div class="absolute w-full left-0 top-full z-50 max-h-80 shadow-inner bg-gray-50 overflow-auto border-b-4" x-show="isOpenCategory">
+                        <div class="absolute w-full left-0 top-full z-50 max-h-80 shadow-inner bg-cyan-800 overflow-auto border-b-4" x-show="isOpenCategory">
                             <div class="relative text-center py-4">
                                 <b class="text-cyan-800">TẤT CẢ DANH MỤC</b>
                                 <button class="absolute top-4 right-4 text-red-400" @click="isOpenCategory = false" aria-expanded="true">
