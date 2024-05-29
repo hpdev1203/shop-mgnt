@@ -54,6 +54,16 @@ class AddImportProduct extends Component
             'warehouse_id.required' => 'Vui lòng chọn kho hàng.',
         ]);
 
+        if ($this->import_product_detail_count == 0) {
+            $this->dispatch('successImportProduct', [
+                'title' => 'Thất bại',
+                'message' => 'Bạn chưa chọn sản phẩm, vui lòng nhập lại.',
+                'type' => 'error',
+                'timeout' => 3000
+            ]);
+            return;
+        }
+
         if ($this->import_product_detail_count > 0) {
             for ($i=0; $i < $this->import_product_detail_count; $i++) {
                 $product_size[$i] = 0;
