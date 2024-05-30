@@ -1,6 +1,6 @@
 <div class="bg-white">
 	<header class="relative bg-white">
-		<nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6">
 			<div class="border-b border-gray-200">
                 <div class="flex justify-between h-20 items-center">
 					<!-- Logo -->
@@ -15,10 +15,12 @@
 						</a>
 					</div>
                     <div class="justify-start items-center hidden sm:flex">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-red-400">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="13" width="13" version="1.1" id="_x32_" viewBox="0 0 512 512" xml:space="preserve" fill="#000000" stroke="#000000">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>              
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>                          
+                            <g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#9d0202;} </style> <g> <path class="st0" d="M94.811,21.696c-35.18,22.816-42.091,94.135-28.809,152.262c10.344,45.266,32.336,105.987,69.42,163.165 c34.886,53.79,83.557,102.022,120.669,129.928c47.657,35.832,115.594,58.608,150.774,35.792 c17.789-11.537,44.218-43.058,45.424-48.714c0,0-15.498-23.896-18.899-29.14l-51.972-80.135 c-3.862-5.955-28.082-0.512-40.386,6.457c-16.597,9.404-31.882,34.636-31.882,34.636c-11.38,6.575-20.912,0.024-40.828-9.142 c-24.477-11.262-51.997-46.254-73.9-77.947c-20.005-32.923-40.732-72.322-41.032-99.264c-0.247-21.922-2.341-33.296,8.304-41.006 c0,0,29.272-3.666,44.627-14.984c11.381-8.392,26.228-28.286,22.366-34.242l-51.972-80.134c-3.401-5.244-18.899-29.14-18.899-29.14 C152.159-1.117,112.6,10.159,94.811,21.696z"/> </g> </g>
                         </svg>
-                        <span class=" ml-2">Hotline:</span> <a href="tel:{{$system_info->phone}}" class="ml-2 text-green-500">{{$system_info->phone}}</a>
+                        <span class="text-sm font-medium text-gray-700 ml-1">Hotline:</span> <a href="tel:{{$system_info->phone}}" class="text-sm font-medium text-red-800 ml-1">{{$system_info->phone}}</a>
                     </div>
 					<div class="flex items-center">
 						<!-- Cart -->
@@ -59,12 +61,12 @@
 				<div class="flex justify-between h-12 items-center border-t relative">
 					<!-- Flyout menus -->
 					<div class="block" x-data="{ isOpenCategory: false }">
-						<div class="flex h-full items-center cursor-pointer text-white text-md hover:text-lime-400" @click="isOpenCategory = !isOpenCategory" aria-expanded="false">
-                            <div class="hidden sm:flex bg-blue-600 p-2">
+						<div class="flex h-full items-center cursor-pointer text-white text-md hover:text-gray-200" @click="isOpenCategory = !isOpenCategory" aria-expanded="false">
+                            <div class="hidden sm:flex sm:items-center sm:justify-center bg-cyan-800 p-2">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                                 </svg>
-                                <span class="pl-2">Tất cả danh mục</span>
+                                <span class="pl-2 text-sm">Tất cả danh mục</span>
                             </div>
                             <button type="button" @click="isOpenMenu = !isOpenMenu" aria-expanded="false" class="rounded-md bg-blue-600 p-1 text-white sm:hidden">
                                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -72,11 +74,11 @@
                                 </svg>
                             </button>
 						</div>
-                        <div class="absolute w-full left-0 top-full z-50 max-h-80 shadow-inner bg-white rounded overflow-auto border-b-4" x-show="isOpenCategory">
-                            <div class="relative text-center py-4">
-                                <b class="text-blue-500">TẤT CẢ DANH MỤC</b>
+                        <div class="absolute w-full left-0 top-full z-50 max-h-80 shadow-inner bg-gray-50 overflow-auto border-b" x-show="isOpenCategory">
+                            <div class="relative text-center py-4 border-b">
+                                <b class="text-gray-800">TẤT CẢ DANH MỤC</b>
                                 <button class="absolute top-4 right-4 text-red-400" @click="isOpenCategory = false" aria-expanded="true">
-                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button>
@@ -92,7 +94,7 @@
                                                     <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Category Logo" class="w-full h-full rounded-full">
                                                 @endif
                                             </div>
-                                            <p class="text-sm">{{$category->name}}</p>
+                                            <p class="text-gray-800 font-medium text-sm uppercase">{{$category->name}}</p>
                                         </a>
                                     </div>
                                 @endforeach

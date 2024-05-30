@@ -66,10 +66,12 @@
         </style>
 	</head>
 	<body class="bg-gray-300 font-sans leading-normal text-base tracking-normal">
-        @include('client.layouts.menu')
-        @yield('content')
-        @include('client.layouts.footer')
-        @livewire('wire-elements-modal')
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            @include('client.layouts.menu')
+            @yield('content')
+            @include('client.layouts.footer')
+            @livewire('wire-elements-modal')
+        </div>
     </body>
     @livewireScripts
     <script>

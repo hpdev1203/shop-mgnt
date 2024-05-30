@@ -14,11 +14,9 @@ class ProductSize extends Model implements Auditable
 
     public function productAvailable($product_id, $product_detail_id, $product_size_id, $warehouse_id)
     {
-    $product_detail = ProductDetail::find($product_detail_id);
-        $warehouse = Warehouse::find($warehouse_id);
-        $product_warehouse = $product_detail->product->warehouses()->where('warehouse_id', $warehouse_id)->first();
+        $product_warehouse = Warehouse::find($warehouse_id);
         if($product_warehouse){
-            return $product_warehouse->pivot->quantity;
+            return $product_warehouse->totalProductAvailable($product_id, $product_detail_id, $product_size_id);
         }else{
             return 0;
         }

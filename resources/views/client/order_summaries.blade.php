@@ -3,12 +3,10 @@
 @section('title', 'Thông tin đơn hàng')
 
 @section('content')
-<div class="max-w-7xl sm:px-6 lg:px-8 mx-auto">
     <div class="py-6 bg-white px-4">
         <div class="flex justify-start item-start space-y-2 flex-col">
             <h1 class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Thông tin đơn hàng</h1>
         </div> 
         @livewire('client.order-summaries')
     </div>
-</div>
 @endsection

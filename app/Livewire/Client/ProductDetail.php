@@ -22,8 +22,6 @@ class ProductDetail extends Component
     public $product_detail_selected;
     public $product_detail_images_selected = [];
     public $product_detail_image_default = "";
-    public $product_size_id_selected;
-    public $product_size_selected;
     public $available_quantity = 0;
     public $product_route;
     public $product_id;
@@ -42,10 +40,7 @@ class ProductDetail extends Component
         }
         $this->product_detail_selected = $this->product_details->first();
         $this->product_detail_id_selected = $this->product_detail_selected->id;
-        $this->product_size_selected = $this->product->productSizes->first();
-        if($this->product_size_selected){
-            $this->product_size_id_selected = $this->product_size_selected->id;
-        }
+
         $this->updateProductDetailImage();
         $this->updateAvailableQuantity();
     }
@@ -73,15 +68,9 @@ class ProductDetail extends Component
         $this->updateAvailableQuantity();
     }
 
-    public function updateProductSize($id){
-        $this->product_size_id_selected = $id;
-        $this->product_size_selected = $this->product->productSizes->where('id', $this->product_size_id_selected)->first();
-        $this->updateAvailableQuantity();
-    }
-
     public function updateAvailableQuantity(){
         if($this->warehouse_id_selected){
-            $this->available_quantity = Warehouse::find($this->warehouse_id_selected)->totalProductAvailable($this->product->id, $this->product_detail_id_selected, $this->product_size_id_selected);
+            $this->available_quantity = Warehouse::find($this->warehouse_id_selected)->totalProductAvailable($this->product->id, $this->product_detail_id_selected, null);
         }else{
             $this->available_quantity = 0;
         }
