@@ -14,13 +14,13 @@
     </div>
     <!-- Modal body -->
     <form class="p-2" onsubmit="return false">
-        <table class="min-w-full divide-y divide-gray-200">
+        <table class="table-auto w-full divide-y divide-gray-200 text-sm border">
             <thead class="bg-gray-200">
                 <tr>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-24 text-center">Size</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-24 text-left">Tồn kho</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-32 text-left">Số lượng</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left"></th>
+                    <th scope="col" class="px-2 py-2 text-sm font-medium text-gray-700 tracking-wider w-24 text-center">Size</th>
+                    <th scope="col" class="px-2 py-2 text-sm font-medium text-gray-700 tracking-wider w-24 text-left">Tồn kho</th>
+                    <th scope="col" class="px-2 py-2 text-sm font-medium text-gray-700 tracking-wider w-24 text-left">Số lượng</th>
+                    <th scope="col" class="px-2 py-2 text-sm font-medium text-gray-700 tracking-wider text-left"></th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 text-sm	">
@@ -29,7 +29,7 @@
                         <td class="px-2 py-2 whitespace-nowrap text-center">{{$product_size->size}}</td>
                         <td class="px-2 py-2 whitespace-nowrap text-center">{{$warehouse->totalProductAvailable($product_id, $product_detail_id, $product_size->id)}}</td>
                         <td class="px-2 py-2 whitespace-nowrap">
-                            <input wire:model="listProductAdded.{{$product_size->id}}" wire:change="changeQty({{$product_size->id}})" class="w-32 text-center" type="text">
+                            <input wire:model="listProductAdded.{{$product_size->id}}" wire:change="changeQty({{$product_size->id}})" class="w-24 text-center h-6" type="text">
                             @if($listProductAddedError[$product_size->id] != "")
                                 <div class="text-red-500">{{ $listProductAddedError[$product_size->id] }}</div>
                             @endif
@@ -48,13 +48,22 @@
                         </td>
                     </tr>
                 @endforeach
-                <tr>
-                    <td class="px-2 py-2 whitespace-nowrap text-center font-medium" colspan="2">ĐƠN GIÁ : {{ number_format($product->retail_price, 0, ',', '.') }} VNĐ</td>
-                    <td class="px-2 py-2 whitespace-nowrap text-center font-medium">TỔNG SỐ LƯỢNG : {{$totalQuantity}}</td>
-                    <td class="px-2 py-2 whitespace-nowrap text-right font-medium">TỔNG TIỀN : {{ number_format($totalAmount, 0, ',', '.') }} VNĐ</td>
-                </tr>
             </tbody>
         </table>
+        <div class="mt-4 text-sm font-medium">
+            <div class="flex">
+                <div class="text-gray-700 dark:text-white w-32">Giá:</div>
+                <div class="text-gray-900 dark:text-white w-40">{{ number_format($product->retail_price, 0, ',', '.') }} VNĐ</div>
+            </div>
+            <div class="flex">
+                <div class="text-gray-700 dark:text-white w-32">Tổng số lượng:</div>
+                <div class="text-gray-900 dark:text-white w-40">{{ $totalQuantity }}</div>
+            </div>
+            <div class="flex">
+                <div class="text-gray-700 dark:text-white w-32">Tổng số tiền:</div>
+                <div class="text-gray-900 dark:text-white w-40">{{ number_format($totalAmount, 0, ',', '.') }} VNĐ</div>
+            </div>
+        </div>
         @if(session()->has('error'))
             <div class="text-red-500 text-center">{{ session('error') }}</div>
         @endif

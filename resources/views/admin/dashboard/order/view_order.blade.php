@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Chỉnh sửa đơn đơn hàng')
+@section('title', 'Xem đơn đơn hàng')
 @section('menu', 'orders')
 
 @section('content')
     <div class="container mx-auto px-2 py-8 sm:px-6 md:px-8">
-        <h3 class="text-2xl text-gray-700 font-bold">CHỈNH SỬA ĐƠN HÀNG</h3>
+        <h3 class="text-2xl text-gray-700 font-bold">XEM ĐƠN HÀNG</h3>
         <nav class="text-sm font-medium text-gray-500 py-4" aria-label="breadcrumb">
             <ol class="list-none p-0 inline-flex">
                 <li class="flex items-center">
@@ -17,14 +17,14 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">Chỉnh sửa đơn đơn hàng</span>
+                    <span class="text-gray-700">Xem đơn đơn hàng</span>
                 </li>
             </ol>
         </nav>
         <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div class="px-4 py-6 md:px-6 xl:px-7.5">
                 <div class="flex justify-between items-center">
-                    <h4 class="text-xl font-bold text-black dark:text-white inline">CHỈNH SỬA - <span class="uppercase font-bold text-sky-400">{{$order->code}}</span></h4>
+                    <h4 class="text-xl font-bold text-black dark:text-white inline">XEM - <span class="uppercase font-bold text-sky-400">{{$order->code}}</span></h4>
                     @if($order->status == 'draft')
                         <span data-modal-target="timeline-modal" data-modal-toggle="timeline-modal" class="text-sm font-medium text-gray-500 cursor-pointer">BẢN NHÁP</span>
                     @endif
@@ -48,7 +48,7 @@
             </div>
 
             <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
-                @livewire('admin.order.edit-order', ['id' => $order->id, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products])
+                @livewire('admin.order.view-order', ['id' => $order->id, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products])
             </div>
         </div>
 

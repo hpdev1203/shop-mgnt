@@ -38,7 +38,7 @@
                     </div>
                     
                     <div class="mb-4">
-                        <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Mẫu</span>
+                        <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Mẫu:</span>
                         <div class="flex items-center mt-2">
                             @foreach ($product_details as $product_detail)
                                 @if($product_detail->image != null)
