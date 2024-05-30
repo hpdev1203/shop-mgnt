@@ -69,7 +69,11 @@ class ProductDetail extends Component
     }
 
     public function updateAvailableQuantity(){
-        
+        if($this->warehouse_id_selected){
+            $this->available_quantity = Warehouse::find($this->warehouse_id_selected)->totalProductAvailable($this->product->id, $this->product_detail_id_selected, null);
+        }else{
+            $this->available_quantity = 0;
+        }
     }
 
     public function render()

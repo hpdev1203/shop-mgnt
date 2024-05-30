@@ -30,7 +30,7 @@
                         <div class="flex items-center mt-2">
                             @foreach ($product_warehouses as $warehouse)
                                 <label class="inline-flex items-center mr-2">
-                                    <input wire:model="warehouse_id_selected" wire:click="updateWarehouse" type="radio" name="warehouse" value="{{$warehouse->id}}" class="form-radio text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <input wire:model="warehouse_id_selected" wire:click="updateWarehouse" type="radio" name="warehouse" value="{{$warehouse->id}}" class="form-radio text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     <span class="ml-2 text-sm">{{$warehouse->name}}</span>
                                 </label>
                             @endforeach
@@ -53,6 +53,49 @@
                         <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 mt-4">
                             {{$product_detail_selected->short_description}}
                         </p>
+                    </div>
+                    <div class="mb-4">
+                        <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">TỒN KHO</span>
+                        <div class="flex items-center mt-2">
+                            <table class="table-auto w-full divide-y divide-gray-200 text-sm border">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="px-4 py-2 font-medium text-left w-32">Size</th>
+                                        @foreach ($product_sizes as $size)
+                                            <th class="px-4 py-2 font-medium text-center">{{$size->size}}</th>
+                                        @endforeach
+                                        <th class="px-4 py-2 font-bold w-24">Tổng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="px-4 py-2">Tồn kho thực</td>
+                                        @php
+                                            $total_quantity = 0
+                                        @endphp
+                                        @foreach ($product_sizes as $size)
+                                            @php
+                                                $total_quantity += $size->productAvailable($product_id, $product_detail_id_selected, $size->id, $warehouse_id_selected)
+                                            @endphp
+                                            <td class="px-4 py-2 text-center">
+                                                @if(Auth::check())
+                                                    {{$size->productAvailable($product_id, $product_detail_id_selected, $size->id, $warehouse_id_selected)}}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                        @endforeach
+                                        <td class="px-4 py-2 font-bold text-center">
+                                            @if(Auth::check())
+                                                {{$total_quantity}}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="pt-2 mb-4 text-center">
                         @if(count($product_warehouses) > 0 && $available_quantity > 0)

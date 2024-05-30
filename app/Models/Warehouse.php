@@ -35,6 +35,13 @@ class Warehouse extends Model implements Auditable
 
     public function totalProductImport($product_id, $product_detail_id, $size_id)
     {
+        if($size_id == null){
+            return $this->importProducts()
+                ->join('import_product_detail', 'import_product.id', '=', 'import_product_detail.import_product_id')
+                ->where('import_product_detail.product_id', $product_id)
+                ->where('import_product_detail.product_detail_id', $product_detail_id)
+                ->sum('import_product_detail.quantity');
+        }
         return $this->importProducts()
             ->join('import_product_detail', 'import_product.id', '=', 'import_product_detail.import_product_id')
             ->where('import_product_detail.product_id', $product_id)
@@ -45,6 +52,13 @@ class Warehouse extends Model implements Auditable
 
     public function totalProductTransfer($product_id, $product_detail_id, $size_id)
     {
+        if($size_id == null){
+            return $this->transferWarehouseFrom()
+                ->join('transfer_product_detail', 'transfer_product.id', '=', 'transfer_product_detail.transfer_product_id')
+                ->where('transfer_product_detail.product_id', $product_id)
+                ->where('transfer_product_detail.product_detail_id', $product_detail_id)
+                ->sum('transfer_product_detail.quantity');
+        }
         return $this->transferWarehouseFrom()
             ->join('transfer_product_detail', 'transfer_product.id', '=', 'transfer_product_detail.transfer_product_id')
             ->where('transfer_product_detail.product_id', $product_id)
@@ -55,6 +69,13 @@ class Warehouse extends Model implements Auditable
 
     public function totalProductReceive($product_id, $product_detail_id, $size_id)
     {
+        if($size_id == null){
+            return $this->transferWarehouseTo()
+                ->join('transfer_product_detail', 'transfer_product.id', '=', 'transfer_product_detail.transfer_product_id')
+                ->where('transfer_product_detail.product_id', $product_id)
+                ->where('transfer_product_detail.product_detail_id', $product_detail_id)
+                ->sum('transfer_product_detail.quantity');
+        }
         return $this->transferWarehouseTo()
             ->join('transfer_product_detail', 'transfer_product.id', '=', 'transfer_product_detail.transfer_product_id')
             ->where('transfer_product_detail.product_id', $product_id)
@@ -65,6 +86,12 @@ class Warehouse extends Model implements Auditable
 
     public function totalProductOrdered($product_id, $product_detail_id, $size_id)
     {
+        if($size_id == null){
+            return $this->orderProducts()
+                ->where('product_id', $product_id)
+                ->where('product_detail_id', $product_detail_id)
+                ->sum('quantity');
+        }
         return $this->orderProducts()
             ->where('product_id', $product_id)
             ->where('product_detail_id', $product_detail_id)
