@@ -32,4 +32,13 @@ class OrderController extends Controller
         $changeLog = OrderStatus::where('order_id', $id)->get();
         return view('admin.dashboard.order.edit_order', ['order' => $order, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products, 'changeLog' => $changeLog]);
     }
+
+    public function view($id){
+        $order = Order::find($id);
+        $customers = User::where('role', 'customer')->get();
+        $payment_methods = PaymentMethod::all();
+        $products = Product::all();
+        $changeLog = OrderStatus::where('order_id', $id)->get();
+        return view('admin.dashboard.order.view_order', ['order' => $order, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products, 'changeLog' => $changeLog]);
+    }
 }

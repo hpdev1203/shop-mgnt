@@ -116,7 +116,7 @@
                                             <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"></path>
                                             <path d="M3 9l4 0"></path>
                                         </svg>
-                                        Đặt hàng
+                                        Đơn hàng
                                     </a>
                                 </li>
                                 <li>

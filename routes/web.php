@@ -93,6 +93,7 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::get('/admin/orders/add', [OrderController::class, 'add'])->name('admin.orders.add');
     Route::get('/admin/orders/edit/{id}', [OrderController::class, 'edit'])->name('admin.orders.edit');
+    Route::get('/admin/orders/view/{id}', [OrderController::class, 'view'])->name('admin.orders.view');
 
     /* Payment Method  */
     Route::get('/admin/payment-methods', [PaymentMethodController::class, 'index'])->name('admin.payment-methods');
