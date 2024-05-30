@@ -19,7 +19,6 @@ class AddTransferWarehouse extends Component
     public $transfer_warehouse_name = "";
     public $from_warehouse_id = "";
     public $to_warehouse_id = "";
-    public $list_transfer_warehouse_detail = [];
     public $product_id = [];
     public $product_detail_id = [];
     public $size_id = [];
@@ -27,11 +26,50 @@ class AddTransferWarehouse extends Component
     public $transfer_warehouse_detail_count = 0;
     public $product_detail_list;
     public $product_size_list;
+    public $disabled_select_yn = [];
 
     public function addTransferWarehouseDetail(){
-        $new_transfer_warehouse_detail = new TransferWarehouseDetail();
-        $this->list_transfer_warehouse_detail[] = $new_transfer_warehouse_detail;
         $this->transfer_warehouse_detail_count++;
+    }
+
+    public function copyTransferWarehouseDetail($index){
+        $this->transfer_warehouse_detail_count++;
+        if(isset($this->product_id[$index])){
+            $firstProductId = array_slice($this->product_id, 0, $index+1);
+            $secondProductId = array_slice($this->product_id, $index+1);
+            $this->product_id = array_merge($firstProductId, [$this->product_id[$index]], $secondProductId);
+
+            $firstProductDetailList = array_slice($this->product_detail_list, 0, $index+1);
+            $secondProductDetailList = array_slice($this->product_detail_list, $index+1);
+            $this->product_detail_list = array_merge($firstProductDetailList, [$this->product_detail_list[$index]], $secondProductDetailList);
+            
+            $firstProductDetailId = array_slice($this->product_detail_id, 0, $index+1);
+            $secondProductDetailId = array_slice($this->product_detail_id, $index+1);
+            $this->product_detail_id = array_merge($firstProductDetailId, [$this->product_detail_id[$index]], $secondProductDetailId);
+
+            $firstSizeList = array_slice($this->product_size_list, 0, $index+1);
+            $secondSizeList = array_slice($this->product_size_list, $index+1);
+            $this->product_size_list = array_merge($firstSizeList, [$this->product_size_list[$index]], $secondSizeList);
+            
+            $firstSizeId = array_slice($this->size_id, 0, $index+1);
+            $secondSizeId = array_slice($this->size_id, $index+1);
+            $this->size_id = array_merge($firstSizeId, [$this->size_id[$index]], $secondSizeId);
+           
+            $this->disabled_select($index);
+        }
+    }
+
+    public function disabled_select($index){
+        for ($i=$index; $i <= $this->transfer_warehouse_detail_count; $i++) {
+            if (isset($this->product_id[$i]) && $this->product_id[$i] == $this->product_id[$index]) {
+                $this->disabled_select_yn[$i] = "y";
+                $this->disabled_select_yn[$index] = "n";
+            }else{
+                $this->disabled_select_yn[$i] = "n";
+                break;
+            }
+            $this->disabled_select_yn[$this->transfer_warehouse_detail_count - 1] = "y";
+        }
     }
 
     public function pullDropdown($index){
@@ -60,6 +98,16 @@ class AddTransferWarehouse extends Component
             'to_warehouse_id.required' => 'Vui lòng chọn kho hàng đến.',
             'to_warehouse_id.different' => 'Vui lòng chọn kho hàng đến khác với kho hàng đi.',
         ]);
+
+        if ($this->transfer_warehouse_detail_count == 0) {
+            $this->dispatch('successTransferProduct', [
+                'title' => 'Thất bại',
+                'message' => 'Bạn chưa chọn sản phẩm, vui lòng nhập lại.',
+                'type' => 'error',
+                'timeout' => 3000
+            ]);
+            return;
+        }
 
         if ($this->transfer_warehouse_detail_count > 0) {
             for ($i=0; $i < $this->transfer_warehouse_detail_count; $i++) {
@@ -193,6 +241,6 @@ class AddTransferWarehouse extends Component
         $warehouses = Warehouse::all();
         $products = Product::all();
         $this->transfer_warehouse_code = 'TRA-'.str_pad(count($id_latest) + 1, 4, '0', STR_PAD_LEFT);
-        return view('livewire.admin.inventory.add-transfer-warehouse',['warehouses' => $warehouses, 'products' => $products, 'list_transfer_warehouse_detail' => $this->list_transfer_warehouse_detail , 'product_detail_list' => $this->product_detail_list , 'product_size_list' => $this->product_size_list]);
+        return view('livewire.admin.inventory.add-transfer-warehouse',['warehouses' => $warehouses, 'products' => $products, 'product_detail_list' => $this->product_detail_list , 'product_size_list' => $this->product_size_list]);
     }
 }

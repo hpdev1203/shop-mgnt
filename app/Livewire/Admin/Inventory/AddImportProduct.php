@@ -16,7 +16,6 @@ class AddImportProduct extends Component
     public $import_product_code = "";
     public $import_product_name = "";
     public $warehouse_id = "";
-    public $list_import_product_detail = [];
     public $product_id = [];
     public $product_detail_id = [];
     public $size_id = [];
@@ -24,11 +23,46 @@ class AddImportProduct extends Component
     public $import_product_detail_count = 0;
     public $product_detail_list;
     public $product_size_list;
+    public $disabled_select_yn = [];
 
     public function addImportProductDetail(){
-        $new_import_product_detail = new ImportProductDetail();
-        $this->list_import_product_detail[] = $new_import_product_detail;
         $this->import_product_detail_count++;
+    }
+
+    public function copyImportProductDetail($index){
+        $this->import_product_detail_count++;
+        if(isset($this->product_id[$index])){
+            $firstProductId = array_slice($this->product_id, 0, $index+1);
+            $secondProductId = array_slice($this->product_id, $index+1);
+            $this->product_id = array_merge($firstProductId, [$this->product_id[$index]], $secondProductId);
+
+            $firstProductDetailList = array_slice($this->product_detail_list, 0, $index+1);
+            $secondProductDetailList = array_slice($this->product_detail_list, $index+1);
+            $this->product_detail_list = array_merge($firstProductDetailList, [$this->product_detail_list[$index]], $secondProductDetailList);
+            
+            $firstProductDetailId = array_slice($this->product_detail_id, 0, $index+1);
+            $secondProductDetailId = array_slice($this->product_detail_id, $index+1);
+            $this->product_detail_id = array_merge($firstProductDetailId, [$this->product_detail_id[$index]], $secondProductDetailId);
+
+            $firstSizeList = array_slice($this->product_size_list, 0, $index+1);
+            $secondSizeList = array_slice($this->product_size_list, $index+1);
+            $this->product_size_list = array_merge($firstSizeList, [$this->product_size_list[$index]], $secondSizeList);
+            
+            $firstSizeId = array_slice($this->size_id, 0, $index+1);
+            $secondSizeId = array_slice($this->size_id, $index+1);
+            $this->size_id = array_merge($firstSizeId, [$this->size_id[$index]], $secondSizeId);
+            
+            for ($i=$index; $i <= $this->import_product_detail_count; $i++) {
+                if (isset($this->product_id[$i]) && $this->product_id[$i] == $this->product_id[$index]) {
+                    $this->disabled_select_yn[$i] = "y";
+                    $this->disabled_select_yn[$index] = "n";
+                    $this->disabled_select_yn[$this->import_product_detail_count - 1] = "y";
+                }else{
+                    $this->disabled_select_yn[$i] = "n";
+                    break;
+                }
+            }
+        }
     }
 
     public function pullDropdown($index){
@@ -116,6 +150,6 @@ class AddImportProduct extends Component
         $warehouses = Warehouse::all();
         $products = Product::all();
         $this->import_product_code = 'IMP-'.str_pad(count($id_latest) + 1, 4, '0', STR_PAD_LEFT);
-        return view('livewire.admin.inventory.add-import-product',['warehouses' => $warehouses, 'products' => $products, 'list_import_product_detail' => $this->list_import_product_detail , 'product_detail_list' => $this->product_detail_list , 'product_size_list' => $this->product_size_list]);
+        return view('livewire.admin.inventory.add-import-product',['warehouses' => $warehouses, 'products' => $products, 'product_detail_list' => $this->product_detail_list , 'product_size_list' => $this->product_size_list , 'disabled_select_yn' => $this->disabled_select_yn]);
     }
 }
