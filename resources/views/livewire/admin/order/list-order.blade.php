@@ -30,7 +30,7 @@
                         </svg>
                     </th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-12 text-center">STT</th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-center">Mã đơn hàng</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-72 text-center">Mã đơn hàng</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Khách Hàng</th>
                     {{-- <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-left">Hình thức thanh toán</th> --}}
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-center">Trạng thái thanh toán</th>
@@ -51,9 +51,20 @@
                             <input type="checkbox" name="cbx_delete_order" class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" wire:model="selected_index.{{$index}}" value="{{$order->id}}">
                         </td>
                         <td class="px-2 py-2 whitespace-nowrap text-center">{{ $orders->perPage() * ($orders->currentPage() - 1) + $loop->iteration }}</td>
-                        <td class="px-2 py-2 whitespace-nowrap text-center">
-                            <a href="{{route('admin.orders.edit', $order->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
+                        <td class="px-2 py-2 whitespace-nowrap text-center flex items-center justify-center">
+                            <a href="{{route('admin.orders.view', $order->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
                                 {{$order->code}}
+                            </a>
+                            <button class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900" onclick="copyToClipboard('{{$order->code}}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none">
+                                    <path d="M6 11C6 8.17157 6 6.75736 6.87868 5.87868C7.75736 5 9.17157 5 12 5H15C17.8284 5 19.2426 5 20.1213 5.87868C21 6.75736 21 8.17157 21 11V16C21 18.8284 21 20.2426 20.1213 21.1213C19.2426 22 17.8284 22 15 22H12C9.17157 22 7.75736 22 6.87868 21.1213C6 20.2426 6 18.8284 6 16V11Z" stroke="#1C274C" stroke-width="1.5"/>
+                                    <path d="M6 19C4.34315 19 3 17.6569 3 16V10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H15C16.6569 2 18 3.34315 18 5" stroke="#1C274C" stroke-width="1.5"/>
+                                </svg>
+                            </button>
+                            <a href="{{route('admin.orders.edit', $order->id)}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 3.99997H6C4.89543 3.99997 4 4.8954 4 5.99997V18C4 19.1045 4.89543 20 6 20H18C19.1046 20 20 19.1045 20 18V12M18.4142 8.41417L19.5 7.32842C20.281 6.54737 20.281 5.28104 19.5 4.5C18.7189 3.71895 17.4526 3.71895 16.6715 4.50001L15.5858 5.58575M18.4142 8.41417L12.3779 14.4505C12.0987 14.7297 11.7431 14.9201 11.356 14.9975L8.41422 15.5858L9.00257 12.6441C9.08001 12.2569 9.27032 11.9013 9.54951 11.6221L15.5858 5.58575M18.4142 8.41417L15.5858 5.58575" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </a>
                         </td>
                         <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->customer->name}}</td>
@@ -138,6 +149,17 @@
                 popupDeleteMultiple.click();
                 parseInfoDeleteMultiple('deleteListCheckbox()');
             }
+        }
+        function copyToClipboard(text){
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            const popupWarning = document.querySelector('[data-modal-target="popup-warning"]');
+            popupWarning.click();
+            parseInfoWarning('Đã sao chép mã đơn hàng');
         }
     </script>
     @script

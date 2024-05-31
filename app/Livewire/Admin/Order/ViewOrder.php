@@ -2,11 +2,10 @@
 
 namespace App\Livewire\Admin\Order;
 
+use App\Models\PaymentMethod;
 use Livewire\Component;
 use App\Models\Order;
 use App\Models\OrderDetail;
-use App\Models\Product;
-use App\Models\Warehouse;
 use App\Models\User;
 
 class ViewOrder extends Component
@@ -14,6 +13,7 @@ class ViewOrder extends Component
     public $customers;
     public $payment_methods;
     public $payment_method_id = '';
+    public $payment_method_name = '';
     public $payment_status = '';
     public $customer_id = '';
     public $customer_name ='';
@@ -187,6 +187,7 @@ class ViewOrder extends Component
         $this->order = Order::findOrFail($id);
         $this->order_id = $id;
         $this->payment_method_id = $this->order->payment_method_id;
+        $this->payment_method_name = PaymentMethod::find($this->payment_method_id)->name;
         $this->payment_status = $this->order->payment_status;
         $this->customer_id = $this->order->user_id;
         $this->customer_name = User::find($this->customer_id)->name;
