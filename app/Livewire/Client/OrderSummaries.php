@@ -14,8 +14,6 @@ class OrderSummaries extends Component
     public $filter_order_summaries_yn = "n";
 
     public function filter_order_summaries(){
-        $this->from_date = $this->from_date;
-        $this->to_date = $this->to_date;
         $this->filter_order_summaries_yn = "y";
         $this->render();
     }
