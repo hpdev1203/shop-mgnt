@@ -1,7 +1,6 @@
 <form wire:submit='payment' class="lg:mt-6">
     <div>
-        <h2 class="text-xl font-bold text-[#333]">Thông tin thanh toán</h2>
-        <div class="grid grid-cols-2 gap-6 mt-4">
+        <div class="grid grid-cols-2 gap-6">
             <div class="col-span-2 md:col-span-1">
                 <label for="order_code" class="block text-sm font-medium leading-6 text-gray-900">Mã đơn hàng</label>
                 <div class="mt-2">
