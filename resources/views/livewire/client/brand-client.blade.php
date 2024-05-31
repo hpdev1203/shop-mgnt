@@ -1,9 +1,9 @@
-<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="bg-white p-4">
-        <h2 class="text-2xl font-bold text-gray-800 mb-2">{{$brand->name}}</h2>
+<div class="w-full bg-white py-4 md:py-6 px-2 md:px-4">
+    <div class="pb-4">
+        <h2 class="text-lg lg:text-2xl font-bold text-gray-800 mb-2">{{$brand->name}}</h2>
         <div class=" flex items-center flex-wrap">
             @if ($products->isEmpty())
-                <p class="whitespace-nowrap text-center py-2">Không có sản phẩm thuộc nhãn hàng này.</p>
+                <p class="whitespace-nowrap mx-auto text-xs md:text-sm">Không có sản phẩm thuộc nhãn hàng này.</p>
             @endif
             @foreach ($products as $index => $product)
                 <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 flex flex-col">

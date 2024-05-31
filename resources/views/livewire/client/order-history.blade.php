@@ -1,16 +1,16 @@
-<div class="w-full bg-white py-4 md:py-6 px-2 md:px-4">
-    <div class="flex justify-start item-start space-y-2 flex-col">
-        <h1 class="text-xl lg:text-2xl font-semibold leading-8 lg:leading-9 text-gray-800">Mã đơn hàng: <span class="text-green-500">{{$order->code}}</span></h1>
-        <p class="text-md font-medium leading-6 text-gray-600">Ngày đặt: {{date('d/m/Y H:i:s', strtotime($order->order_date))}}</p>
+<div class="w-full bg-white py-4 md:py-6 px-2 md:px-6">
+    <div class="flex justify-start item-start flex-col">
+        <p class="text-lg lg:text-2xl font-semibold text-gray-800">Mã đơn hàng: <span class="text-green-500">{{$order->code}}</span></p>
+        <p class="text-sm font-medium text-gray-600">Ngày đặt: {{date('d/m/Y H:i:s', strtotime($order->order_date))}}</p>
     </div> 
-    <div class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
+    <div class="mt-5 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
         <div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
             <div class="flex flex-col justify-start items-start bg-white w-full">
                 @if (count($order_details) == 0)
-                    <p class="text-base dark:text-white leading-4 text-gray-800 pt-4">Không có dữ liệu</p>
+                    <p class="text-base dark:text-white text-gray-800 pt-4">Không có dữ liệu</p>
                 @else
                     @foreach ($order_details as $index => $order_detail)
-                        <div class="flex justify-start w-full items-center border-b py-4">
+                        <div class="flex justify-start w-full items-center border-b py-2 md:py-4">
                             <div class="w-12 h-10 md:w-28 md:h-24">
                                 @if (isset($order_detail->product_detail) && $order_detail->product_detail->image != "")
                                     @php

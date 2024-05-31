@@ -1,6 +1,6 @@
 <div class="bg-white">
 	<header class="relative bg-white">
-		<nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6">
+		<nav aria-label="Top" class="mx-auto w-full px-2 md:px-6">
 			<div class="border-b border-gray-200">
                 <div class="flex justify-between h-20 items-center">
 					<!-- Logo -->
