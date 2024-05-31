@@ -7,7 +7,7 @@
     <section class="bg-white">
         <div class="container mx-auto flex items-center flex-wrap pt-4">
             <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3 bg-cyan-800">
-                <h2 class="text-sm md:text-md font-bold text-white">SẢN PHẨM MỚI</h2>
+                <h2 class="text-sm md:text-lg font-bold text-white">SẢN PHẨM MỚI</h2>
             </div>
             @foreach ($new_products as $product)
                 <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 flex flex-col">
@@ -49,7 +49,7 @@
         <section class="bg-white">
             <div class="container mx-auto flex items-center flex-wrap">
                 <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3 bg-cyan-800">
-                    <h2 class="text-sm md:text-md font-bold text-white">SẢN PHẨM BÁN CHẠY</h2>
+                    <h2 class="text-sm md:text-lg font-bold text-white">SẢN PHẨM BÁN CHẠY</h2>
                 </div>
                 @foreach ($best_seller_products as $product)
                     <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 flex flex-col">
