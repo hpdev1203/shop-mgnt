@@ -18,95 +18,70 @@
                     <div class="col-span-4 sm:col-span-1">
                         <label for="order_date" class="block text-sm font-medium leading-6 text-gray-900">Ngày đặt hàng <span class="text-red-700">*</span></label>
                         <div class="mt-2">
-                            {{date_format($order_date)}}
+                            {{date('d-m-Y', strtotime($order_date))}}
                         </div>
                     </div>
                     <div class="col-span-4 sm:col-span-1">
                         <label class="block text-sm font-medium leading-6 text-gray-900">Hình thức thanh toán <span class="text-red-700">*</span></label>
                         <div class="mt-2">
-                            <select wire:model="payment_method_id" id="payment_method" name="payment_method" class="convert-to-dropdown block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                <option value="">-</option>
-                                @foreach($payment_methods as $payment_method)
-                                    <option value="{{$payment_method->id}}">{{$payment_method->name}}</option>
-                                @endforeach
-                            </select>
+                            {{$payment_method_name}}
                         </div>
-                        @error('payment_method_id')
-                            <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-span-4 sm:col-span-1">
                         <label class="block text-sm font-medium leading-6 text-gray-900">Trạng thái thanh toán <span class="text-red-700">*</span></label>
                         <div class="mt-2">
-                            <select wire:model="payment_status" id="payment_status" name="payment_status" class="convert-to-dropdown block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                <option value="">-</option>
-                                <option value="pending">Đang chờ thanh toán</option>
-                                <option value="paid">Đã thanh toán</option>
-                            </select>
+                            @switch($payment_status)
+                                @case("pending")
+                                    Đang chờ thanh toán
+                                    @break
+                                @case("paid")
+                                    Đã thanh toán
+                                    @break
+                                @default
+                                    Chưa thanh toán
+                            @endswitch
                         </div>
-                        @error('payment_status')
-                            <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-span-4 sm:col-span-1">
                         <label class="block text-sm font-medium leading-6 text-gray-900">Ghi chú</label>
                         <div class="mt-2">
-                            <textarea wire:model="order_note" name="order_note" id="order_note" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                            {{$order_note}}
                         </div>
                     </div>
                     <div class="col-span-4 sm:col-span-1">
                         <label for="order_phone" class="block text-sm font-medium leading-6 text-gray-900">Số điện thoại người nhận hàng <span class="text-red-700">*</span></label>
                         <div class="mt-2">
-                            <input wire:model="order_phone" type="text" name="order_phone" id="order_phone" autocomplete="order_phone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            {{$order_phone}}
                         </div>
-                        @error('order_phone')
-                            <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-span-4 sm:col-span-1">
-                        <label for="order_phone" class="block text-sm font-medium leading-6 text-gray-900">Email người nhận hàng <span class="text-red-700">*</span></label>
+                        <label for="order_email" class="block text-sm font-medium leading-6 text-gray-900">Email người nhận hàng <span class="text-red-700">*</span></label>
                         <div class="mt-2">
-                            <input wire:model="order_email" type="text" name="order_email" id="order_email" autocomplete="order_email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            {{$order_email}}
                         </div>
-                        @error('order_phone')
-                            <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-span-4 sm:col-span-2">
                         <label for="order_address" class="block text-sm font-medium leading-6 text-gray-900">Địa chỉ nhận hàng <span class="text-red-700">*</span> <i>(Số nhà, tên đường, phường/xã)</i></label>
                         <div class="mt-2">
-                            <textarea wire:model="order_address" name="order_address" id="order_address" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                            {{$order_address}}
                         </div>
-                        @error('order_address')
-                            <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-span-4 sm:col-span-1">
                         <label for="order_state" class="block text-sm font-medium leading-6 text-gray-900">Quận/Huyện <span class="text-red-700">*</span></label>
                         <div class="mt-2">
-                            <input wire:model="order_state" type="text" name="order_state" id="order_state" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            {{$order_state}}
                         </div>
-                        @error('order_state')
-                            <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-span-4 sm:col-span-1">
                         <label for="order_city" class="block text-sm font-medium leading-6 text-gray-900">Tỉnh/Thành Phố <span class="text-red-700">*</span></label>
                         <div class="mt-2">
-                            <input wire:model="order_city" type="text" name="order_city" id="order_city" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            {{$order_city}}
                         </div>
-                        @error('order_city')
-                            <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
-                        @enderror
                     </div>
                 </div>
                 <div class="mt-6">
                     <div class="flex justify-between items-center">
                         <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH SẢN PHẨM</h4>
-                        <button type="button" 
-                                wire:click="$dispatch('openModal', { component: 'admin.order.add-product-modal', arguments: { mode : 'Edit' } })"
-                                class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
-                                >Thêm sảm phẩm</button>
                     </div>
                 </div>
                 <div class="overflow-x-auto mt-2">
@@ -155,93 +130,82 @@
                                         {{number_format($order_detail['total_amount'])}}
                                     </td>
                                     <td class="px-2 py-2 whitespace-nowrap text-center">
-                                        <button type="button" 
-                                                wire:click="$dispatch('openModal', { component: 'admin.order.edit-product-modal', arguments: { order_detail : {{json_encode($order_detail)}}, index : {{$index}}, mode : 'Edit' } })"
-                                                class="inline-flex items-center px-2 py-1 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
-                                                >Sửa</button>
-                                        <button type="button" 
-                                                wire:click="removeProduct({{$index}})"
-                                                class="inline-flex items-center px-2 py-1 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-600 active:bg-red-700 focus:outline-none focus:border-red-900 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150"
-                                                >Xóa</button>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <tr>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
-                            <td scope="col" class="px-2 py-2 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Tổng tiền hàng</b></td>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
-                                <span class="px-3 py-2 whitespace-nowrap text-right font-bold text-sm">{{number_format($subtotal_amount)}}</span>
-                                <input wire:model="subtotal_amount" type="hidden" name="subtotal_amount" id="subtotal_amount" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-right">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
-                            <td scope="col" class="px-2 py-2 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Giảm giá</b></td>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
-                                <input wire:model="discount_amount" wire:change="calTotalAmount" type="text" name="discount_amount" id="discount_amount" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-right">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
-                            <td scope="col" class="px-2 py-2 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Tạm tính</b></td>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
-                                <span class="px-3 py-2 whitespace-nowrap text-right font-bold text-sm">{{number_format($grandtotal_amount)}}</span>
-                                <input wire:model="grandtotal_amount" type="hidden" name="grandtotal_amount" id="grandtotal_amount">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
-                            <td scope="col" class="px-2 py-2 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Phí ship</b></td>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
-                                <input wire:model="shipping_amount" wire:change="calTotalAmount" type="text" name="shipping_amount" id="shipping_amount" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-right">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
-                            <td scope="col" class="px-2 py-2 text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Tổng tiền</b></td>
-                            <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
-                                <span class="px-3 py-2 whitespace-nowrap text-right font-bold text-sm">{{number_format($total_amount)}}</span>
-                                <input wire:model="total_amount" type="hidden" name="total_amount" id="total_amount">
-                            </td>
-                        </tr>
-                    </table>
                 </div>
+                <table class="min-w-full divide-y divide-gray-200">
+                    <tr>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
+                        <td scope="col" class="px-2 py-2 text-xs sm:text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Tổng tiền hàng</b></td>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
+                            <span class="px-3 py-2 whitespace-nowrap text-right font-bold text-xs sm:text-sm">{{number_format($subtotal_amount)}}</span>
+                            <input wire:model="subtotal_amount" type="hidden" name="subtotal_amount" id="subtotal_amount" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-right">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
+                        <td scope="col" class="px-2 py-2 text-xs sm:text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Giảm giá</b></td>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
+                            <span class="text-xs sm:text-sm px-3">{{$discount_amount}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
+                        <td scope="col" class="px-2 py-2 text-xs sm:text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Tạm tính</b></td>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
+                            <span class="px-3 py-2 whitespace-nowrap text-right font-bold text-xs sm:text-sm">{{number_format($grandtotal_amount)}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
+                        <td scope="col" class="px-2 py-2 text-xs sm:text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Phí ship</b></td>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
+                            <span class="text-xs sm:text-sm px-3">{{$shipping_amount}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider text-center"></td>
+                        <td scope="col" class="px-2 py-2 text-xs sm:text-sm font-medium text-gray-700 uppercase tracking-wider w-40 text-left"><b>Tổng tiền</b></td>
+                        <td scope="col" class="px-2 py-2 text-xs font-medium text-gray-700 uppercase tracking-wider w-40 text-right">
+                            <span class="px-3 py-2 whitespace-nowrap text-right font-bold text-xs sm:text-sm">{{number_format($total_amount)}}</span>
+                            <input wire:model="total_amount" type="hidden" name="total_amount" id="total_amount">
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
-        <div class="mt-6 flex flex-col sm:flex-row items-center justify-end gap-x-6">
+        <div class="mt-6 flex sm:flex-row items-center justify-end gap-x-6">
             <a href="{{route('admin.orders')}}" class="text-sm font-semibold leading-6 text-gray-900">Hủy</a>
-            @if($order_status == 'draft')
-                <button type="button" wire:click="draftOrder" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Lưu nháp</button>
-                <button type="button" wire:click="createOrder" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Tạo đơn</button>
-            @else
-                @if($order_status == 'pending' || $order_status == 'confirmed')
-                    <button type="button" 
-                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'rejected' } })"
-                        class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-600 active:bg-red-700 focus:outline-none focus:border-red-900 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150">Từ chối</button>
-                @endif
-                @if($order_status == 'pending')
-                    <button type="button" 
-                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'confirmed' } })"
-                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Xác nhận</button>
-                @endif
-                @if($order_status == 'confirmed')
-                    <button type="button" 
-                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'shipping' } })"
-                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Giao hàng</button>
-                @endif
-                @if($order_status == 'shipping')
-                    <button type="button" 
-                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'delivered' } })"
-                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Xác nhận đã giao hàng</button>
-                @endif
-                @if($order_status == 'delivered')
-                    <button type="button"
-                        wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'completed' } })"
-                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Hoàn thành</button>
-                @endif
+            <button type="button" 
+                wire:click="$dispatch('openModal', { component: 'admin.order.update-payment-status-modal', arguments: { order_id : {{$order_id}}, payment_status : '{{$payment_status}}' } })"
+                class="inline-flex items-center px-4 py-2 bg-sky-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-sky-600 active:bg-sky-700 focus:outline-none focus:border-sky-900 focus:ring ring-sky-300 disabled:opacity-25 transition ease-in-out duration-150">Cập nhật trạng thái thanh toán</button>
+            @if($order_status == 'pending' || $order_status == 'confirmed')
+                <button type="button" 
+                    wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'rejected' } })"
+                    class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-600 active:bg-red-700 focus:outline-none focus:border-red-900 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150">Hủy đơn</button>
+            @endif
+            @if($order_status == 'pending')
+                <button type="button" 
+                    wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'confirmed' } })"
+                    class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Xác nhận</button>
+            @endif
+            @if($order_status == 'confirmed')
+                <button type="button" 
+                    wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'shipping' } })"
+                    class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Giao hàng</button>
+            @endif
+            @if($order_status == 'shipping')
+                <button type="button" 
+                    wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'delivered' } })"
+                    class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Xác nhận đã giao hàng</button>
+            @endif
+            @if($order_status == 'delivered')
+                <button type="button"
+                    wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'completed' } })"
+                    class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Hoàn thành</button>
             @endif
         </div>
         @if (session()->has('message'))

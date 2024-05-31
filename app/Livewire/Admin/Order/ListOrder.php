@@ -53,7 +53,7 @@ class ListOrder extends Component
         if($this->search_input == ''){
             $orders = Order::paginate(10);
         } else {
-            $orders = Order::where('name', 'like', '%'.$this->search_input.'%')->orWhere('code', 'like', '%'.$this->search_input.'%')->paginate(10);
+            $orders = Order::where('code', 'like', '%'.$this->search_input.'%')->paginate(10);
         }
         return view('livewire.admin.order.list-order', ['orders' => $orders]);
     }

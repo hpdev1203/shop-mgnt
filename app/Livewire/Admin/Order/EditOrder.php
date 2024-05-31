@@ -70,6 +70,11 @@ class EditOrder extends Component
         $this->storeOrder();
     }
 
+    public function updateOrder(){
+        $this->order_status = Order::find($this->order_id)->status;
+        $this->storeOrder();
+    }
+
     public function draftOrder(){
         $this->order_status = "draft";
         $this->storeOrder();

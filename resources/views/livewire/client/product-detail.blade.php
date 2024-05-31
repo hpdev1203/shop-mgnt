@@ -3,13 +3,13 @@
         <div class="max-w-6xl mx-auto px-3 lg:px-0">
             <div class="flex flex-col md:flex-row -mx-4">
                 <div class="md:flex-1 px-4">
-                    <div class="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-                        <img id="image-show-detail" class="w-full h-full object-cover" src="{{$product_detail_image_default}}" alt="Product Image">
+                    <div class="h-96 sm:h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
+                        <img id="image-show-detail" class="w-96 h-96 sm:w-full sm:h-full object-cover" src="{{$product_detail_image_default}}" alt="Product Image">
                     </div>
                     <div class="flex items-center justify-center -mx-2 flex-wrap">
                         @foreach ($product_detail_images_selected as $index => $image)
-                            <div class="px-2 mb-4">
-                                <img onclick="switchImage(this)" class="image-detail w-20 h-20 object-cover rounded-sm bg-gray-300 dark:bg-gray-700 cursor-pointer border {{ $index == 0 ? 'border-blue-700 border-2' : 'border-gray-500 border-0' }}" src="{{ asset('storage/images/products/' . $image) }}" alt="Product Image">
+                            <div class="px-1 sm:px-2 mb-4">
+                                <img onclick="switchImage(this)" class="image-detail w-12 h-12 sm:w-20 sm:h-20 object-cover rounded-sm bg-gray-300 dark:bg-gray-700 cursor-pointer border {{ $index == 0 ? 'border-blue-700 border-2' : 'border-gray-500 border-0' }}" src="{{ asset('storage/images/products/' . $image) }}" alt="Product Image">
                             </div>
                         @endforeach
                     </div>
@@ -38,7 +38,7 @@
                     </div>
                     
                     <div class="mb-4">
-                        <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Mẫu:</span>
+                        <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Mẫu: <span class="text-red-600">{{$product_detail_selected->title}}</span></span>
                         <div class="flex items-center mt-2">
                             @foreach ($product_details as $product_detail)
                                 @if($product_detail->image != null)
@@ -53,6 +53,16 @@
                         <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 mt-4">
                             {{$product_detail_selected->short_description}}
                         </p>
+                    </div>
+                    <div wire:loading wire:target="updateProductDetail">  
+                        <div class="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+                            <div class="text-white text-2xl">
+                                <svg class="animate-spin h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-1.647zM12 20c3.042 0 5.824-1.135 7.938-3l-1.647-3A7.962 7.962 0 0112 16v4zm5.938-11H20c0-3.042-1.135-5.824-3-7.938l-3 1.647A7.962 7.962 0 0112 8V4zm-8.938 11l1.647 3A7.962 7.962 0 014 12H8c0 3.042 1.135 5.824 3 7.938z"></path>
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-4">
                         <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">TỒN KHO</span>
@@ -142,8 +152,9 @@
     </div>
     <script>
         function switchImage(image){
-            const imageShow = document.getElementById("image-show-detail")
-            const imageDetails = document.getElementsByClassName("image-detail")
+            const imageShow = document.getElementById("image-show-detail");
+            imageShow.classList.remove("animate-fade");
+            const imageDetails = document.getElementsByClassName("image-detail");
             for (let i = 0; i < imageDetails.length; i++) {
                 imageDetails[i].classList.remove("border-blue-700", "border-2");
                 imageDetails[i].classList.add("border-gray-500", "border-0");
@@ -151,9 +162,12 @@
             image.classList.remove("border-gray-500", "border-0");
             image.classList.add("border-blue-700", "border-2");
             if(imageShow){
-                imageShow.src = image.src
+                imageShow.src = image.src;
+                void imageShow.offsetWidth; // Trigger reflow to restart animation
+                imageShow.classList.add("animate-fade");
             }
         }
+    </script>
     </script>
     @script
         <script>

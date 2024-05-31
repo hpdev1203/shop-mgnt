@@ -24,7 +24,7 @@
         <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div class="px-4 py-6 md:px-6 xl:px-7.5">
                 <div class="flex justify-between items-center">
-                    <h4 class="text-xl font-bold text-black dark:text-white inline">CHỈNH SỬA - <span class="uppercase font-bold text-sky-400">{{$order->code}}</span></h4>
+                    <h4 class="text-xl font-bold text-black dark:text-white inline"><span class="uppercase font-bold text-sky-400">{{$order->code}}</span></h4>
                     @if($order->status == 'draft')
                         <span data-modal-target="timeline-modal" data-modal-toggle="timeline-modal" class="text-sm font-medium text-gray-500 cursor-pointer">BẢN NHÁP</span>
                     @endif
