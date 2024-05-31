@@ -1,6 +1,6 @@
-<div class="w-full bg-white">
+<div class="w-full bg-white py-4 md:py-6 px-2 md:px-6">
     <div class="mx-auto flex flex-wrap pt-4">
-        <div class="w-full px-6">
+        <div class="w-full">
             <h2 class="text-2xl font-bold text-gray-800 mb-2">{{$category->name}}</h2>
         </div>
         @if ($products->isEmpty())

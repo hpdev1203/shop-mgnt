@@ -66,7 +66,7 @@
         </style>
 	</head>
 	<body class="bg-gray-300 font-sans leading-normal text-base tracking-normal">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-full md:max-w-7xl md:px-4 lg:px-8">
             @include('client.layouts.menu')
             @yield('content')
             @include('client.layouts.footer')
