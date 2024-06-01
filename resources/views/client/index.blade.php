@@ -10,7 +10,7 @@
                 <h2 class="text-sm md:text-lg font-bold text-white">SẢN PHẨM MỚI</h2>
             </div>
             @foreach ($new_products as $product)
-                <div class="w-1/2 lg:w-1/3 xl:w-1/4 px-2 md:px-4 py-2 md:py-4 flex flex-col">
+                <div class="w-1/2 lg:w-1/3 xl:w-1/4 px-2 md:px-6 py-2 md:py-4 flex flex-col">
                     <a href="{{route('product-detail', ['id' => $product->id, 'slug' => $product->slug])}}">
                         <div class="w-full h-52 md:h-64">
                             @if (count($product->productDetails) > 0 && $product->productDetails[0] && $product->productDetails[0]->image)
@@ -48,7 +48,7 @@
                     <h2 class="text-sm md:text-lg font-bold text-white">SẢN PHẨM BÁN CHẠY</h2>
                 </div>
                 @foreach ($best_seller_products as $product)
-                <div class="w-1/2 lg:w-1/3 xl:w-1/4 px-2 md:px-4 py-2 md:py-4 flex flex-col">
+                <div class="w-1/2 lg:w-1/3 xl:w-1/4 px-2 md:px-6 py-2 md:py-4 flex flex-col">
                         <a href="{{route('product-detail', ['id' => $product->product->id, 'slug' => $product->product->slug])}}">
                             <div class="w-full h-52 md:h-64">
                                 @if (count($product->product->productDetails) > 0 && $product->product->productDetails[0] && $product->product->productDetails[0]->image)

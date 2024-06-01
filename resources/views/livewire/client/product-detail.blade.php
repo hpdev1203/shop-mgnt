@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-white dark:bg-gray-800 py-8">
+    <div class="bg-white dark:bg-gray-800 py-4 md:py-8">
         <div class="max-w-6xl mx-auto px-3 lg:px-0">
             <div class="flex flex-col md:flex-row -mx-4">
                 <div class="md:flex-1 px-4">
@@ -15,30 +15,30 @@
                     </div>
                 </div>
                 <div class="md:flex-1 px-4">
-                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2 uppercase">{{$product->name}}</h2>
-                    <div class="flex mb-4">
+                    <h2 class="text-md md:text-xl font-bold text-gray-800 dark:text-white mb-2 uppercase">{{$product->name}}</h2>
+                    <div class="flex mb-2 md:mb-4">
                         <div class="mr-4">
-                            <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Giá:</span>
+                            <span class="text-sm md:text-md font-bold text-gray-700 dark:text-gray-300 uppercase">Giá:</span>
                             @if(Auth::check())
-                                <span class="text-green-500">{{number_format($product->retail_price)}} VNĐ</span>
+                                <span class="text-sm md:text-md text-green-500">{{number_format($product->retail_price)}} VNĐ</span>
                             @else
-                                <span class="text-red-500 text-sm">Đăng nhập để xem giá</span>
+                                <span class="text-red-500 text-sm md:text-md">Đăng nhập để xem giá</span>
                             @endif
                         </div>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-2 md:mb-4">
                         <div class="flex items-center mt-2">
                             @foreach ($product_warehouses as $warehouse)
                                 <label class="inline-flex items-center mr-2">
                                     <input wire:model="warehouse_id_selected" wire:click="updateWarehouse" type="radio" name="warehouse" value="{{$warehouse->id}}" class="form-radio text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <span class="ml-2 text-sm">{{$warehouse->name}}</span>
+                                    <span class="ml-2 text-xs md:text-sm">{{$warehouse->name}}</span>
                                 </label>
                             @endforeach
                         </div>
                     </div>
                     
-                    <div class="mb-4">
-                        <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Mẫu: <span class="text-red-600">{{$product_detail_selected->title}}</span></span>
+                    <div class="mb-2 md:mb-4">
+                        <span class="text-sm md:text-md font-bold text-gray-700 dark:text-gray-300 uppercase">Mẫu: <span class="text-red-600">{{$product_detail_selected->title}}</span></span>
                         <div class="flex items-center mt-2">
                             @foreach ($product_details as $product_detail)
                                 @if($product_detail->image != null)
@@ -50,7 +50,7 @@
                                 @endif
                             @endforeach
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 mt-4">
+                        <p class="text-gray-600 dark:text-gray-300 text-xs md:text-sm mb-2 md:mb-4 mt-2 md:mt-2">
                             {{$product_detail_selected->short_description}}
                         </p>
                     </div>
@@ -64,22 +64,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">TỒN KHO</span>
+                    <div class="mb-2 md:mb-4">
+                        <span class="text-sm md:text-md font-bold text-gray-700 dark:text-gray-300 uppercase">TỒN KHO</span>
                         <div class="flex items-center mt-2">
-                            <table class="table-auto w-full divide-y divide-gray-200 text-sm border">
+                            <table class="table-auto w-full divide-y divide-gray-200 text-xs md:text-sm border">
                                 <thead class="bg-gray-200">
                                     <tr>
-                                        <th class="px-4 py-2 font-medium text-left w-32">Size</th>
+                                        <th class="px-2 md:px-4 py-2 font-medium text-left w-32">Size</th>
                                         @foreach ($product_sizes as $size)
-                                            <th class="px-4 py-2 font-medium text-center">{{$size->size}}</th>
+                                            <th class="px-2 md:px-4 py-2 font-medium text-center">{{$size->size}}</th>
                                         @endforeach
-                                        <th class="px-4 py-2 font-bold w-24">Tổng</th>
+                                        <th class="px-2 md:px-4 py-2 font-bold w-16 md:w-24">Tổng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="px-4 py-2">Tồn kho thực</td>
+                                        <td class="px-2 md:px-4 py-2">Tồn kho thực</td>
                                         @php
                                             $total_quantity = 0
                                         @endphp
@@ -87,7 +87,7 @@
                                             @php
                                                 $total_quantity += $size->productAvailable($product_id, $product_detail_id_selected, $size->id, $warehouse_id_selected)
                                             @endphp
-                                            <td class="px-4 py-2 text-center">
+                                            <td class="px-2 md:px-4 py-2 text-center">
                                                 @if(Auth::check())
                                                     {{$size->productAvailable($product_id, $product_detail_id_selected, $size->id, $warehouse_id_selected)}}
                                                 @else
@@ -95,7 +95,7 @@
                                                 @endif
                                             </td>
                                         @endforeach
-                                        <td class="px-4 py-2 font-bold text-center">
+                                        <td class="px-2 md:px-4 py-2 font-bold text-center">
                                             @if(Auth::check())
                                                 {{$total_quantity}}
                                             @else
@@ -107,10 +107,10 @@
                             </table>
                         </div>
                     </div>
-                    <div class="pt-2 mb-4 text-center">
+                    <div class="pt-2 mb-2 md:mb-4 text-center text-sm md:text-md">
                         @if(count($product_warehouses) > 0 && $available_quantity > 0)
                             @if(Auth::check())
-                                <button wire:click="$dispatch('openModal', { component: 'client.modal-add-product-to-cart', arguments : { product_id : {{$product_id}}, warehouse_id_selected : {{$warehouse_id_selected}}, product_detail_id_selected : {{$product_detail_id_selected}} } })" type="button" class="flex items-center bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 py-2 px-6 rounded-full font-bold hover:bg-gray-700 dark:hover:bg-gray-300">
+                                <button wire:click="$dispatch('openModal', { component: 'client.modal-add-product-to-cart', arguments : { product_id : {{$product_id}}, warehouse_id_selected : {{$warehouse_id_selected}}, product_detail_id_selected : {{$product_detail_id_selected}} } })" type="button" class="flex items-center bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 py-2 px-4 rounded-full font-bold hover:bg-gray-700 dark:hover:bg-gray-300">
                                     <svg class="w-6 h-6 text-white dark:text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                     </svg>
@@ -124,8 +124,8 @@
                         @endif
                     </div>
                     <div class="pb-2">
-                        <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">Mô tả sản phẩm</span>
-                        <div class="text-sm">
+                        <span class="text-sm md:text-md font-bold text-gray-700 dark:text-gray-300 uppercase">Mô tả sản phẩm</span>
+                        <div class="text-xs md:text-sm">
                             {!! $product->description !!}
                         </div>
                     </div>
