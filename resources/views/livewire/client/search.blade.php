@@ -1,5 +1,5 @@
 <div class="flex lg:relative w-full lg:w-96" x-data="{ isOpenSearch: false }">
-    <input wire:model='input_search' wire:keydown='search' type="text" name="input_search" placeholder="Tìm kiếm" autocomplete="" class="block border border-gray-300 py-2 px-3 text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 w-full">
+    <input wire:model='input_search' wire:keydown='search' type="text" name="input_search" placeholder="Tìm kiếm sản phẩm" autocomplete="" class="block border border-gray-300 py-2 px-3 text-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 w-full">
     @if ($product_search != "")
         <div class="absolute w-full lg:w-96 left-0 top-full z-50 max-h-56 shadow-inner bg-gray-200 overflow-auto">
             @if (count($product_search) == 0)
