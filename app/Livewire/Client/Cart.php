@@ -35,6 +35,20 @@ class Cart extends Component
     public $on_saving = false;
 
 
+    public $list_size = [];
+
+    public function show_size($stt,$order_id,$product_id,$product_detail_id){
+        $this->close_size();
+        $this->list_size[$stt] = CartItem::where('cart_id',$order_id)
+        ->where('product_id',$product_id)
+        ->where('product_detail_id',$product_detail_id)
+        ->orderBy('size_id', 'desc')->get();
+    }
+
+    public function close_size(){
+        $this->list_size = [];
+    }
+
     public function mount()
     {
         if(!Auth::check()){
@@ -69,7 +83,7 @@ class Cart extends Component
         // ->groupBy('product_id')
         // ->get();
 
-        $this->dispatch('hide_loading');
+        // $this->dispatch('hide_loading');
     }
 
     public function deleteCartItem($id){
