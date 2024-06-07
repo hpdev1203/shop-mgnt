@@ -65,7 +65,7 @@
                             @if (count($notifications) > 0)
                                 @foreach ($notifications as $item)
                                     <li>
-                                        <a href="{{route('admin.orders.edit', $item->id)}}" class="flex flex-col gap-2.5 px-4.5 py-3 hover:bg-gray-200">
+                                        <a href="{{route('admin.orders.view', $item->id)}}" class="flex flex-col gap-2.5 px-4.5 py-3 hover:bg-gray-200">
                                             <p class="text-sm">
                                                 Khách hàng {{$item->customer->name}} vừa đặt thành công đơn hàng {{$item->code}}.
                                             </p>
