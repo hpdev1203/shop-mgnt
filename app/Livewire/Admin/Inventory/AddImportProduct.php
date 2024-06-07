@@ -47,21 +47,20 @@ class AddImportProduct extends Component
             $firstSizeList = array_slice($this->product_size_list, 0, $index+1);
             $secondSizeList = array_slice($this->product_size_list, $index+1);
             $this->product_size_list = array_merge($firstSizeList, [$this->product_size_list[$index]], $secondSizeList);
-            
-            $firstSizeId = array_slice($this->size_id, 0, $index+1);
-            $secondSizeId = array_slice($this->size_id, $index+1);
-            $this->size_id = array_merge($firstSizeId, [$this->size_id[$index]], $secondSizeId);
-            
+
+            $product_id_merge = $this->product_id[$index];
             for ($i=$index; $i <= $this->import_product_detail_count; $i++) {
-                if (isset($this->product_id[$i]) && $this->product_id[$i] == $this->product_id[$index]) {
+                if (isset($this->product_id[$i]) && $this->product_id[$i] == $product_id_merge) {
                     $this->disabled_select_yn[$i] = "y";
-                    $this->disabled_select_yn[$index] = "n";
-                    $this->disabled_select_yn[$this->import_product_detail_count - 1] = "y";
                 }else{
-                    $this->disabled_select_yn[$i] = "n";
-                    break;
+                    $this->disabled_select_yn[$i - 1] = "n";
+                    $this->disabled_select_yn[$i] = "y";
+                    if(isset($this->product_id[$i])){
+                        $product_id_merge = $this->product_id[$i];
+                    }
                 }
             }
+            $this->disabled_select_yn[$this->import_product_detail_count] = "n";
         }
     }
 

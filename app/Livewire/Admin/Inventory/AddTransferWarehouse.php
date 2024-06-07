@@ -55,20 +55,19 @@ class AddTransferWarehouse extends Component
             $secondSizeId = array_slice($this->size_id, $index+1);
             $this->size_id = array_merge($firstSizeId, [$this->size_id[$index]], $secondSizeId);
            
-            $this->disabled_select($index);
-        }
-    }
-
-    public function disabled_select($index){
-        for ($i=$index; $i <= $this->transfer_warehouse_detail_count; $i++) {
-            if (isset($this->product_id[$i]) && $this->product_id[$i] == $this->product_id[$index]) {
-                $this->disabled_select_yn[$i] = "y";
-                $this->disabled_select_yn[$index] = "n";
-            }else{
-                $this->disabled_select_yn[$i] = "n";
-                break;
+            $product_id_merge = $this->product_id[$index];
+            for ($i=$index; $i <= $this->import_product_detail_count; $i++) {
+                if (isset($this->product_id[$i]) && $this->product_id[$i] == $product_id_merge) {
+                    $this->disabled_select_yn[$i] = "y";
+                }else{
+                    $this->disabled_select_yn[$i - 1] = "n";
+                    $this->disabled_select_yn[$i] = "y";
+                    if(isset($this->product_id[$i])){
+                        $product_id_merge = $this->product_id[$i];
+                    }
+                }
             }
-            $this->disabled_select_yn[$this->transfer_warehouse_detail_count - 1] = "y";
+            $this->disabled_select_yn[$this->import_product_detail_count] = "n";
         }
     }
 
