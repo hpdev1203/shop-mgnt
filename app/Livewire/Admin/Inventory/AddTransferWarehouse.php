@@ -56,7 +56,7 @@ class AddTransferWarehouse extends Component
             $this->size_id = array_merge($firstSizeId, [$this->size_id[$index]], $secondSizeId);
            
             $product_id_merge = $this->product_id[$index];
-            for ($i=$index; $i <= $this->import_product_detail_count; $i++) {
+            for ($i=$index; $i <= $this->transfer_warehouse_detail_count; $i++) {
                 if (isset($this->product_id[$i]) && $this->product_id[$i] == $product_id_merge) {
                     $this->disabled_select_yn[$i] = "y";
                 }else{
@@ -67,7 +67,7 @@ class AddTransferWarehouse extends Component
                     }
                 }
             }
-            $this->disabled_select_yn[$this->import_product_detail_count] = "n";
+            $this->disabled_select_yn[$this->transfer_warehouse_detail_count] = "n";
         }
     }
 
