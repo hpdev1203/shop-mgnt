@@ -7,8 +7,8 @@
             <div class="w-1/4 pt-4 flex flex-col items-center">
                 <a href="{{route('brand',['slug'=>$brand->slug])}}" class="w-auto text-blue-400 lg:hover:text-red-400 text-center items-center">
                     <div class="mb-2 w-15 h-15 mx-auto">
-                        @if ($brand->image)
-                            <img src="{{ asset('storage/images/categories/' . $brand->image) }}" alt="{{$brand->name}}" class="w-full h-full rounded-full object-cover">
+                        @if ($brand->logo)
+                            <img src="{{ asset('storage/images/brands/' . $brand->logo) }}" alt="Brand Logo" class="w-full h-full rounded-full object-cover">
                         @else
                             <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Brand Logo" class="w-full h-full rounded-full">
                         @endif
