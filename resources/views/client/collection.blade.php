@@ -3,5 +3,5 @@
 @section('title', 'Chi tiết sản phẩm')
 
 @section('content')
-    @livewire('client.collection')
+    @livewire('client.collection', ["slug" => $category->slug])
 @endsection

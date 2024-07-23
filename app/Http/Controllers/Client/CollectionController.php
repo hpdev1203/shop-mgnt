@@ -4,21 +4,13 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Product;
+use App\Models\Category;
 
 class CollectionController extends Controller
 {
-    public function index()
+    public function index($slug)
     {   
-        $id_user = 0;
-        if (isset(Auth::user()->id)) {
-            $id_user = Auth::user()->id;
-        }
-        $user = User::where('id',$id_user)->where('role','customer')->first();
-
-        $products = Product::all();
-        return view('client.collection', ['user' => $user]);
+        $category = Category::where('slug',$slug)->first();
+        return view('client.collection', ['category' => $category]);
     }
 }
