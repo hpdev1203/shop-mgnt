@@ -18,7 +18,7 @@ class OrderController extends Controller
     }
 
     public function add(){
-        $customers = User::where('role', 'customer')->get();
+        $customers = User::all();
         $payment_methods = PaymentMethod::all();
         $products = Product::all();
         return view('admin.dashboard.order.add_order', ['customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products]);
@@ -26,7 +26,7 @@ class OrderController extends Controller
 
     public function edit($id){
         $order = Order::find($id);
-        $customers = User::where('role', 'customer')->get();
+        $customers = User::all();
         $payment_methods = PaymentMethod::all();
         $products = Product::all();
         $changeLog = OrderStatus::where('order_id', $id)->get();
@@ -35,7 +35,7 @@ class OrderController extends Controller
 
     public function view($id){
         $order = Order::find($id);
-        $customers = User::where('role', 'customer')->get();
+        $customers = User::all();
         $payment_methods = PaymentMethod::all();
         $products = Product::all();
         $changeLog = OrderStatus::where('order_id', $id)->get();

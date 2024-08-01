@@ -3,8 +3,8 @@
         <div class="max-w-6xl mx-auto px-3 lg:px-0">
             <div class="flex flex-col md:flex-row -mx-4">
                 <div class="md:flex-1 px-4">
-                    <div class="h-96 sm:h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-                        <img id="image-show-detail" class="w-96 h-96 sm:w-full sm:h-full object-cover" src="{{$product_detail_image_default}}" alt="Product Image">
+                    <div class="h-auto rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
+                        <img id="image-show-detail" class="w-auto h-auto object-cover" src="{{$product_detail_image_default}}" alt="Product Image">
                     </div>
                     <div class="flex items-center justify-center -mx-2 flex-wrap">
                         @foreach ($product_detail_images_selected as $index => $image)
