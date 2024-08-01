@@ -67,7 +67,7 @@ class AddProductModal extends ModalComponent
                 'product_size_id' => 'required',
                 'warehouse_id' => 'required',
                 'product_quantity' => 'required|numeric|min:1',
-                'product_unit_price' => 'required|numeric|min:1',
+                'product_unit_price' => 'required|numeric|min:0',
                 'product_total_amount' => 'required|numeric|min:1',
             ],
             [
@@ -80,7 +80,7 @@ class AddProductModal extends ModalComponent
                 'product_quantity.min' => 'Trường số lượng phải lớn hơn 0.',
                 'product_unit_price.required' => 'Trường giá bán là bắt buộc.',
                 'product_unit_price.numeric' => 'Trường giá bán phải là số.',
-                'product_unit_price.min' => 'Trường giá bán phải lớn hơn 0.',
+                'product_unit_price.min' => 'Trường giá bán không được nhỏ hơn 0.',
                 'product_total_amount.required' => 'Trường thành tiền là bắt buộc.',
                 'product_total_amount.numeric' => 'Trường thành tiền phải là số.',
                 'product_total_amount.min' => 'Trường thành tiền phải lớn hơn 0.',
