@@ -86,18 +86,19 @@ class Cart extends Component
         // $this->dispatch('hide_loading');
     }
 
-    public function deleteCartItem($id){
+    public function deleteCartItem($id,$product_id,$product_detail_id){
         $cart_item =  DB::select('
         DELETE 
         FROM cart_item 
-        WHERE cart_id = '.$this->Carts->id.'
-        AND product_detail_id = '.$id);
+        WHERE cart_id = '.$id.'
+        AND product_id = '.$product_id.'
+        AND product_detail_id = '.$product_detail_id);
         
     }
 
-    public function handleDetele($id)
+    public function handleDetele($id,$product_id,$product_detail_id)
     {
-        $this->deleteCartItem($id);
+        $this->deleteCartItem($id,$product_id,$product_detail_id);
         $this->mount();
     }
   
