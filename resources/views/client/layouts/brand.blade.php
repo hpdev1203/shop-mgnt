@@ -8,9 +8,9 @@
                 <a href="{{route('brand',['slug'=>$brand->slug])}}" class="w-auto text-blue-400 lg:hover:text-red-400 text-center items-center">
                     <div class="mb-2 w-15 h-15 mx-auto">
                         @if ($brand->logo)
-                            <img src="{{ asset('storage/images/brands/' . $brand->logo) }}" alt="Brand Logo" class="w-full h-full rounded-full object-cover">
+                            <img src="{{ asset('storage/images/brands/' . $brand->logo) }}" alt="Brand Logo" class="w-full h-full rounded-lg object-cover">
                         @else
-                            <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Brand Logo" class="w-full h-full rounded-full">
+                            <img src="{{ asset('library/images/image-not-found.jpg') }}" alt="Brand Logo" class="w-full h-full rounded-lg">
                         @endif
                     </div>
                     <p class="text-gray-900 font-medium text-xs md:text-sm uppercase">{{$brand->name}}</p>

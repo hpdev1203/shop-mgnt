@@ -78,7 +78,7 @@ class EditProductModal extends ModalComponent
                 'warehouse_id' => 'required',
                 'product_quantity' => 'required|numeric|min:1',
                 'product_unit_price' => 'required|numeric|min:0',
-                'product_total_amount' => 'required|numeric|min:1',
+                'product_total_amount' => 'required|numeric|min:0',
             ],
             [
                 'product_id.required' => 'Trường sản phẩm là bắt buộc.',
