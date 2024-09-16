@@ -23,8 +23,9 @@ class ModalAddProductToCart extends ModalComponent
     public $listProductAddedError = [];
     public $totalQuantity = 0;
     public $totalAmount = 0;
+    public $mode;
 
-    public function mount($product_id, $warehouse_id_selected, $product_detail_id_selected)
+    public function mount($product_id, $warehouse_id_selected, $product_detail_id_selected, $cart_id, $mode)
     {
         $this->product_id = $product_id;
         $this->warehouse_id = $warehouse_id_selected;
@@ -32,9 +33,27 @@ class ModalAddProductToCart extends ModalComponent
         $this->product = PrdDetail::find($product_detail_id_selected);
         $this->product_sizes = $this->product->product->productSizes;
         $this->warehouse = Warehouse::find($warehouse_id_selected);
+        $this->cart_id = $cart_id;
+        $this->mode = $mode;
         foreach ($this->product_sizes as $key => $size) {
-            $this->listProductAdded[$size->id] = 0;
+            if($this->cart_id != ''){
+                $qnty = CartItem::where('cart_id',$this->cart_id)
+                ->where('size_id',$size->id)
+                ->first();
+                if(isset($qnty->quantity)){
+                    $this->listProductAdded[$size->id] = $qnty->quantity;
+                    $this->totalQuantity += $qnty->quantity;
+                }else{
+                    $this->listProductAdded[$size->id] = 0;
+                    $this->totalQuantity += 0;
+                }
+            }else{
+                $this->listProductAdded[$size->id] = 0;
+            }
             $this->listProductAddedError[$size->id] = "";
+        }
+        if($this->mode == 'edit'){
+            $this->totalAmount =  $this->totalQuantity*$this->product->product->retail_price;
         }
     }
     public function addQuantity($product_size_id)
@@ -51,8 +70,14 @@ class ModalAddProductToCart extends ModalComponent
     public function reduceQuantity($product_size_id)
     {
         $this->listProductAddedError[$product_size_id] = "";
-        if ($this->listProductAdded[$product_size_id] > 0) {
-            $this->listProductAdded[$product_size_id]--;
+        if($this->mode == 'edit'){
+            if ($this->listProductAdded[$product_size_id] > 1) {
+                $this->listProductAdded[$product_size_id]--;
+            }
+        }else{
+            if ($this->listProductAdded[$product_size_id] > 0) {
+                $this->listProductAdded[$product_size_id]--;
+            }
         }
         $this->updateTotal();
     }
@@ -85,9 +110,9 @@ class ModalAddProductToCart extends ModalComponent
         $cart = CartMD::where('user_id', Auth::user()->id)->first();
         if(!$cart){
             $cart = new CartMD();
+            $cart->user_id = Auth::user()->id;
+            $cart->save();
         }
-        $cart->user_id = Auth::user()->id;
-        $cart->save();
         foreach ($this->listProductAdded as $key => $value) {
             if ($value > 0) {
                 $cart_item = CartItem::where('cart_id', $cart->id)
@@ -98,7 +123,11 @@ class ModalAddProductToCart extends ModalComponent
                     ->first();
                 if($cart_item){
                     $available_quantity = Warehouse::find($this->warehouse_id)->totalProductAvailable($this->product_id, $this->product_detail_id, $key);
-                    $cart_item->quantity += $value;
+                    if($this->mode == 'edit'){
+                        $cart_item->quantity = $value;
+                    }else{
+                        $cart_item->quantity += $value;
+                    }
                     if($cart_item->quantity > $available_quantity){
                         $this->dispatch('alertError', [$available_quantity]);
                         return;

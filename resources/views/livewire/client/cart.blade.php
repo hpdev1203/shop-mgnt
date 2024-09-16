@@ -6,33 +6,12 @@
         </div> 
         <div class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
             <div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-                <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-100 px-4 py-4 md:py-6 md:p-6 xl:p-6 w-full lg:overflow-auto lg:h-[430px]">
+                <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-100 px-2 md:px-4 py-4 md:py-6 md:p-6 xl:p-6 w-full lg:overflow-auto lg:h-[430px]">
                         <div class="hidden lg:flex mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full border-b border-gray-200">
-                            
                             <div class="md:flex-row flex-col flex justify-between items-start w-full space-y-4 md:space-y-0">
                                 <div class="w-full flex flex-col justify-start items-start space-y-8 uppercase">Mô tả sản phẩm</div>
-                                
-                                
-                                <div class="flex justify-end space-x-8 items-start w-96">
-                                    
-                                   
-                                    <div class="uppercase">Giá</div>
-                                    <div class="uppercase">Xóa</div>
-                                </div>
                             </div>
                         </div>
-            
-                        {{-- <div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full div_loading ">
-                            <div class="pb-4 md:pb-8 w-40 h-40 md:w-40 mx-auto image-background">
-                                
-                            </div>
-                            <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full h-full pb-8 space-y-4 md:space-y-0">
-                                <div class="w-full flex flex-col justify-start items-start space-y-8">
-                                    <div class="flex text-sm flex-col dark:text-white leading-none text-gray-800 animated-background"> </div>
-                                    <div class="flex text-sm flex-row dark:text-white leading-none text-gray-800 animated-background"></div>
-                                </div>
-                            </div>
-                        </div> --}}
                       
                         @foreach ($CartItems as $index => $item)
                             @php
@@ -49,7 +28,7 @@
                                 $details_first = $details[0];
                             @endphp
                             <div class="flex justify-start w-full items-center border-b py-2 md:py-4">
-                                <div class="w-12 h-10 md:w-28 md:h-24">
+                                <div class="hidden md:inline-block w-12 h-10 md:w-28 md:h-24">
                                     @if ($details_first->image)
                                         @php
                                             $imageThumbnailCheck = json_decode($details_first->image);   
@@ -60,7 +39,7 @@
                                         <img class="w-full h-full object-cover" src="{{ asset('library/images/image-not-found.jpg') }}" alt="Không có hình ảnh sản phẩm">
                                     @endif
                                 </div>
-                                <div class="w-full flex justify-between ml-2 items-start">
+                                <div class="w-full flex justify-between md:ml-2 items-start">
                                     <div class="w-full">
                                         <a  href="{{route('product-detail',['id'=>$item->product_id,'slug'=>$item->slug])}}" class="block text-xs md:text-sm text-gray-800 hover:text-green-500">{{$item->name}} ({{$item->dt_name}})</a>
                                         <div class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 flex jusitfy-start items-center relative">
@@ -91,19 +70,18 @@
                                     <div class="w-40 text-right">
                                         <p class="text-xs md:text-sm text-green-500 font-semibold">{{number_format($item->total)}} VND</p>
                                     </div>
-                                    <div class="w-20 text-right">
-                                        <a data-modal-target="popup-delete-item" data-modal-toggle="popup-delete-item" onclick="parseDataDelete('{{$item->cart_id}}', '{{$item->product_id}}', '{{$item->product_detail_id}}')" class="inline-flex items-center text-red-600 hover:text-red-900 cursor-pointer">
-                                            <svg class="icon" data-bs-toggle="tooltip" data-bs-title="Delete" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                                <g id="SVGRepo_iconCarrier"> 
-                                                    <path d="M20.5001 6H3.5" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path> 
-                                                    <path d="M9.5 11L10 16" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path>
-                                                    <path d="M14.5 11L14 16" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path>
-                                                    <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#ab0d0d" stroke-width="1.5"></path>
-                                                    <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#ab0d0d" stroke-width="1.5" stroke-linecap="round"></path> 
-                                                </g>
+                                    <div class="w-10 md:w-20 text-right">
+                                        <a title="Sửa" wire:click="$dispatch('openModal', { component: 'client.modal-add-product-to-cart', arguments : { product_id : {{$item->product_id}}, warehouse_id_selected : {{$item->warehouse_id}}, product_detail_id_selected : {{$item->product_detail_id}}, cart_id: {{$item->cart_id}}, mode:'edit' } })" class="inline-flex items-center text-cyan-600 hover:text-cyan-900 cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 md:size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                             </svg>
+                                        </a>
+                                    </div>
+                                    <div class="w-8 md:w-12 text-right">
+                                        <a title="Xóa" data-modal-target="popup-delete-item" data-modal-toggle="popup-delete-item" onclick="parseDataDelete('{{$item->cart_id}}', '{{$item->product_id}}', '{{$item->product_detail_id}}')" class="inline-flex items-center text-red-600 hover:text-red-900 cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 md:size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>                                              
                                         </a>
                                     </div>
                                 </div>
@@ -157,9 +135,6 @@
                         <div id="svg-icon" class="text-center"></div>
                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"><span id="title-message"></span></h3>
                         <p id="message" class="mb-5 text-sm text-gray-500 dark:text-gray-400"></p>
-                        <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                            OK
-                        </button>
                     </div>
                 </div>
             </div>
@@ -194,8 +169,6 @@
         }
     </script>
         <script>
-        
-
             window.addEventListener('cartUpdated', event => {
                 const cartCount = event.detail[0];
                 
@@ -206,11 +179,13 @@
                 
                 setTimeout(() => {
                     title.innerHTML = "Thành công";
-                    message.innerHTML = "Sản phẩm đã được thêm vào giỏ hàng";
+                    message.innerHTML = "Sản phẩm đã được cập nhật";
                     svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
                     modal.click();
-                    updateCartNumber(cartCount);
                 }, 200);
+                setTimeout(() => {
+                    window.location.href = "{{route('cart')}}";
+                }, 2000);
             });
             window.addEventListener('alertError', event => {
                 const available_quantity = event.detail[0];
@@ -227,7 +202,7 @@
                 }, 200);
                 setTimeout(() => {
                     window.location.href = "{{route('cart')}}";
-                }, 3000);
+                }, 2000);
             });
             window.addEventListener('successPayment', event => {
                 const btn = document.getElementById('modal_success');
