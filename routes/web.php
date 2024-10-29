@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\ImportProductController;
 use App\Http\Controllers\Admin\TransferWarehouseController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SystemInformationController;
+use App\Http\Controllers\Admin\MacController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\ReportController;
@@ -115,6 +116,7 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     Route::get('/admin/administrators/edit/{id}', [AdministratorController::class, 'edit'])->name('admin.administrators.edit');
 
     Route::get('/admin/systems', [SystemInformationController::class, 'index'])->name('admin.systems');
+    Route::get('/admin/macs', [MacController::class, 'index'])->name('admin.macs');
 
     /* Report  */
     Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin.reports');
