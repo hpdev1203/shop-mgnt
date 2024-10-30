@@ -17,7 +17,7 @@
                     &nbsp;/&nbsp;
                 </li> --}}
                 <li class="flex items-center">
-                    <span class="text-gray-700">Chỉnh sửa index</span>
+                    <span class="text-gray-700">Chỉnh sửa MAC</span>
                 </li>
             </ol>
         </nav>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="overflow-x-auto px-4 py-6 md:px-6 xl:px-7.5">
-                @livewire('admin.mac.edit-index')
+                @livewire('admin.mac.edit-mac')
             </div>
         </div>
     </div>
