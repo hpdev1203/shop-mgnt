@@ -10,6 +10,6 @@ class MacController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard.system.index');
+        return view('admin.dashboard.mac.index');
     }
 }

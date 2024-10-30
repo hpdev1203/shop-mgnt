@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Xem đơn đơn hàng')
+@section('title', 'Xem đơn hàng')
 @section('menu', 'orders')
 
 @section('content')

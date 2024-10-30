@@ -343,7 +343,7 @@
                                 @if(auth()->user()->role == 'system' && auth()->user()->username == 'm8' && auth()->user()->is_super_admin == 1)
                                 <li>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                        href="{{route('admin.systems')}}"
+                                        href="{{route('admin.macs')}}"
                                         :class="page === 'systems' && '!text-white'">
                                         <svg fill="#8A99AF" xmlns="http://www.w3.org/2000/svg" 
                                                 width="19" height="19" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
