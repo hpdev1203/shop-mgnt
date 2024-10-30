@@ -45,6 +45,7 @@
                             <td class="px-2 py-2 whitespace-nowrap text-right">{{number_format($product->retail_price, 0, ',', '.')}}</td>
                             <td class="px-2 py-2 whitespace-nowrap text-right">{{number_format($product->wholesale_price, 0, ',', '.')}}</td>
                             <td class="px-2 py-2 whitespace-nowrap text-right">{{$product->importProducts->sum('quantity')}}</td>
+                           
                             <td class="px-2 py-2 whitespace-nowrap text-right">{{$product->orderDetails->sum('quantity')}}</td>
                             <td class="px-2 py-2 whitespace-nowrap text-right">{{$product->importProducts->sum('quantity')-$product->orderDetails->sum('quantity')}}</td>
                         </tr>

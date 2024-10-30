@@ -25,7 +25,13 @@ class Product extends Model implements Auditable
     }
     public function orderDetails()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class)
+            ->leftJoin('order_status', 'order_detail.order_id', '=', 'order_status.order_id')
+            ->where(function($query) {
+                $query->where('order_status.status', '!=', 'rejected')
+                      ->orWhereNull('order_status.status');
+            })
+            ->select('*');
     }
     public function productBrand()
     {

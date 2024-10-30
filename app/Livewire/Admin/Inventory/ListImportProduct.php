@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Inventory;
 
 use Livewire\Component;
 use App\Models\ImportProduct;
+use App\Models\ImportProductDetail;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
@@ -11,6 +12,7 @@ class ListImportProduct extends Component
 {
     use WithPagination, WithoutUrlPagination;
     public $search_input = '';
+    public $code = '';
 
     public function search()
     {
@@ -27,5 +29,18 @@ class ListImportProduct extends Component
             ->orderBy('created_at','desc')->paginate(10);
         }
         return view('livewire.admin.inventory.list-import-product', ['import_products' => $import_products]);
+    }
+    
+    public function updateImportProduct($id,$code){
+        ImportProductDetail::where('import_product_id', $id)
+            ->update([
+                'quantity' => 0,
+            ]);
+            $this->dispatch('successPayment', [
+                'title' => 'Thành công',
+                'message' => 'Đã đặt thành công Mã nhập hàng ',
+                'type' => 'success'
+            ]);
+        
     }
 }
