@@ -127,6 +127,6 @@ class EditMac extends Component
             }
         }
 
-        return view('livewire.admin.Mac.edit-mac', ['modules' => $this->modules]);
+        return view('livewire.admin.mac.edit-mac', ['modules' => $this->modules]);
     }
 }
