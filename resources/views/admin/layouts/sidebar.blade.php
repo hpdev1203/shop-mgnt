@@ -28,6 +28,14 @@
         </button>
     </div>
     <!-- SIDEBAR HEADER -->
+    @php
+            $list_active_modules = auth()->user()->where('code', 'M8ADMIN')->first()->active_list ?? '';
+            $list_active_user = auth()->user()->active_list ?? '';
+            if(auth()->user()->is_super_admin == 1) 
+                $list_active_user = $list_active_modules;
+            
+    @endphp
+
     <div
         class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear"
         >
@@ -39,7 +47,7 @@
             <div>
                 <ul class="mb-6 flex flex-col gap-1.5 text-base">
                     <!-- Menu Item Dashboard -->
-                    <li>
+                    <li  >
                         <a
                             class="group relative flex items-center gap-2 rounded-sm px-2 py-1 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 text-white"
                             href="{{route('admin')}}"
@@ -55,7 +63,7 @@
                     </li>
                     <!-- Menu Item Dashboard -->
 
-                    <li>
+                    <li @if (in_array("TMDT", explode(',', $list_active_modules)) && in_array("TMDT", explode(',', $list_active_user))) @else style='display:none' @endif>
                         <a
                             class="group relative flex items-center gap-2 rounded-sm px-2 py-1 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                             href="#"
@@ -90,7 +98,7 @@
                             :class="(selected === 'Ecommerce') ? 'block' :'hidden'"
                             >
                             <ul class="mt-2 flex flex-col gap-2 pl-6">
-                                <li>
+                                <li @if (in_array("TMDTBC", explode(',', $list_active_modules)) && in_array("TMDTBC", explode(',', $list_active_user))) @else style='display:none' @endif>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.reports')}}"
                                         :class="page === 'reports' && '!text-white'">
@@ -105,7 +113,7 @@
                                         Báo cáo
                                     </a>
                                 </li>
-                                <li>
+                                <li @if (in_array("TMDTDH", explode(',', $list_active_modules)) && in_array("TMDTDH", explode(',', $list_active_user))) @else style='display:none' @endif>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.orders')}}"
                                         :class="page === 'orders' && '!text-white'">
@@ -119,7 +127,7 @@
                                         Đơn hàng
                                     </a>
                                 </li>
-                                <li>
+                                <li @if (in_array("TMDTDM", explode(',', $list_active_modules)) && in_array("TMDTDM", explode(',', $list_active_user))) @else style='display:none' @endif>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.categories')}}"
                                         :class="page === 'categories' && '!text-white'">
@@ -132,7 +140,7 @@
                                         Danh mục
                                     </a>
                                 </li>
-                                <li>
+                                <li @if (in_array("TMDTNH", explode(',', $list_active_modules)) && in_array("TMDTNH", explode(',', $list_active_user))) @else style='display:none' @endif>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.brands')}}"
                                         :class="page === 'brands' && '!text-white'">
@@ -145,7 +153,7 @@
                                         Nhãn hàng
                                     </a>
                                 </li>
-                                <li>
+                                <li @if (in_array("TMDTSP", explode(',', $list_active_modules)) && in_array("TMDTSP", explode(',', $list_active_user))) @else style='display:none' @endif>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.products')}}"
                                         :class="page === 'products' && '!text-white'">
@@ -160,7 +168,7 @@
                                         Sản phẩm
                                     </a>
                                 </li>
-                                <li>
+                                <li @if (in_array("TMDTTK", explode(',', $list_active_modules)) && in_array("TMDTTK", explode(',', $list_active_user))) @else style='display:none' @endif>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.inventories')}}" :class="page === 'inventories' && '!text-white'">
                                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -172,7 +180,7 @@
                                         Tồn kho
                                     </a>
                                 </li>
-                                <li>
+                                <li @if (in_array("TMDTKH", explode(',', $list_active_modules)) && in_array("TMDTKH", explode(',', $list_active_user))) @else style='display:none' @endif>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.warehouses')}}"
                                         :class="page === 'warehouses' && '!text-white'">
@@ -187,7 +195,7 @@
                                         Kho hàng
                                     </a>
                                 </li>
-                                <li>
+                                <li @if (in_array("TMDTKY", explode(',', $list_active_modules)) && in_array("TMDTKY", explode(',', $list_active_user))) @else style='display:none' @endif>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.users')}}"
                                         :class="page === 'users' && '!text-white'">
@@ -205,7 +213,7 @@
                         </div>
                     </li>
 
-                    <li>
+                    <li @if(auth()->user()->is_super_admin != 1) style='display:none' @endif>
                         <a
                             class="group relative flex items-center gap-2 rounded-sm py-1 px-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                             href="#"
@@ -283,7 +291,7 @@
                         </div>
                     </li>
 
-                    <li>
+                    <li @if(auth()->user()->is_super_admin != 1) style='display:none' @endif>
                         <a
                             class="group relative flex items-center gap-2 rounded-sm py-1 px-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                             href="#"
@@ -319,7 +327,7 @@
                             class="translate transform overflow-hidden"
                             :class="(selected === 'Systems') ? 'block' :'hidden'"
                             >
-                            <ul class="mt-2 flex flex-col gap-2 pl-6">
+                            <ul class="mt-2 flex flex-col gap-2 pl-6"  >
                                 <li>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.administrators')}}"
@@ -333,14 +341,14 @@
                                 </li>
                                 <li>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                        href="{{route('admin.macs')}}"
+                                        href="{{route('admin.systems')}}"
                                         :class="page === 'systems' && '!text-white'">
                                         <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path  class="clr-i-solid clr-i-solid-path-3"  d="M981.333333 469.333333a21.333333 21.333333 0 0 0-21.333333 21.333334v85.333333a85.333333 85.333333 0 0 1-85.333333 85.333333H149.333333a85.333333 85.333333 0 0 1-85.333333-85.333333V149.333333a85.333333 85.333333 0 0 1 85.333333-85.333333h725.333334a85.333333 85.333333 0 0 1 85.333333 85.333333 21.333333 21.333333 0 0 0 42.666667 0 128 128 0 0 0-128-128H149.333333a128 128 0 0 0-128 128v426.666667a128 128 0 0 0 128 128h725.333334a128 128 0 0 0 128-128v-85.333333a21.333333 21.333333 0 0 0-21.333334-21.333334z" fill="#8A99AF" /><path d="M981.333333 298.666667a21.333333 21.333333 0 0 0-21.333333 21.333333v85.333333a21.333333 21.333333 0 0 0 42.666667 0v-85.333333a21.333333 21.333333 0 0 0-21.333334-21.333333zM966.186667 219.52a21.333333 21.333333 0 0 0 0 30.293333 21.333333 21.333333 0 0 0 30.293333 0l2.56-3.413333a11.946667 11.946667 0 0 0 1.92-3.626667 13.226667 13.226667 0 0 0 1.706667-3.84 26.88 26.88 0 0 0 0-4.266666 21.333333 21.333333 0 0 0-36.48-15.146667zM896 960H128a21.333333 21.333333 0 0 0 0 42.666667h768a21.333333 21.333333 0 0 0 0-42.666667zM682.666667 853.333333a21.333333 21.333333 0 0 0 0-42.666666H341.333333a21.333333 21.333333 0 0 0 0 42.666666zM704 384a21.333333 21.333333 0 0 0 0-42.666667h-44.373333a149.333333 149.333333 0 0 0-28.16-67.84l31.36-31.36a21.333333 21.333333 0 1 0-30.08-30.08l-31.573334 31.146667A149.333333 149.333333 0 0 0 533.333333 215.04V170.666667a21.333333 21.333333 0 0 0-42.666666 0v44.373333a149.333333 149.333333 0 0 0-67.84 28.16l-31.573334-31.36a21.333333 21.333333 0 0 0-30.08 30.08l31.36 31.36A149.333333 149.333333 0 0 0 364.373333 341.333333H320a21.333333 21.333333 0 0 0 0 42.666667h44.373333a149.333333 149.333333 0 0 0 28.16 67.84l-31.36 31.36a21.333333 21.333333 0 1 0 30.08 30.08l31.36-31.36A149.333333 149.333333 0 0 0 490.666667 510.293333V554.666667a21.333333 21.333333 0 0 0 42.666666 0v-44.373334a149.333333 149.333333 0 0 0 67.84-28.16l31.36 31.36a21.333333 21.333333 0 0 0 30.08-30.08l-31.146666-31.573333A149.333333 149.333333 0 0 0 659.626667 384z m-192 85.333333a106.666667 106.666667 0 1 1 106.666667-106.666666 106.666667 106.666667 0 0 1-106.666667 106.666666z" fill="#8A99AF"  class="clr-i-solid clr-i-solid-path-3" /></svg>
                                         Cài đặt hệ thống
                                     </a>
                                 </li>
                                
-                                @if(auth()->user()->role == 'system' && auth()->user()->username == 'm8' && auth()->user()->is_super_admin == 1)
+                                @if(auth()->user()->role == 'system' && auth()->user()->code == 'M8ADMIN' && auth()->user()->is_super_admin == 1)
                                 <li>
                                     <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                         href="{{route('admin.macs')}}"

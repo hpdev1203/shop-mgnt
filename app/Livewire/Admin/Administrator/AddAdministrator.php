@@ -25,8 +25,42 @@ class AddAdministrator extends Component
     public $administrator_role = 'system';
     public $administrator_active = '1';
 
+    public $modules = [];
+    public $list_active_modules = '';
+    public $list_modules = [];
+
     public function storeAdministrator()
     {
+        $this->list_active_modules = '';
+        foreach ($this->modules as $module) {
+            if ($module['active_yn'] != false) {
+                $this->list_active_modules .= ",".$module['code'];
+            }
+            if (isset($module['sub_modules'])) {
+                foreach ($module['sub_modules'] as $sub_module) {
+                    if ($sub_module['active_yn'] != false) {
+                        $this->list_active_modules .= ",".$sub_module['code'];
+                    }
+                    if (isset($sub_module['sub_sub_modules'])) {
+                        foreach ($sub_module['sub_sub_modules'] as $sub_sub_module) {
+                            if ($sub_sub_module['active_yn'] != false) {
+                                $this->list_active_modules .= ",".$sub_sub_module['code'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if($this->list_active_modules == ''){
+            $this->dispatch('successPayment', [
+                'title' => 'Thất bại',
+                'message' => 'Vui lòng chọn Module có thể hiển thị',
+                'type' => 'errorNum'
+            ]);
+            return;
+        }
+
         $this->validate([
             'administrator_code' => 'required|unique:users,code',
             'administrator_name' => 'required',
@@ -64,6 +98,7 @@ class AddAdministrator extends Component
             ImageOptimizer::optimize($this->photo->path());
             $this->photo->storeAs(path: "public\images\administrators", name: $photo_name);
         }
+        
 
         $administrator = new Administrator();
         $administrator->code = $this->administrator_code;
@@ -76,6 +111,7 @@ class AddAdministrator extends Component
         $administrator->address = $this->administrator_address;
         $administrator->role = $this->administrator_role;
         $administrator->is_active = $this->administrator_active;
+        $administrator->active_list = $this->list_active_modules;
         if ($this->photo) {
             $administrator->avatar_user = $photo_name;
         }
@@ -84,6 +120,54 @@ class AddAdministrator extends Component
     }
     public function render()
     {
+        $modules_MAC = [
+            ['id' => 1, 'name' => 'Thương Mại Điện Tử', 'code' => 'TMDT', 'active_yn' => 'y', 'active_mac_yn' => 'n', 'sub_modules' => [
+                ['id' => 11, 'name' => 'Báo Cáo', 'code' => 'TMDTBC', 'active_yn' => 'y', 'active_mac_yn' => 'n', 'sub_sub_modules' => [
+                    ['id' => 111, 'name' => 'Báo Cáo Hàng Tồn Kho', 'code' => 'TMDTBCHT', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                    ['id' => 12, 'name' => 'Báo Cáo Doanh Thu', 'code' => 'TMDTBCDT', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                    ['id' => 12, 'name' => 'Báo Cáo Bán Hàng Theo Mẫu Bán Chạy', 'code' => 'TMDTBCBC', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                    ['id' => 12, 'name' => 'Báo Cáo Bán Hàng Theo Khách Hàng', 'code' => 'TMDTBCKH', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                ]],
+                ['id' => 12, 'name' => 'Đơn Hàng', 'code' => 'TMDTDH', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                ['id' => 12, 'name' => 'Danh Mục', 'code' => 'TMDTDM', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                ['id' => 12, 'name' => 'Nhãn Hàng', 'code' => 'TMDTNH', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                ['id' => 12, 'name' => 'Sản Phẩm', 'code' => 'TMDTSP', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                ['id' => 12, 'name' => 'Tồn Kho', 'code' => 'TMDTTK', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                ['id' => 12, 'name' => 'Kho Hàng', 'code' => 'TMDTKH', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                ['id' => 12, 'name' => 'Khách Hàng', 'code' => 'TMDTKY', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+            ]],
+        ];
+        $this->modules = $modules_MAC;
+        $this->list_active_modules = auth()->user()->where('code', 'M8ADMIN')->first()->active_list ?? '';
+        if (!is_null($this->list_active_modules) && !empty($this->list_active_modules)) {
+            foreach ($this->modules as $key => $module) {
+               
+                if (in_array($module['code'], explode(',', $this->list_active_modules))) {
+                    $this->modules[$key]['active_mac_yn'] = 'y';
+                }else{
+                    $this->modules[$key]['active_mac_yn'] = 'n';
+                }
+                if (isset($module['sub_modules'])) {
+                    foreach ($module['sub_modules'] as $sub_key => $sub_module) {
+                        if (in_array($sub_module['code'], explode(',', $this->list_active_modules))) {
+                            $this->modules[$key]['sub_modules'][$sub_key]['active_mac_yn'] = 'y';
+                        }else{
+                            $this->modules[$key]['sub_modules'][$sub_key]['active_mac_yn'] = 'n';
+                        }
+                        if (isset($sub_module['sub_sub_modules'])) {
+                            foreach ($sub_module['sub_sub_modules'] as $sub_sub_key => $sub_sub_module) {
+                                if (in_array($sub_sub_module['code'], explode(',', $this->list_active_modules))) {
+                                    $this->modules[$key]['sub_modules'][$sub_key]['sub_sub_modules'][$sub_sub_key]['active_mac_yn'] = 'y';
+                                }else{
+                                    $this->modules[$key]['sub_modules'][$sub_key]['sub_sub_modules'][$sub_sub_key]['active_mac_yn'] = 'n';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+      
         $Administrators = Administrator::all();
         $id_latest = Administrator::latest('id')->first();
         if($id_latest == null){
@@ -91,6 +175,6 @@ class AddAdministrator extends Component
         }   
         $this->administrator_code = 'ADM-'.str_pad($id_latest->id + 1, 4, '0', STR_PAD_LEFT);
 
-        return view('livewire.admin.administrator.add-administrator', ['administrator' => $Administrators]);
+        return view('livewire.admin.administrator.add-administrator', ['administrator' => $Administrators, 'modules' => $this->modules]);
     }
 }

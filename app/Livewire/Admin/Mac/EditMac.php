@@ -25,24 +25,23 @@ class EditMac extends Component
 
     public $modules = [];
     public $list_active_modules = '';
-    public $TMDT = '1';
+    public $list_modules = [];
 
     public function updateMac()
     {
-        dd($this->TMDT);
+        $this->list_active_modules = '';
         foreach ($this->modules as $module) {
-            if ($module['active_yn'] == 'y') {
-               
+            if ($module['active_yn'] === true || $module['active_yn'] === 'y') {
                 $this->list_active_modules .= ",".$module['code'];
             }
             if (isset($module['sub_modules'])) {
                 foreach ($module['sub_modules'] as $sub_module) {
-                    if ($sub_module['active_yn'] == 'y') {
+                    if ($sub_module['active_yn'] === true || $sub_module['active_yn'] === 'y') {
                         $this->list_active_modules .= ",".$sub_module['code'];
                     }
                     if (isset($sub_module['sub_sub_modules'])) {
                         foreach ($sub_module['sub_sub_modules'] as $sub_sub_module) {
-                            if ($sub_sub_module['active_yn'] == 'y') {
+                            if ($sub_sub_module['active_yn'] === true || $sub_sub_module['active_yn'] === 'y') {
                                 $this->list_active_modules .= ",".$sub_sub_module['code'];
                             }
                         }
@@ -50,62 +49,28 @@ class EditMac extends Component
                 }
             }
         }
-        dd($this->list_active_modules);
-        $this->validate([
-            'Mac_name' => 'required',
-            'Mac_email' => 'required|email',
-            'Mac_phone' => 'required',
-            'Mac_address' => 'required',
-            'Mac_city' => 'required',
-            'Mac_state' => 'required',
-        ], [
-            'Mac_name.required' => 'Vui lòng nhập tên hệ thống.',
-            'Mac_email.required' => 'Vui lòng nhập email hệ thống.',
-            'Mac_email.email' => 'Vui lòng nhập đúng định dạng email hệ thống.',
-            'Mac_phone.required' => 'Vui lòng nhập số điện thoại hệ thống.',
-            'Mac_address.required' => 'Vui lòng nhập địa chỉ.',
-            'Mac_city.required' => 'Vui lòng nhập thành phố.',
-            'Mac_state.required' => 'Vui lòng nhập Tỉnh thành.',
-        ]);
-        if ($this->photo) {
-            $this->validate([
-                'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ], [
-                'photo.image' => 'File không phải là ảnh',
-                'photo.mimes' => 'Ảnh không đúng định dạng',
-                'photo.max' => 'Ảnh không được lớn hơn 2MB'
-            ]);
-            Storage::delete('public\\' . $this->existedPhoto);
-            $photo_name = time() . uniqid() . '.' . $this->photo->extension();
-            ImageOptimizer::optimize($this->photo->path());
-            $this->photo->storeAs(path: "public\images\Macs", name: $photo_name);
-        }
-
-        $Mac_info = Mac::first();
-        $Mac_info->name = $this->Mac_name;
-        $Mac_info->email = $this->Mac_email;
-        $Mac_info->phone = $this->Mac_phone;
-        $Mac_info->address = $this->Mac_address;
-        $Mac_info->city = $this->Mac_city;
-        $Mac_info->state = $this->Mac_state;
-        $Mac_info->website = $this->website;
-        if ($this->photo) {
-            $Mac_info->logo = $photo_name;
-        }
-        $Mac_info->save();
-
+        $user = auth()->user();
+        $user->active_list = $this->list_active_modules;
+        $user->save();
         session()->flash('success', 'Cài đặt hệ thống thành công.');
         return redirect()->route('admin');
-
         // session()->flash('message', 'brand has been updated successfully!');
         // return redirect()->route('admin.Macs');
     }
 
-    
+    public function updatedModules($value)
+    {
+        foreach ($this->modules as $index => $module) {
+            // Nếu active_yn là null (checkbox không được chọn), chuyển thành 'n'
+            if (is_null($this->modules[$index]['active_yn'])) {
+                $this->modules[$index]['active_yn'] = 'n';
+            }
+        }
+    }
 
     public function render()
     {
-        $modules = [
+        $modules_MAC = [
             ['id' => 1, 'name' => 'Thương Mại Điện Tử', 'code' => 'TMDT', 'active_yn' => 'y', 'sub_modules' => [
                 ['id' => 11, 'name' => 'Báo Cáo', 'code' => 'TMDTBC', 'active_yn' => 'y', 'sub_sub_modules' => [
                     ['id' => 111, 'name' => 'Báo Cáo Hàng Tồn Kho', 'code' => 'TMDTBCHT', 'active_yn' => 'y'],
@@ -129,7 +94,39 @@ class EditMac extends Component
                 ['id' => 16, 'name' => 'Cài Đặt Hệ Thống', 'code' => 'HTTMCD', 'active_yn' => 'y'],
             ]],
         ];
-        $this->modules = $modules;
+        $this->list_active_modules = auth()->user()->active_list;
+        
+        $this->modules = $modules_MAC;
+        if (!is_null($this->list_active_modules) && !empty($this->list_active_modules)) {
+            
+            foreach ($this->modules as $key => $module) {
+               
+                if (in_array($module['code'], explode(',', $this->list_active_modules))) {
+                    $this->modules[$key]['active_yn'] = 'y';
+                }else{
+                    $this->modules[$key]['active_yn'] = 'n';
+                }
+                if (isset($module['sub_modules'])) {
+                    foreach ($module['sub_modules'] as $sub_key => $sub_module) {
+                        if (in_array($sub_module['code'], explode(',', $this->list_active_modules))) {
+                            $this->modules[$key]['sub_modules'][$sub_key]['active_yn'] = 'y';
+                        }else{
+                            $this->modules[$key]['sub_modules'][$sub_key]['active_yn'] = 'n';
+                        }
+                        if (isset($sub_module['sub_sub_modules'])) {
+                            foreach ($sub_module['sub_sub_modules'] as $sub_sub_key => $sub_sub_module) {
+                                if (in_array($sub_sub_module['code'], explode(',', $this->list_active_modules))) {
+                                    $this->modules[$key]['sub_modules'][$sub_key]['sub_sub_modules'][$sub_sub_key]['active_yn'] = 'y';
+                                }else{
+                                    $this->modules[$key]['sub_modules'][$sub_key]['sub_sub_modules'][$sub_sub_key]['active_yn'] = 'n';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         return view('livewire.admin.Mac.edit-mac', ['modules' => $this->modules]);
     }
 }

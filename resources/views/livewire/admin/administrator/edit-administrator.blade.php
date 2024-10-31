@@ -12,7 +12,46 @@
                     @enderror
             </div>
             <div class="col-span-1 sm:col-span-2 md:col-span-1"></div>
-            <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+            <div class="col-span-1 sm:col-span-2 md:col-span-2 row-span-4">
+                <input type="checkbox" id="select_all" onclick="toggleSelectAll()" class="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <label for="module" class="text-sm font-medium leading-6 text-gray-900">Chọn Tất Cả</label>
+                <div class="flex flex-col mt-2">
+                    @foreach($modules as $index => $module)
+                        <div class="flex items-center bg-blue-100" onclick="toggleModule('{{ $module['code'] }}')" @if($module['active_mac_yn'] != 'y') style="display: none" @endif>
+                            <input type="checkbox" id="{{ $module['code'] }}" name="box{{ $module['code'] }}" wire:model="modules.{{ $index }}.active_yn" value="{{ $module['code'] }}" @if($module['active_yn'] == 'y') checked @endif class="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <label for="{{ $module['code'] }}" class="ml-2 text-sm font-medium leading-6 text-gray-900">{{ $module['name'] }}</label>
+                        </div>
+                        @if($module['sub_modules'] ?? [])
+                            <div class="ml-4">
+                                <div class="text-sm font-medium leading-6 text-gray-900 cursor-pointer" onclick="toggleCollapse('{{ $module['code'] }}')">Thu gọn/Mở rộng</div>
+                                <div id="{{ $module['code'] }}-collapse">
+                                    @if($module['sub_modules'] ?? [])
+                                        @foreach($module['sub_modules'] ?? [] as $subModule)
+                                            <div class="flex items-center bg-yellow-100" onclick="toggleSubModule('{{ $subModule['code'] }}')" @if($subModule['active_mac_yn'] != 'y') style="display: none" @endif>
+                                                <input type="checkbox" id="{{ $subModule['code'] }}" name="box{{ $subModule['code'] }}" wire:model="modules.{{ $index }}.sub_modules.{{ $loop->iteration - 1 }}.active_yn" value="{{ $subModule['code'] }}" @if($subModule['active_yn'] == 'y') checked @endif class="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                <label for="{{ $subModule['code'] }}" class="ml-2 text-sm font-medium leading-6 text-gray-900">{{ $subModule['name'] }}</label>
+                                            </div>
+                                            @if($subModule['sub_sub_modules'] ?? [])
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium leading-6 text-gray-900 cursor-pointer" onclick="toggleCollapse('{{ $subModule['code'] }}')">Thu gọn/Mở rộng</div>
+                                                    <div id="{{ $subModule['code'] }}-collapse">
+                                                        @foreach($subModule['sub_sub_modules'] ?? [] as $subSubModule)
+                                                            <div class="flex items-center bg-green-100" @if($subSubModule['active_mac_yn'] != 'y') style="display: none" @endif>
+                                                                <input type="checkbox" id="{{ $subSubModule['code'] }}" name="subbox{{ $subSubModule['code'] }}" wire:model="modules.{{ $index }}.sub_modules.{{ $loop->parent->iteration - 1 }}.sub_sub_modules.{{ $loop->iteration - 1 }}.active_yn" value="{{ $subSubModule['code'] }}" @if($subSubModule['active_yn'] == 'y') checked @endif class="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                                <label for="{{ $subSubModule['code'] }}" class="ml-2 text-sm font-medium leading-6 text-gray-900">{{ $subSubModule['name'] }}</label>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                        @endif
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
                     <label for="administrator_name" class="block text-sm font-medium leading-6 text-gray-900">Tên quản trị viên</label>
                     <div class="mt-2">
@@ -31,7 +70,7 @@
                         <div class="mt-1 text-sm text-red-600">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+               
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
                     <label for="administrator_phone" class="block text-sm font-medium leading-6 text-gray-900">Số điện thoại</label>
                     <div class="mt-2">
@@ -50,7 +89,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-span-1 sm:col-span-2 md:col-span-2"></div>
+                
                 <div class="col-span-1 sm:col-span-2 md:col-span-1">
                     <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Ảnh đại diện</label>
                     <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
@@ -80,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-span-1 sm:col-span-2 md:col-span-3"></div>
+                <div class="col-span-1 sm:col-span-2 md:col-span-1"></div>
                 <div class="col-span-1 sm:col-span-2 md:col-span-2">
                     <label for="administrator_address" class="block text-sm font-medium leading-6 text-gray-900">Địa chỉ</label>
                     <div class="mt-2">
@@ -127,4 +166,182 @@
             @endif
         @endif
     </div>
+    <button id="modal_success" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="hidden block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+    </button>
+    
+    <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="p-4 md:p-5 text-center">
+                    <div id="svg-icon" class="text-center"></div>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"><span id="title-message"></span></h3>
+                    <p id="message" class="mb-5 text-sm text-gray-500 dark:text-gray-400"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleSelectAll() {
+            console.log('vao');
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = document.getElementById('select_all').checked;
+                checkboxes[i].click();
+                checkboxes[i].click();
+            }
+        }
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][name^="box"]');
+        var allChecked = Array.from(checkboxes).every(function(checkbox) {
+            return checkbox.checked;
+        });
+        console.log(allChecked);
+        document.getElementById('select_all').checked = allChecked;
+</script>
+<script>
+    function toggleCollapse(id) {
+        var collapse = document.getElementById(id + '-collapse');
+        if (collapse.style.display === 'none') {
+            collapse.style.display = 'block';
+        } else {
+            collapse.style.display = 'none';
+        }
+    }
+</script>
+<script>
+    function toggleModule(moduleCode) {
+      
+        console.log('vaox');
+        var moduleCheckboxes = document.querySelectorAll(`input[type="checkbox"][name^="box${moduleCode}"]`);
+        var isChecked = document.getElementById(moduleCode).checked;
+        for (var i = 0; i < moduleCheckboxes.length; i++) {
+            moduleCheckboxes[i].checked = isChecked;
+            moduleCheckboxes[i].click();
+            moduleCheckboxes[i].click();
+        }
+        var moduleCheckboxes = document.querySelectorAll(`input[type="checkbox"][name^="subbox${moduleCode}"]`);
+        console.log(moduleCheckboxes);
+        console.log(moduleCode);
+        for (var i = 0; i < moduleCheckboxes.length; i++) {
+            moduleCheckboxes[i].checked = isChecked;
+            moduleCheckboxes[i].click();
+            moduleCheckboxes[i].click();
+        }
+        
+       
+    }
+</script>
+<script>
+    function toggleSubModule(subModuleCode) {
+        
+        var subModuleCheckboxes = document.querySelectorAll(`input[type="checkbox"][name^="subbox${subModuleCode}"]`);
+        var parentModuleCode = subModuleCode.substring(0, subModuleCode.length - 2);
+
+        var isChecked = document.getElementById(subModuleCode).checked;
+        for (var i = 0; i < subModuleCheckboxes.length; i++) {
+            subModuleCheckboxes[i].checked = isChecked;
+            subModuleCheckboxes[i].click();
+            subModuleCheckboxes[i].click();
+        }
+    }
+</script>
+<script>
+    window.addEventListener('cartUpdated', event => {
+        const cartCount = event.detail[0];
+        
+        const modal = document.getElementById("modal_success");
+        const title = document.getElementById("title-message");
+        const message = document.getElementById("message");
+        const svgIcon = document.getElementById("svg-icon");
+        
+        setTimeout(() => {
+            title.innerHTML = "Thành công";
+            message.innerHTML = "Sản phẩm đã được cập nhật";
+            svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+            modal.click();
+        }, 200);
+        setTimeout(() => {
+            window.location.href = "{{route('cart')}}";
+        }, 2000);
+    });
+    window.addEventListener('alertError', event => {
+        const available_quantity = event.detail[0];
+        const modal = document.getElementById("modal_success");
+        const title = document.getElementById("title-message");
+        const message = document.getElementById("message");
+        const svgIcon = document.getElementById("svg-icon");
+        
+        setTimeout(() => {
+            title.innerHTML = "Thất bại";
+            message.innerHTML = "Không thể thêm vượt quá số lượng trong kho vào giỏ hàng. Số lượng tối đa cho sản phẩm này : "+available_quantity;
+            svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-red-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>'
+            modal.click();
+        }, 200);
+        setTimeout(() => {
+            window.location.href = "{{route('cart')}}";
+        }, 2000);
+    });
+    window.addEventListener('successPayment', event => {
+        const btn = document.getElementById('modal_success');
+        const title = document.getElementById('title-message');
+        const message = document.getElementById('message');
+        const svgIcon = document.getElementById('svg-icon');
+        setTimeout(() => {
+            message.innerHTML = event.detail[0].message;
+            title.innerHTML = event.detail[0].title;
+            if(event.detail[0].type == 'success'){
+                svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+            }else{
+                svgIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-red-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+            }
+            btn.click(); 
+        }, 500);
+        // if(event.detail[0].type == 'success'){
+        //     setTimeout(() => {
+        //         window.location.href = "{{route('order_summaries')}}";
+        //     }, 3000);
+        // }
+        if(event.detail[0].type == 'errorNum'){
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
+        }
+        // if(event.detail[0].type == 'error'){
+        //     setTimeout(() => {
+        //         window.location.href = "{{route('index')}}";
+        //     }, 3000);
+        // }
+    })
+    // window.addEventListener('hide_loading', event => { 
+    //     setTimeout(() => {
+            
+    //         var sections = document.querySelectorAll('.div_loading');
+    //         for (i = 0; i < sections.length; i++){
+    //             let element = sections[i];
+    //             element.classList.add('div_hide');
+    //         }
+    //         var div_result = document.querySelectorAll('.div_result');
+    //         for (k = 0; k < div_result.length; k++){
+    //             let element = div_result[k];
+    //             element.style.display = 'flex';
+    //             console.log(element.style.display);
+    //         }
+            
+    //     }, 500);
+
+    // });
+    // function showhide(cls){
+        
+    //     let div_detail = document.getElementsByClassName(cls);
+    //     console.log(div_detail);
+    //     for (let k = 0; k < div_detail.length; k++){
+    //             let element = div_detail[k];
+    //             if(element.classList.contains('hidden')){
+    //                 element.classList.remove('hidden');
+    //             }else{
+    //                 element.classList.add('hidden');
+    //             };
+    //         }
+    // }
+    
+</script>
 </form>
