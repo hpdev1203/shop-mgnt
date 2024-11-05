@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin\ARAP;
+namespace App\Livewire\Admin\Arap;
 
 use App\Models\PaymentMethod;
 use Livewire\Component;
@@ -8,7 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\User;
 
-class ViewARAP extends Component
+class ViewArap extends Component
 {
     public $customers;
     public $payment_methods;

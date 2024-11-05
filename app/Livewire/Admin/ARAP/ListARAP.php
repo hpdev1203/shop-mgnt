@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin\ARAP;
+namespace App\Livewire\Admin\Arap;
 
 use Livewire\Component;
 use App\Models\Order;
@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 use App\Models\OrderDetail;
 use App\Models\User;
 
-class ListARAP extends Component
+class ListArap extends Component
 {
     use WithPagination, WithoutUrlPagination;
     public $search_input = '';

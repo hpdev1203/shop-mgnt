@@ -10,7 +10,7 @@ use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\OrderStatus;
 
-class ARAPController extends Controller
+class ArapController extends Controller
 {
     public function index()
     {
