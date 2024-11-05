@@ -7,6 +7,8 @@ use Livewire\Component;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\User;
+use Illuminate\Http\Request;
+use PDF;
 
 class ViewOrder extends Component
 {
@@ -56,6 +58,16 @@ class ViewOrder extends Component
         }
         $this->updateAmount($index);
         $this->calTotalAmount();
+    }
+    public function generatePDF()
+    {
+        $data = ['title' => 'TEST'];
+        $pdf = PDF::loadView('admin.dashboard.order.pdf_view', $data);
+        $pdf->setPaper('A4', 'portrait');
+
+
+        $pdf->set_option('defaultFont', 'DejaVuSans');
+        return $pdf->download('laravel_pdf.pdf');
     }
 
     public function removeProduct($index)

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa Đơn Bán Hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 700px;
+            margin: 0 auto;
+        }
+        .invoice-header {
+            text-align: center;
+        }
+        .invoice-header h2 {
+            margin: 5px 0;
+        }
+        .invoice-details, .summary {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .invoice-details th, .invoice-details td, .summary th, .summary td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        .summary {
+            margin-top: 20px;
+        }
+        .summary td {
+            text-align: right;
+        }
+        .total-cell {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invoice-header">
+        <h1>CÔNG TY TNHH THỂ THAO TPU</h1>
+        <p>TPU SPORT - KHO SỈ HÀNG THỂ THAO</p>
+        <p>218 Bà Vân Dân - Thanh Khê - Đà Nẵng</p>
+        <p>Điện thoại: 0905.045.054</p>
+        <h2>HÓA ĐƠN BÁN HÀNG</h2>
+        <p>Ngày 30 tháng 10 năm 2024</p>
+        <p>11:37</p>
+    </div>
+
+    <div>
+        <p>Khách hàng: Gia Tiên (Đại Lý)</p>
+    </div>
+
+    <table class="invoice-details">
+        <thead>
+            <tr>
+                <th>TÊN HÀNG HÓA</th>
+                <th>SL</th>
+                <th>ĐƠN GIÁ</th>
+                <th>THÀNH TIỀN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ASTRO ĐỎ - XXL</td>
+                <td>3</td>
+                <td>80,000</td>
+                <td>240,000</td>
+            </tr>
+            <tr>
+                <td>ASTRO ĐỎ - XL</td>
+                <td>4</td>
+                <td>80,000</td>
+                <td>320,000</td>
+            </tr>
+            <tr>
+                <td>ASTRO ĐỎ - M</td>
+                <td>2</td>
+                <td>80,000</td>
+                <td>160,000</td>
+            </tr>
+            <tr>
+                <td>HUNTER 2 BÍCH - M</td>
+                <td>1</td>
+                <td>88,000</td>
+                <td>88,000</td>
+            </tr>
+            <tr>
+                <td>VAREL ĐA - XL</td>
+                <td>2</td>
+                <td>78,000</td>
+                <td>156,000</td>
+            </tr>
+            <tr>
+                <td>VAREL CAM - L</td>
+                <td>1</td>
+                <td>78,000</td>
+                <td>78,000</td>
+            </tr>
+            <tr>
+                <td>VAREL TRẮNG - XXL</td>
+                <td>1</td>
+                <td>78,000</td>
+                <td>78,000</td>
+            </tr>
+            <tr>
+                <td>VAREL TRẮNG - XL</td>
+                <td>3</td>
+                <td>78,000</td>
+                <td>234,000</td>
+            </tr>
+            <tr>
+                <td>VAREL TRẮNG - M</td>
+                <td>2</td>
+                <td>78,000</td>
+                <td>156,000</td>
+            </tr>
+            <tr>
+                <td>VAREL TRẮNG - L</td>
+                <td>4</td>
+                <td>78,000</td>
+                <td>312,000</td>
+            </tr>
+            <tr>
+                <td>RAPTOR BÍCH - L</td>
+                <td>5</td>
+                <td>78,000</td>
+                <td>390,000</td>
+            </tr>
+            <tr>
+                <td>RAPTOR BÍCH - M</td>
+                <td>9</td>
+                <td>78,000</td>
+                <td>702,000</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="summary">
+        <tbody>
+            <tr>
+                <td>Tổng số lượng:</td>
+                <td>41</td>
+            </tr>
+            <tr>
+                <td>Tổng tiền hàng:</td>
+                <td>3,230,000</td>
+            </tr>
+            <tr>
+                <td>Chiết khấu:</td>
+                <td>258,400</td>
+            </tr>
+            <tr>
+                <td>Thành tiền:</td>
+                <td>2,971,600</td>
+            </tr>
+            <tr>
+                <td>Nợ cũ:</td>
+                <td>6,069,240</td>
+            </tr>
+            <tr class="total-cell">
+                <td>Cần thanh toán:</td>
+                <td>9,040,840</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

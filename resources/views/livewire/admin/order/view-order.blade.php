@@ -182,6 +182,7 @@
             <button type="button" 
                 wire:click="$dispatch('openModal', { component: 'admin.order.update-payment-status-modal', arguments: { order_id : {{$order_id}}, payment_status : '{{$payment_status}}' } })"
                 class="inline-flex items-center px-4 py-2 bg-sky-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-sky-600 active:bg-sky-700 focus:outline-none focus:border-sky-900 focus:ring ring-sky-300 disabled:opacity-25 transition ease-in-out duration-150">Cập nhật trạng thái thanh toán</button>
+            <a href="{{ route('admin.pdf', ['id' => $order_id]) }}" download class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">Xuất PDF</a>
             @if($order_status == 'pending' || $order_status == 'confirmed')
                 <button type="button" 
                     wire:click="$dispatch('openModal', { component: 'admin.order.update-status-modal', arguments: { order_id : {{$order_id}}, status : 'rejected' } })"

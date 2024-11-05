@@ -41,6 +41,8 @@ use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Client\BrandController as ClientBrandController;
 use App\Http\Controllers\Admin\ArapController;
+use App\Http\Controllers\PDFController;
+
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -137,6 +139,8 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
     /* ARAPS  */
     Route::get('/admin/araps', [ArapController::class, 'index'])->name('admin.araps');
     Route::get('/admin/araps/view/{id}', [ArapController::class, 'view'])->name('admin.araps.view');
+
+    Route::get('/admin/pdf/{id}', [PDFController::class, 'generatePDF'])->name('admin.pdf');
 });
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');
@@ -166,3 +170,4 @@ Route::get('/spotlight', [SpotlightController::class, 'index'])->name('spotlight
 Route::get('/spotlight/search', [SpotlightController::class, 'search'])->name('spotlight.search');
 
 Route::get('/nhan-hang/{slug}', [ClientBrandController::class, 'index'])->name('brand');
+
