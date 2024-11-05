@@ -2,216 +2,69 @@
 
 namespace App\Livewire\Admin\Arap;
 
-use App\Models\PaymentMethod;
 use Livewire\Component;
 use App\Models\Order;
+use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
 use App\Models\OrderDetail;
-use App\Models\User;
 
 class ViewArap extends Component
 {
-    public $customers;
-    public $payment_methods;
-    public $payment_method_id = '';
-    public $payment_method_name = '';
-    public $payment_status = '';
-    public $customer_id = '';
-    public $customer_name ='';
-    public $order_date = '';
-    public $order_status = '';
-    public $order_note = '';
-    public $order_code = '';
-    public $order_phone = '';
-    public $order_email = '';
-    public $order_address = '';
-    public $order_state = '';
-    public $order_city = '';
-    public $order_details = [];
-    public $subtotal_amount = 0;
-    public $discount_amount = 0;
-    public $grandtotal_amount = 0;
-    public $shipping_amount = 0;
-    public $total_amount = 0;
-    public $order;
-    public $order_id;
-    public $order_product_delete = [];
+    use WithPagination, WithoutUrlPagination;
+    public $search_input = '';
+    public $list_order = [];
+    public $selected_index = [];
+    public $id = '';
 
-    protected $listeners = ['updateOrderProduct'];
-
-    public function updateOrderProduct($order_product, $index = null)
+    public function search()
     {
-        if($index === null){
-            $this->order_details[] = $order_product;
-            $index = count($this->order_details) - 1;
-        } else {
-            $index = $index - 1;
-            if(empty($this->order_details[$index]["id"])){
-                $id = null;
-            } else {
-                $id = $this->order_details[$index]["id"];
+        $this->resetPage();
+    }
+
+    public function deleteListCheckbox()
+    {
+        foreach ($this->selected_index as $key => $checked) {
+            if($checked == true){
+                $order_id = $this->list_order[$key]['id'];
+                $this->deleteOrder($order_id);
             }
-            
-            $this->order_details[$index] = $order_product;
-            $this->order_details[$index]["id"] = $id;
         }
-        $this->updateAmount($index);
-        $this->calTotalAmount();
+        $this->selected_index = [];
+        $this->render();
     }
 
-    public function removeProduct($index)
-    {
-        $this->order_product_delete[] = $this->order_details[$index];
-        unset($this->order_details[$index]);
-        $this->order_details = array_values($this->order_details);
-        $this->updateAmount($index-1);
-        $this->calTotalAmount();
-    }
-
-    public function createOrder(){
-        $this->order_status = "pending";
-        $this->storeOrder();
-    }
-
-    public function draftOrder(){
-        $this->order_status = "draft";
-        $this->storeOrder();
-    }
-
-    public function storeOrder()
-    {
-        $this->validateOrder();
-
-        if(empty($this->order_details)){
-            $this->dispatch('successOrder', [
-                'title' => 'Thất bại',
-                'message' => 'Vui lòng chọn sản phẩm cho đơn hàng',
-                'type' => 'error',
-                'timeout' => 3000
-            ]);
-            return;
+    public function deleteOrder($id){
+        $order_detail = OrderDetail::where('order_id', $id)->get();
+        foreach ($order_detail as $item) {
+            $item->delete();
         }
-
-        $this->order->update([
-            'code' => $this->order_code,
-            'user_id' => $this->customer_id,
-            'payment_method_id' => $this->payment_method_id,
-            'payment_status' => $this->payment_status,
-            'order_date' => $this->order_date,
-            'status' => $this->order_status,
-            'note' => $this->order_note,
-            'shipping_phone' => $this->order_phone,
-            'shipping_email' => $this->order_email,
-            'shipping_address' => $this->order_address,
-            'shipping_state' => $this->order_state,
-            'shipping_city' => $this->order_city,
-            'subtotal_amount' => $this->subtotal_amount,
-            'discount_amount' => $this->discount_amount,
-            'grandtotal_amount' => $this->grandtotal_amount,
-            'shipping_amount' => $this->shipping_amount,
-            'total_amount' => $this->total_amount,
-        ]);
-
-        foreach ($this->order_product_delete as $order_product) {
-            OrderDetail::find($order_product["id"])->delete();
-        }
-        foreach ($this->order_details as $order_product) {
-            if(empty($order_product["id"])){
-                $order_detail = new OrderDetail();
-            } else {
-                $order_detail = OrderDetail::find($order_product["id"]);
-            }
-            $order_detail->fill([
-                'order_id' => $this->order->id,
-                'product_id' => $order_product["product_id"],
-                'product_detail_id' => $order_product["product_detail_id"],
-                'size_id' => $order_product["size_id"],
-                'warehouse_id' => $order_product["warehouse_id"],
-                'quantity' => $order_product["quantity"],
-                'unit_price' => $order_product["unit_price"],
-                'total_amount' => $order_product["total_amount"],
-                'note' => $order_product["note"],
-            ])->save();
-        }
-
-        $this->dispatch('successOrder', [
-            'title' => 'Thành công',
-            'message' => '',
-            'type' => 'success',
-            'timeout' => 3000
-        ]);
+        $order = Order::find($id);
+        $order->delete();
+        session()->flash('success', 'Order deleted successfully');
     }
 
-    protected function validateOrder()
+    public function handleDetele($id)
     {
-        $this->validate([
-            'customer_id' => 'required',
-            'payment_method_id' => 'required',
-            'payment_status' => 'required',
-            'order_date' => 'required',
-            'order_status' => 'required',
-            'order_code' => 'required',
-            'order_phone' => 'required',
-            'order_address' => 'required',
-            'order_state' => 'required',
-            'order_city' => 'required'
-        ], [
-            'customer_id.required' => 'Trường khách hàng là bắt buộc.',
-            'payment_method_id.required' => 'Trường phương thức thanh toán là bắt buộc.',
-            'payment_status.required' => 'Trường trạng thái thanh toán là bắt buộc.',
-            'order_date.required' => 'Trường ngày đặt hàng là bắt buộc.',
-            'order_status.required' => 'Trường trạng thái đơn hàng là bắt buộc.',
-            'order_code.required' => 'Trường mã đơn hàng là bắt buộc.',
-            'order_phone.required' => 'Trường số điện thoại đơn hàng là bắt buộc.',
-            'order_address.required' => 'Trường địa chỉ đơn hàng là bắt buộc.',
-            'order_state.required' => 'Trường tỉnh/thành phố đơn hàng là bắt buộc.',
-            'order_city.required' => 'Trường quận/huyện đơn hàng là bắt buộc.'
-        ]);
+        $this->deleteOrder($id);
+        $this->render();
     }
 
-    public function updateAmount($index)
+    public function mount($id)
     {
-        $this->subtotal_amount = 0;
-        foreach ($this->order_details as $key => $order_product) {
-            $this->subtotal_amount += $order_product["total_amount"];
-        }
-    }
-
-    public function calTotalAmount()
-    {
-        $this->grandtotal_amount = $this->subtotal_amount - $this->discount_amount;
-        $this->total_amount = $this->grandtotal_amount + $this->shipping_amount;
-    }
-
-    public function mount($id, $customers, $payment_methods)
-    {
-        $this->order = Order::findOrFail($id);
-        $this->order_id = $id;
-        $this->payment_method_id = $this->order->payment_method_id;
-        $this->payment_method_name = PaymentMethod::find($this->payment_method_id)->name;
-        $this->payment_status = $this->order->payment_status;
-        $this->customer_id = $this->order->user_id;
-        $this->customer_name = User::find($this->customer_id)->name;
-        $this->order_date = date('Y-m-d', strtotime($this->order->order_date));
-        $this->order_status = $this->order->status;
-        $this->order_note = $this->order->note;
-        $this->order_code = $this->order->code;
-        $this->order_phone = $this->order->shipping_phone;
-        $this->order_email = $this->order->shipping_email;
-        $this->order_address = $this->order->shipping_address;
-        $this->order_state = $this->order->shipping_state;
-        $this->order_city = $this->order->shipping_city;
-        $this->subtotal_amount = $this->order->subtotal_amount;
-        $this->discount_amount = $this->order->discount_amount;
-        $this->grandtotal_amount = $this->order->grandtotal_amount;
-        $this->shipping_amount = $this->order->shipping_amount;
-        $this->total_amount = $this->order->total_amount;
-        $this->customers = $customers;
-        $this->payment_methods = $payment_methods;
-        $this->order_details = $this->order->order_detail()->with('product', 'product_size', 'warehouse', 'product_detail')->get()->toArray();
+        $this->id = $id;
     }
 
     public function render()
     {
-        return view('livewire.admin.order.view-order');
+       
+        if($this->search_input == ''){
+            $orders = Order::where('user_id', '=', $this->id)->paginate(10);
+           
+        } else {
+            $orders = Order::where('user_id', '=', $this->id)->where('code', 'like', '%'.$this->search_input.'%')->paginate(10);
+        }
+        
+        $this->list_order = collect($orders->items());
+        return view('livewire.admin.arap.view-arap', ['orders' => $orders]);
     }
 }

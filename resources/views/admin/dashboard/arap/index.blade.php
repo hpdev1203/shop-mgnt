@@ -13,7 +13,7 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">Quản Lý Đơn Hàng</span>
+                    <span class="text-gray-700">Quản Lý Công Nợ</span>
                 </li>
             </ol>
         </nav>

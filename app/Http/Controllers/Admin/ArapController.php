@@ -33,11 +33,12 @@ class ArapController extends Controller
     // }
 
     public function view($id){
-        $order = Order::find($id);
+        $order = Order::where('order_id', $id);
+     
         $customers = User::all();
         $payment_methods = PaymentMethod::all();
         $products = Product::all();
         $changeLog = OrderStatus::where('order_id', $id)->get();
-        return view('admin.dashboard.arap.view_arap', ['order' => $order, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products, 'changeLog' => $changeLog]);
+        return view('admin.dashboard.arap.view_arap', ['id' => $id,'order' => $order, 'customers' => $customers, 'payment_methods' => $payment_methods, 'products' => $products, 'changeLog' => $changeLog]);
     }
 }
