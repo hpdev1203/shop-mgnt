@@ -135,6 +135,7 @@ class AddAdministrator extends Component
                 ['id' => 12, 'name' => 'Tồn Kho', 'code' => 'TMDTTK', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
                 ['id' => 12, 'name' => 'Kho Hàng', 'code' => 'TMDTKH', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
                 ['id' => 12, 'name' => 'Khách Hàng', 'code' => 'TMDTKY', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
+                ['id' => 12, 'name' => 'Quản Lý Công Nợ', 'code' => 'TMDTCN', 'active_yn' => 'y', 'active_mac_yn' => 'n'],
             ]],
         ];
         $this->modules = $modules_MAC;

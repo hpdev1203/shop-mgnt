@@ -40,6 +40,7 @@ use App\Http\Controllers\Admin\InfoAdminController;
 use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Client\BrandController as ClientBrandController;
+use App\Http\Controllers\Admin\ARAPController;
 
 
 Route::group(['middleware' => [AdminAuth::class]], function () {
@@ -132,6 +133,10 @@ Route::group(['middleware' => [AdminAuth::class]], function () {
 
     Route::get('/admin/contact', [AdminContactController::class, 'index'])->name('admin.contact');
     Route::get('/admin/contact/edit/{id}', [AdminContactController::class, 'edit'])->name('admin.contact.edit');
+
+    /* ARAPS  */
+    Route::get('/admin/araps', [ARAPController::class, 'index'])->name('admin.araps');
+    Route::get('/admin/araps/view/{id}', [ARAPController::class, 'view'])->name('admin.araps.view');
 });
 Route::get('locale/{lang}', [LocaleController::class, 'setLocale']);
 Route::get('/admin/login', Login::class)->middleware([CheckAdminLogin::class])->name('admin.login');

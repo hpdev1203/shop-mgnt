@@ -209,6 +209,14 @@
                                         Khách hàng
                                     </a>
                                 </li>
+                                <li @if (in_array("TMDTCN", explode(',', $list_active_modules)) && in_array("TMDTKY", explode(',', $list_active_user))) @else style='display:none' @endif>
+                                    <a  class="group relative flex items-center gap-2 rounded-md px-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{route('admin.araps')}}"
+                                        :class="page === 'araps' && '!text-white'">
+                                        <svg fill="#8A99AF"  width="19" height="19" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15,8a1,1,0,0,1-1,1H6A1,1,0,0,1,6,7h8A1,1,0,0,1,15,8Zm-1,3H6a1,1,0,0,0,0,2h8a1,1,0,0,0,0-2Zm-4,4H6a1,1,0,0,0,0,2h4a1,1,0,0,0,0-2Zm13-3v8a3,3,0,0,1-3,3H4a3,3,0,0,1-3-3V4A3,3,0,0,1,4,1H16a3,3,0,0,1,3,3v7h3A1,1,0,0,1,23,12ZM17,4a1,1,0,0,0-1-1H4A1,1,0,0,0,3,4V20a1,1,0,0,0,1,1H17Zm4,9H19v8h1a1,1,0,0,0,1-1Z"/></svg>
+                                        Quản lý công nợ
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

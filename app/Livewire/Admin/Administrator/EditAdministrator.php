@@ -140,6 +140,7 @@ class EditAdministrator extends Component
                 ['id' => 16, 'name' => 'Tồn Kho', 'code' => 'TMDTTK', 'active_yn' => 'n', 'active_mac_yn' => 'n'],
                 ['id' => 17, 'name' => 'Kho Hàng', 'code' => 'TMDTKH', 'active_yn' => 'n', 'active_mac_yn' => 'n'],
                 ['id' => 18, 'name' => 'Khách Hàng', 'code' => 'TMDTKY', 'active_yn' => 'n', 'active_mac_yn' => 'n'],
+                ['id' => 18, 'name' => 'Quản Lý Công Nợ', 'code' => 'TMDTCN', 'active_yn' => 'n', 'active_mac_yn' => 'n'],
             ]],
         ];
         $this->modules = $modules_MAC;

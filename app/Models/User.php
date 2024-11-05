@@ -59,4 +59,12 @@ class User extends Authenticatable implements Auditable
     {
         return $this->hasMany(ContactUser::class, 'user_id', 'id')->count() > 0;
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id')->where('status','<>','rejected');
+    }
+    public function ordersPaid()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id')->where('status','<>','rejected')->where('payment_status','=','paid');
+    }
 }
