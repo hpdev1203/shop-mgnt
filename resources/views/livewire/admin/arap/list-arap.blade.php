@@ -81,7 +81,7 @@
                                         $query->where('status', '!=', 'rejected')
                                         ->orWhereNull('status');
                            })
-                           ->where('payment_status', '!=', 'paid')
+                           ->where('payment_status', '=', 'paid')
                            ->sum('total_amount');
 
                             $totalAmount_user = $user->orders()->whereHas('orderStatus', function($query) {
