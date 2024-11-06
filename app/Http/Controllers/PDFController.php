@@ -34,7 +34,7 @@ class PDFController extends Controller
         });
         $total_quantity = $orderDetails->sum('quantity');   
         $total_price = $orderDetails->sum('total');
-        $discount = $order->discount;
+        $discount = $order->discount_amount;
         $debt = $order->debt;
         
         $date = date('d');
