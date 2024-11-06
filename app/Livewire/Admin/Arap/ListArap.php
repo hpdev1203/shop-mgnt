@@ -19,8 +19,8 @@ class ListArap extends Component
     public $year = "ALL";
     public $orders = [];
     public $YearSelect =  "ALL";
-    
-
+    public $customer = "ALL";
+    public $user_choose = [];
     public function search()
     {
         $this->resetPage();
@@ -58,19 +58,32 @@ class ListArap extends Component
         $this->resetPage();
     }
 
-
+    public function filterByCustomer()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
        
         if($this->year != "ALL"){
-                $orders = Order::whereYear('order_date', $this->year)->get();
+                $orders = Order::whereYear('order_date', $this->year)
+                ->whereHas('orderStatus', function($query) {
+                    $query->where('status', '!=', 'rejected')
+                          ->orWhereNull('status');
+                })->get();
         } else {
-                $orders = Order::get();
+                $orders = Order::whereHas('orderStatus', function($query) {
+                    $query->where('status', '!=', 'rejected')
+                          ->orWhereNull('status');
+                })->get();
         }
-
+        $this->user_choose = User::where('role', 'customer')->get();
         if($this->search_input == ''){
                 $users = User::where('role', 'customer')
+                            ->when($this->customer != "ALL", function ($query) {
+                                $query->where('id', $this->customer);
+                            })
                              ->when($this->year != "ALL", function ($query) {
                                  $query->whereHas('orders', function ($subQuery) {
                                      $subQuery->whereYear('order_date', $this->year);
@@ -78,16 +91,20 @@ class ListArap extends Component
                              })
                              ->paginate(10);
         }else{
-                $users = User::where('role', '=', 'customer')->where(function ($query) {
-                $query->where('name', 'like', '%'.$this->search_input.'%')->orWhere('code', 'like', '%'.$this->search_input.'%')->orWhere('phone', 'like', '%'.$this->search_input.'%');
-                })->when($this->year != "ALL", function ($subQuery) {
-                    $subQuery->whereHas('orders', function ($subSubQuery) {
-                        $subSubQuery->whereYear('order_date', $this->year);
-                    });
-                })->paginate(10);
+                $users = User::where('role', '=', 'customer')
+                            ->when($this->customer != "ALL", function ($query) {                        
+                                $query->where('id', $this->customer);
+                            })
+                            ->where(function ($query) {
+                                $query->where('name', 'like', '%'.$this->search_input.'%')->orWhere('code', 'like', '%'.$this->search_input.'%')->orWhere('phone', 'like', '%'.$this->search_input.'%');
+                            })->when($this->year != "ALL", function ($subQuery) {
+                                $subQuery->whereHas('orders', function ($subSubQuery) {
+                                    $subSubQuery->whereYear('order_date', $this->year);
+                                });
+                        })->paginate(10);
         }
         $this->list_user = collect($users->items());
         $this->YearSelect = $this->year;
-        return view('livewire.admin.arap.list-arap', ['orders' => $orders, 'users' => $users, 'YearSelect' => $this->year]);
+        return view('livewire.admin.arap.list-arap', ['orders' => $orders, 'users' => $users, 'YearSelect' => $this->year, 'user_choose' => $this->user_choose]);
     }
 }

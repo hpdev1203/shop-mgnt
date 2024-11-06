@@ -1,13 +1,25 @@
 <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div class="px-4 py-6 md:px-6 xl:px-7.5">
             <div class="flex justify-between items-center">
-                <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH ĐƠN HÀNG</h4>
+                <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH ĐƠN HÀNG CỦA: {{$user->name}}</h4>
                 
             </div>
         </div>
         <div class="px-4 py-1 mb-2 md:px-6 xl:px-7.5">
             <div class="flex justify-between items-center">
-                <input wire:model='search_input' wire:keydown='search' type="text" name="search" placeholder="Tìm kiếm..." class="px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                <div class="col-md-4">
+                    <input wire:model='search_input' wire:keydown='search' type="text" name="search" placeholder="Tìm kiếm..." class="px-2 py-2 buser buser-gray-300 rounded-md focus:outline-none focus:ring focus:buser-blue-300 md:px-3 md:py-2">
+                </div>
+                <div class="flex items-center">
+                    <div class="col-md-4">
+                        <select wire:model="year" id="year" name="year" class="ml-3 block w-full pl-3 pr-10 mt-1 border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" wire:change="filterByYear()">
+                            <option value="ALL">Chọn Năm</option>
+                            @for ($i = now()->year; $i >= 2010; $i--)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="overflow-x-auto">
@@ -17,11 +29,11 @@
                        
                         <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-12 text-center">STT</th>
                         <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-72 text-center">Mã đơn hàng</th>
-                        <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Khách Hàng</th>
-                        {{-- <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-left">Hình thức thanh toán</th> --}}
-                        <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-center">Trạng thái thanh toán</th>
-                        <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-center">Trạng thái</th>
-                        <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-right">Tổng tiền (VND)</th>
+                        <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Ngày Đặt</th>
+                        <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-left">Trạng Thái Thanh Toán</th>
+                        <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-left">Tổng Tiền Hàng</th>
+                        <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-left">Đã Thanh Toán</th>
+                        <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-right">Công Nợ</th>
                         {{-- <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-36 text-center">Hành Động</th> --}}
                     </tr>
                 </thead>
@@ -41,32 +53,30 @@
                                 </a>
                                
                             </td>
-                            <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->customer->name}}</td>
-                            {{-- <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->payment_method->name}}</td> --}}
-                            <td class="px-2 py-2 whitespace-nowrap text-center">
-                                @if ($order->payment_status == "paid")
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Đã thanh toán</span>
+                            @php
+                                $totalPaid_user = $order->payment_status == 'paid' ? $order->total_amount : 0;
+                                
+                                $totalAmount_user = $order->total_amount;
+                                $totalUnpaid_user = $totalAmount_user  -  $totalPaid_user;
+                            @endphp
+                            <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->order_date}}</td>
+                            <td class="px-2 py-2 whitespace-nowrap text-left">
+                                @if($order->payment_status == 'paid')
+                                    <span class="text-green-500">Đã thanh toán</span>
                                 @else
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Chưa thanh toán</span>
+                                    <span class="text-red-500">Chưa thanh toán</span>
                                 @endif
                             </td>
-                            <td class="px-2 py-2 whitespace-nowrap text-center">
-                                @if ($order->status == "pending")
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Chờ xác nhận</span>
-                                @elseif ($order->status == "confirmed")
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Đã xác nhận</span>
-                                @elseif ($order->status == "shipping")
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">Đang giao hàng</span>
-                                @elseif ($order->status == "delivered")
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Đã giao hàng</span>
-                                @elseif ($order->status == "rejected")
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Đã bị từ chối</span>
-                                @elseif ($order->status == "completed")
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-gray-800">Hoàn thành</span>
-                                @endif
+                            {{-- <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->payment_method->name}}</td> --}}
+                            <td class="px-2 py-2 whitespace-nowrap text-right">
+                                {{ number_format($totalAmount_user, 0, ',', '.') }}
                             </td>
                             <td class="px-2 py-2 whitespace-nowrap text-right">
-                                {{number_format($order->total_amount, 0, ',', '.')}}
+                                {{ number_format($totalPaid_user, 0, ',', '.') }}
+                            </td>
+                            </td>
+                            <td class="px-2 py-2 whitespace-nowrap text-right">
+                                {{number_format($totalUnpaid_user, 0, ',', '.') }}
                             </td>
                             {{-- <td class="px-2 py-2 whitespace-nowrap text-center">
                                 <a href="{{route('admin.orders.edit', $order->id)}}" class="inline-flex items-center mr-2 text-indigo-600 hover:text-indigo-900">
@@ -93,6 +103,23 @@
                             </td> --}}
                         </tr>
                     @endforeach
+                    @php
+                        $totalAmount = $orders->sum('total_amount');
+                        $totalPaid = $orders->where('payment_status','=','paid')->sum('total_amount');
+                        $totalUnpaid = $totalAmount - $totalPaid;
+                    @endphp
+                    <tr class="bg-gray-100">
+                        <td class="px-2 py-2 whitespace-nowrap text-right" colspan="4">Tổng</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-right">
+                                {{ number_format($totalAmount, 0, ',', '.') }}
+                        </td>
+                        <td class="px-2 py-2 whitespace-nowrap text-right">
+                                {{ number_format($totalPaid, 0, ',', '.') }}
+                        </td>
+                        <td class="px-2 py-2 whitespace-nowrap text-right">
+                                {{ number_format($totalUnpaid, 0, ',', '.') }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

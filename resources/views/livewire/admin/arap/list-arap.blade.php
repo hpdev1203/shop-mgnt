@@ -7,15 +7,26 @@
 </div>
 <div class="px-4 py-1 mb-2 md:px-6 xl:px-7.5">
         <div class="flex justify-between items-center">
-        <input wire:model='search_input' wire:keydown='search' type="text" name="search" placeholder="Tìm kiếm..." class="px-2 py-2 buser buser-gray-300 rounded-md focus:outline-none focus:ring focus:buser-blue-300 md:px-3 md:py-2">
+        <div class="col-md-4">
+            <input wire:model='search_input' wire:keydown='search' type="text" name="search" placeholder="Tìm kiếm..." class="px-2 py-2 buser buser-gray-300 rounded-md focus:outline-none focus:ring focus:buser-blue-300 md:px-3 md:py-2">
+        </div>
         <div class="flex items-center">
-            <label for="year" class="block text-sm font-medium text-gray-700">Năm</label>
-            <select wire:model="year" id="year" name="year" class="ml-3 block w-full pl-3 pr-10 mt-1 border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" wire:change="filterByYear()">
-                <option value="ALL">Tất cả</option>
-                @for ($i = now()->year; $i >= 2010; $i--)
-                    <option value="{{ $i }}">{{ $i }}</option>
-                @endfor
-            </select>
+            <div class="col-md-4 p-2">
+                <select wire:model="customer" id="customer" name="customer" class="ml-3 block w-full pl-3 pr-10 mt-1 border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" wire:change="filterByCustomer()">
+                    <option value="ALL">Chọn Khách Hàng</option>
+                    @foreach ($user_choose as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-4 p-2">
+                <select wire:model="year" id="year" name="year" class="ml-3 block w-full pl-3 pr-10 mt-1 border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" wire:change="filterByYear()">
+                    <option value="ALL">Chọn Năm</option>
+                    @for ($i = now()->year; $i >= 2010; $i--)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
+            </div>
         </div>
         </div>
 </div>

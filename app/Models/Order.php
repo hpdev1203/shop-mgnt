@@ -37,4 +37,8 @@ class Order extends Model
     public function payment_method(){
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id', 'id');
     }
+    public function orderStatus()
+    {
+        return $this->hasMany(OrderStatus::class, 'order_id', 'id');
+    }
 }

@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PDF;
+use App\Models\OrderDetail;
+use App\Models\Order;
+use App\Models\ProductDetail;
+use App\Models\User;
+use App\Models\System;
 
 class PDFController extends Controller
 {
@@ -12,7 +17,61 @@ class PDFController extends Controller
     }
     public function generatePDF()
     {
-        $data = ['title' => 'Welcome to Laravel PDF Generation'];
+        $orderId = request()->route('id');
+        $order = Order::find($orderId);
+        if (!$order) {
+            abort(404);
+        }
+        $user = User::find($order->user_id);
+        $username = $user->name;
+        $orderDetails = OrderDetail::where('order_id', $orderId)->get()->map(function ($detail) {
+            return [
+                'name' => $detail->product_detail->product->name,
+                'quantity' => $detail->quantity,
+                'price' => $detail->unit_price,
+                'total' => $detail->quantity * $detail->unit_price,
+            ];
+        });
+        $total_quantity = $orderDetails->sum('quantity');   
+        $total_price = $orderDetails->sum('total');
+        $discount = $order->discount;
+        $debt = $order->debt;
+        
+        $date = date('d');
+        $month = date('m');
+        $year = date('Y');
+        $date_now = 'Ngày ' . $date . ' tháng ' . $month . ' năm ' . $year;
+        date_default_timezone_set('Asia/Ho_Chi_Minh'); // Set the timezone to your local timezone
+
+        $orderDate = $order->order_date; // Get the order date of the current order
+        $totalUnpaid_user = $user->orders()
+                        ->where('order_date', '<=', $orderDate)
+                        ->where('id', '!=', $orderId) // Add condition for order_date
+                        ->sum('total_amount') - 
+                        $user->ordersPaid()
+                        ->where('order_date', '<=', $orderDate) // Add condition for order_date
+                        ->where('id', '!=', $orderId)
+                        ->sum('total_amount');
+        
+        $time = date('H:i');
+        $title = System::first()->website;
+        $hotline = System::first()->phone;   
+        $address = System::first()->address." - ".System::first()->city." - ".System::first()->state;
+        $data = [
+            'title' => $title,
+            'hotline' => $hotline,
+            'date_now' => $date_now,
+            'time' => $time,
+            'orderDetails' => $orderDetails,
+            'total_quantity' => $total_quantity,
+            'total_price' => $total_price,
+            'discount' => $discount,
+            'debt' => $debt,
+            'username' => $username,
+            'totalUnpaid_user' => $totalUnpaid_user,
+            'address' => $address,
+        ];
+
         $pdf = PDF::loadView('admin.dashboard.order.pdf_view', $data);
         $pdf->setPaper('A4', 'portrait');
 

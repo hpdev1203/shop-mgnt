@@ -55,17 +55,17 @@
 <body>
 
     <div class="invoice-header">
-        <span class="text-header">CÔNG TY TNHH THỂ THAO TPU</span><br>
-        <span>TPU SPORT - KHO SỈ HÀNG THỂ THAO</span><br>
-        <span>218 Bà Vân Dân - Thanh Khê - Đà Nẵng</span><br>
-        <span>Điện thoại: 0905.045.054</span><br>
+        <span class="text-header">Gia Tiền Sport</span><br>
+        <span>{{$title}}</span><br>
+        <span>{{$address}}</span><br>
+        <span>Hostline: {{$hotline}}</span><br>
         <h2>HÓA ĐƠN BÁN HÀNG</h2>
-        <span>Ngày 30 tháng 10 năm 2024</span><br>
-        <span>11:37</span>
+        <span>{{$date_now}}</span><br>
+        <span>{{$time}}</span>
     </div>
 
     <div>
-        <p><b>Khách hàng:</b> Gia Tiên (Đại Lý)</p>
+        <p><b>Khách hàng:</b> {{$username}}</p>
     </div>
 
     <table class="invoice-details" >
@@ -78,66 +78,14 @@
             </tr>
         </thead>
         <tbody style="font-size: 9pt;" class="rowitem">
+            @foreach ($orderDetails as $detail)
             <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
+                <td>{{$detail['name']}}</td>
+                <td align='center'>{{$detail['quantity']}}</td>
+                <td align='right'>{{number_format($detail['price'], 0, ',', '.')}}</td>
+                <td align='right'>{{number_format($detail['total'], 0, ',', '.')}}</td>
             </tr>
-            <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
-            </tr>
-            <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
-            </tr>
-            <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
-            </tr>
-            <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
-            </tr>
-            <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
-            </tr>
-            <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
-            </tr>
-            <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
-            </tr>
-            <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
-            </tr>
-            <tr>
-                <td>ASTRO ĐỎ - XXL</td>
-                <td align='center'>3</td>
-                <td align='right'>80,000</td>
-                <td align='right'>240,000</td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
 
@@ -145,27 +93,27 @@
         <tbody style="font-size: 9pt;">
             <tr>
                 <td>Tổng số lượng:</td>
-                <td>41</td>
+                <td>{{$total_quantity}}</td>
             </tr>
             <tr>
                 <td>Tổng tiền hàng:</td>
-                <td>3,230,000</td>
+                <td>{{number_format($total_price, 0, ',', '.')}}</td>
             </tr>
             <tr>
                 <td>Chiết khấu:</td>
-                <td>258,400</td>
+                <td>{{number_format($discount, 0, ',', '.')}}</td>
             </tr>
             <tr>
                 <td>Thành tiền:</td>
-                <td>2,971,600</td>
+                <td>{{number_format($total_price - $discount, 0, ',', '.')}}</td>
             </tr>
             <tr>
                 <td>Nợ cũ:</td>
-                <td>6,069,240</td>
+                <td>{{number_format($totalUnpaid_user, 0, ',', '.')}}</td>
             </tr>
             <tr class="total-cell">
                 <td>Cần thanh toán:</td>
-                <td>9,040,840</td>
+                <td>{{number_format($total_price - $discount + $totalUnpaid_user, 0, ',', '.')}}</td>
             </tr>
         </tbody>
     </table>
