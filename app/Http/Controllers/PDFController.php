@@ -77,6 +77,7 @@ class PDFController extends Controller
 
         // Set font tiếng Việt
         $pdf->set_option('defaultFont', 'DejaVuSans');
-        return $pdf->download('laravel_pdf.pdf');
+        $filename = 'Hóa đơn '.$order->code.'.pdf';
+        return $pdf->download($filename);
     }
 }
