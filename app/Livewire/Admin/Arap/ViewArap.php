@@ -65,11 +65,19 @@ class ViewArap extends Component
         if($this->search_input == ''){
             $orders = Order::where('user_id', '=', $this->id)->when($this->year != "ALL", function ($query) {
                 $query->whereYear('order_date', $this->year);
+            })
+            ->whereHas('orderStatus', function($query) {
+                $query->where('status', '!=', 'rejected')
+                      ->orWhereNull('status');
             })->paginate(10);
            
         } else {
             $orders = Order::where('user_id', '=', $this->id)->where('code', 'like', '%'.$this->search_input.'%')->when($this->year != "ALL", function ($query) {
                 $query->whereYear('order_date', $this->year);
+            })
+            ->whereHas('orderStatus', function($query) {
+                $query->where('status', '!=', 'rejected')
+                      ->orWhereNull('status');
             })->paginate(10);
         }
         

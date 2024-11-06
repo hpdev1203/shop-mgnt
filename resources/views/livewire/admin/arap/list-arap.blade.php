@@ -52,26 +52,9 @@
                 </tr>
                 @endif
                 @php
-                    $totalPaid = $users->sum(function($user) use ($year) {
-                        if ($year != "ALL") {
-                            return $user->ordersPaid()->whereYear('order_date', $year)->sum('total_amount');
-                        }
-                        return $user->ordersPaid()->sum('total_amount');
-                    });
-                    $totalUnpaid = $users->sum(function($user) use ($year) {
-                        if ($year != "ALL") {
-                               
-                            return $user->orders()->whereYear('order_date', $year)->sum('total_amount') - $user->ordersPaid()->whereYear('order_date', $year)->sum('total_amount');
-                                
-                        }
-                        return $user->orders()->sum('total_amount') - $user->ordersPaid()->sum('total_amount');
-                    });
-                    $totalAmount = $users->sum(function($user) use ($year) {
-                        if ($year != "ALL") {
-                            return $user->orders()->whereYear('order_date', $year)->sum('total_amount');
-                        }
-                        return $user->orders()->sum('total_amount');
-                    });
+                    $totalPaid = 0;
+                    $totalUnpaid = 0;
+                    $totalAmount = 0;           
                 @endphp
                 @foreach ($users as $index => $user)
                 <tr>
@@ -90,9 +73,26 @@
                         
                         </td>
                         @php
-                            $totalPaid_user = ($year != "ALL") ? $user->ordersPaid()->whereYear('order_date', $year)->sum('total_amount') : $user->ordersPaid()->sum('total_amount');
-                            $totalUnpaid_user = ($year != "ALL") ? $user->orders()->whereYear('order_date', $year)->sum('total_amount') - $user->ordersPaid()->whereYear('order_date', $year)->sum('total_amount') : $user->orders()->sum('total_amount') - $user->ordersPaid()->sum('total_amount');
-                            $totalAmount_user = ($year != "ALL") ? $user->orders()->whereYear('order_date', $year)->sum('total_amount') : $user->orders()->sum('total_amount');
+                            // Retrieve orders for the specific user
+                            
+
+                          $totalPaid_user = $user->orders()
+                          ->whereHas('orderStatus', function($query) {
+                                        $query->where('status', '!=', 'rejected')
+                                        ->orWhereNull('status');
+                           })
+                           ->where('payment_status', '!=', 'paid')
+                           ->sum('total_amount');
+
+                            $totalAmount_user = $user->orders()->whereHas('orderStatus', function($query) {
+                                                        $query->where('status', '!=', 'rejected')
+                                                        ->orWhereNull('status');
+                                        })->sum('total_amount');
+
+                           $totalUnpaid_user = $totalAmount_user - $totalPaid_user;
+                           $totalPaid += $totalPaid_user;
+                           $totalUnpaid += $totalUnpaid_user;
+                           $totalAmount += $totalAmount_user;   
                         @endphp
                         <td class="px-2 py-2 whitespace-nowrap text-left">{{$user->name}}</td>
                         {{-- <td class="px-2 py-2 whitespace-nowrap text-left">{{$user->payment_method->name}}</td> --}}
