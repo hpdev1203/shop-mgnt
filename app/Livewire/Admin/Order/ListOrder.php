@@ -51,9 +51,9 @@ class ListOrder extends Component
     public function render()
     {
         if($this->search_input == ''){
-            $orders = Order::paginate(10);
+            $orders = Order::orderBy('created_at', 'desc')->paginate(10);
         } else {
-            $orders = Order::where('code', 'like', '%'.$this->search_input.'%')->paginate(10);
+            $orders = Order::where('code', 'like', '%'.$this->search_input.'%')->orderBy('created_at', 'desc')->paginate(10);
         }
         $this->list_order = collect($orders->items());
         return view('livewire.admin.order.list-order', ['orders' => $orders]);

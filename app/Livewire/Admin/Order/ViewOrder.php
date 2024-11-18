@@ -34,9 +34,12 @@ class ViewOrder extends Component
     public $grandtotal_amount = 0;
     public $shipping_amount = 0;
     public $total_amount = 0;
+    public $discount_percent = 0;
     public $order;
     public $order_id;
     public $order_product_delete = [];
+    public $grandtotal_notpay = 0;
+    public $grandtotal_all = 0;
 
     protected $listeners = ['updateOrderProduct'];
 
@@ -121,6 +124,7 @@ class ViewOrder extends Component
             'grandtotal_amount' => $this->grandtotal_amount,
             'shipping_amount' => $this->shipping_amount,
             'total_amount' => $this->total_amount,
+            'discount_percent' => $this->discount_percent,
         ]);
 
         foreach ($this->order_product_delete as $order_product) {
@@ -219,7 +223,12 @@ class ViewOrder extends Component
         $this->total_amount = $this->order->total_amount;
         $this->customers = $customers;
         $this->payment_methods = $payment_methods;
+        $this->discount_percent = $this->order->discount_percent;
         $this->order_details = $this->order->order_detail()->with('product', 'product_size', 'warehouse', 'product_detail')->get()->toArray();
+
+        $grandtotal_notpay = Order::where('user_id', '=', $this->customer_id)->where('id', '<>', $id)->where('order_date', '<', now())->where('payment_status', '=', 'pending')->get();
+        $this->grandtotal_notpay = $grandtotal_notpay->sum('total_amount');
+        $this->grandtotal_all = $this->total_amount + $this->grandtotal_notpay; 
     }
 
     public function render()

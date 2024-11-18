@@ -202,7 +202,7 @@
                 }, 200);
                 setTimeout(() => {
                     window.location.href = "{{route('cart')}}";
-                }, 2000);
+                }, 3000);
             });
             window.addEventListener('successPayment', event => {
                 const btn = document.getElementById('modal_success');

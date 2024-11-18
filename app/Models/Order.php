@@ -25,7 +25,8 @@ class Order extends Model
         'discount_amount',
         'grandtotal_amount',
         'shipping_amount',
-        'total_amount'
+        'total_amount',
+        'discount_percent',
     ];
     public function order_detail()
     {

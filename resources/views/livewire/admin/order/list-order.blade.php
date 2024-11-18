@@ -32,7 +32,7 @@
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-12 text-center">STT</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-72 text-center">Mã đơn hàng</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Khách Hàng</th>
-                    {{-- <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-left">Hình thức thanh toán</th> --}}
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-left">Ngày Đặt Hàng</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-64 text-center">Trạng thái thanh toán</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-center">Trạng thái</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-56 text-right">Tổng tiền (VND)</th>
@@ -68,6 +68,7 @@
                             </a>
                         </td>
                         <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->customer->name}}</td>
+                        <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->created_at->format('d/m/Y H:i')}}</td>
                         {{-- <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->payment_method->name}}</td> --}}
                         <td class="px-2 py-2 whitespace-nowrap text-center">
                             @if ($order->payment_status == "paid")

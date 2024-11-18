@@ -27,9 +27,12 @@ class EditOrder extends Component
     public $order_details = [];
     public $subtotal_amount = 0;
     public $discount_amount = 0;
+    public $discount_percentage = 0;
     public $grandtotal_amount = 0;
     public $shipping_amount = 0;
     public $total_amount = 0;
+    public $grandtotal_notpay = 0;
+    public $grandtotal_all = 0;
     public $order;
     public $order_id;
     public $order_product_delete = [];
@@ -109,6 +112,7 @@ class EditOrder extends Component
             'shipping_city' => $this->order_city,
             'subtotal_amount' => $this->subtotal_amount,
             'discount_amount' => $this->discount_amount,
+            'discount_percent' => $this->discount_percentage,
             'grandtotal_amount' => $this->grandtotal_amount,
             'shipping_amount' => $this->shipping_amount,
             'total_amount' => $this->total_amount,
@@ -180,7 +184,18 @@ class EditOrder extends Component
     }
 
     public function calTotalAmount()
-    {
+    {   
+        if ($this->discount_percentage < 1 || $this->discount_percentage > 100) {
+            $this->dispatch('successOrder', [
+                'title' => 'Thất bại',
+                'message' => 'Giảm giá % phải nằm trong khoảng từ 1 đến 100.',
+                'type' => 'error',
+                'timeout' => 3000
+            ]);
+            
+            return;
+        }
+        $this->discount_amount = round($this->subtotal_amount * $this->discount_percentage / 100, 3);
         $this->grandtotal_amount = $this->subtotal_amount - $this->discount_amount;
         $this->total_amount = $this->grandtotal_amount + $this->shipping_amount;
     }
@@ -203,12 +218,18 @@ class EditOrder extends Component
         $this->order_city = $this->order->shipping_city;
         $this->subtotal_amount = $this->order->subtotal_amount;
         $this->discount_amount = $this->order->discount_amount;
+        $this->discount_percentage = $this->order->discount_percent;
         $this->grandtotal_amount = $this->order->grandtotal_amount;
         $this->shipping_amount = $this->order->shipping_amount;
         $this->total_amount = $this->order->total_amount;
         $this->customers = $customers;
         $this->payment_methods = $payment_methods;
         $this->order_details = $this->order->order_detail()->with('product', 'product_size', 'warehouse', 'product_detail')->get()->toArray();
+        
+        $grandtotal_notpay = Order::where('user_id', '=', $this->customer_id)->where('id', '<>', $id)->where('order_date', '<', now())->where('payment_status', '=', 'pending')->get();
+        $this->grandtotal_notpay = $grandtotal_notpay->sum('total_amount');
+      
+        $this->grandtotal_all = $this->total_amount + $this->grandtotal_notpay;
     }
 
     public function render()
