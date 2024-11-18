@@ -83,7 +83,7 @@
                                
                             </td>
                             
-                            <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->order_date}}</td>
+                            <td class="px-2 py-2 whitespace-nowrap text-left">{{$order->created_at->format('d/m/Y H:i')}}</td>
                             <td class="px-2 py-2 whitespace-nowrap text-left">
                                 @if($order->payment_status == 'paid')
                                     <span class="text-green-500">Đã thanh toán</span>
