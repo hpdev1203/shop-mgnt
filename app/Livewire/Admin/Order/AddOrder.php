@@ -32,6 +32,9 @@ class AddOrder extends Component
     public $grandtotal_amount = 0;
     public $shipping_amount = 0;
     public $total_amount = 0;
+    public $grandtotal_notpay = 0;
+    public $grandtotal_all = 0;
+    public $discount_percentage = 0;   
 
     protected $listeners = ['updateOrderProduct'];
 
@@ -103,6 +106,7 @@ class AddOrder extends Component
             'grandtotal_amount' => $this->grandtotal_amount,
             'shipping_amount' => $this->shipping_amount,
             'total_amount' => $this->total_amount,
+            'discount_percent' => $this->discount_percentage,
         ]);
 
         foreach ($this->order_details as $order_product) {
@@ -166,11 +170,29 @@ class AddOrder extends Component
             $this->subtotal_amount += $order_product["total_amount"];
         }
     }
-
-    public function calTotalAmount()
+    public function calTotalAmountDiscount()
     {
+        if ($this->discount_percentage < 1 || $this->discount_percentage > 100) {
+            $this->dispatch('successOrder', [
+                'title' => 'Thất bại',
+                'message' => 'Giảm giá % phải nằm trong khoảng từ 1 đến 100.',
+                'type' => 'error',
+                'timeout' => 3000
+            ]);
+            
+            return;
+        }
+        $this->discount_amount = round($this->subtotal_amount * $this->discount_percentage / 100, 3);
         $this->grandtotal_amount = $this->subtotal_amount - $this->discount_amount;
         $this->total_amount = $this->grandtotal_amount + $this->shipping_amount;
+        $this->grandtotal_all = $this->total_amount + $this->grandtotal_notpay;
+    }
+    public function calTotalAmount()
+    {   
+        $this->discount_amount = round($this->subtotal_amount * $this->discount_percentage / 100, 3);
+        $this->grandtotal_amount = $this->subtotal_amount - $this->discount_amount;
+        $this->total_amount = $this->grandtotal_amount + $this->shipping_amount;
+        $this->grandtotal_all = $this->total_amount + $this->grandtotal_notpay;
     }
 
     protected function dispatchSuccessMessage($title, $message, $type)
@@ -186,6 +208,14 @@ class AddOrder extends Component
     public function render()
     {
         $this->order_date = now()->format('Y-m-d');
+        $grandtotal_notpay = Order::where('order_date', '<', now())->where('payment_status', '=', 'pending')
+        ->whereHas('orderStatus', function($query) {
+            $query->where('status', '!=', 'rejected')
+                  ->orWhereNull('status');
+        })->get();
+        $this->grandtotal_notpay = $grandtotal_notpay->sum('total_amount');
+        $this->grandtotal_all = $this->total_amount + $this->grandtotal_notpay;
+    
         return view('livewire.admin.order.add-order');
     }
 }

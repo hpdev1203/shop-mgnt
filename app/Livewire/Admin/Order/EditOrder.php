@@ -183,8 +183,8 @@ class EditOrder extends Component
         }
     }
 
-    public function calTotalAmount()
-    {   
+    public function calTotalAmountDiscount()
+    {
         if ($this->discount_percentage < 1 || $this->discount_percentage > 100) {
             $this->dispatch('successOrder', [
                 'title' => 'Thất bại',
@@ -198,6 +198,14 @@ class EditOrder extends Component
         $this->discount_amount = round($this->subtotal_amount * $this->discount_percentage / 100, 3);
         $this->grandtotal_amount = $this->subtotal_amount - $this->discount_amount;
         $this->total_amount = $this->grandtotal_amount + $this->shipping_amount;
+        $this->grandtotal_all = $this->total_amount + $this->grandtotal_notpay;
+    }
+    public function calTotalAmount()
+    {   
+        $this->discount_amount = round($this->subtotal_amount * $this->discount_percentage / 100, 3);
+        $this->grandtotal_amount = $this->subtotal_amount - $this->discount_amount;
+        $this->total_amount = $this->grandtotal_amount + $this->shipping_amount;
+        $this->grandtotal_all = $this->total_amount + $this->grandtotal_notpay;
     }
 
     public function mount($id, $customers, $payment_methods)
@@ -226,9 +234,12 @@ class EditOrder extends Component
         $this->payment_methods = $payment_methods;
         $this->order_details = $this->order->order_detail()->with('product', 'product_size', 'warehouse', 'product_detail')->get()->toArray();
         
-        $grandtotal_notpay = Order::where('user_id', '=', $this->customer_id)->where('id', '<>', $id)->where('order_date', '<', now())->where('payment_status', '=', 'pending')->get();
+        $grandtotal_notpay = Order::where('user_id', '=', $this->customer_id)->where('id', '<>', $id)->where('order_date', '<', now())->where('payment_status', '=', 'pending')->whereHas('orderStatus', function($query) {
+            $query->where('status', '!=', 'rejected')
+                  ->orWhereNull('status');
+        })->get();
         $this->grandtotal_notpay = $grandtotal_notpay->sum('total_amount');
-      
+
         $this->grandtotal_all = $this->total_amount + $this->grandtotal_notpay;
     }
 

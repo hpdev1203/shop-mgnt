@@ -226,7 +226,11 @@ class ViewOrder extends Component
         $this->discount_percent = $this->order->discount_percent;
         $this->order_details = $this->order->order_detail()->with('product', 'product_size', 'warehouse', 'product_detail')->get()->toArray();
 
-        $grandtotal_notpay = Order::where('user_id', '=', $this->customer_id)->where('id', '<>', $id)->where('order_date', '<', now())->where('payment_status', '=', 'pending')->get();
+        $grandtotal_notpay = Order::where('user_id', '=', $this->customer_id)->where('id', '<>', $id)->where('order_date', '<', now())->where('payment_status', '=', 'pending')
+        ->whereHas('orderStatus', function($query) {
+            $query->where('status', '!=', 'rejected')
+                  ->orWhereNull('status');
+        })->get();
         $this->grandtotal_notpay = $grandtotal_notpay->sum('total_amount');
         $this->grandtotal_all = $this->total_amount + $this->grandtotal_notpay; 
     }
