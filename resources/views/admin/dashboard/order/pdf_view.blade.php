@@ -100,7 +100,7 @@
                 <td>{{number_format($total_price, 0, ',', '.')}}</td>
             </tr>
             <tr>
-                <td>Chiết khấu:</td>
+                <td>Chiết khấu ({{$discount_percent}}%):</td>
                 <td>{{number_format($discount, 0, ',', '.')}}</td>
             </tr>
             <tr>

@@ -44,14 +44,11 @@ class PDFController extends Controller
         date_default_timezone_set('Asia/Ho_Chi_Minh'); // Set the timezone to your local timezone
 
         $orderDate = $order->order_date; // Get the order date of the current order
-        $totalUnpaid_user = $user->orders()
-                        ->where('order_date', '<=', $orderDate)
-                        ->where('id', '!=', $orderId) // Add condition for order_date
-                        ->sum('total_amount') - 
-                        $user->ordersPaid()
-                        ->where('order_date', '<=', $orderDate) // Add condition for order_date
-                        ->where('id', '!=', $orderId)
-                        ->sum('total_amount');
+        $totalUnpaid_user = Order::where('user_id', '=', $order->user_id)->where('id', '<>', $orderId)->where('order_date', '<', now())->where('payment_status', '=', 'pending')->whereHas('orderStatus', function($query) {
+            $query->where('status', '!=', 'rejected')
+                  ->orWhereNull('status');
+        })->sum('total_amount');
+      
         
         $time = date('H:i');
         $title = System::first()->website;
@@ -70,6 +67,7 @@ class PDFController extends Controller
             'username' => $username,
             'totalUnpaid_user' => $totalUnpaid_user,
             'address' => $address,
+            'discount_percent' => $order->discount_percent,
         ];
 
         $pdf = PDF::loadView('admin.dashboard.order.pdf_view', $data);
