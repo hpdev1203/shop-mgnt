@@ -36,6 +36,7 @@ class EditOrder extends Component
     public $order;
     public $order_id;
     public $order_product_delete = [];
+    public $action = '';
 
     protected $listeners = ['updateOrderProduct'];
 
@@ -70,20 +71,20 @@ class EditOrder extends Component
 
     public function createOrder(){
         $this->order_status = "pending";
-        $this->storeOrder();
+        $this->storeOrder('create');
     }
 
     public function updateOrder(){
         $this->order_status = Order::find($this->order_id)->status;
-        $this->storeOrder();
+        $this->storeOrder('update');
     }
 
     public function draftOrder(){
         $this->order_status = "draft";
-        $this->storeOrder();
+        $this->storeOrder('draft');
     }
 
-    public function storeOrder()
+    public function storeOrder($action)
     {
         $this->validateOrder();
 
@@ -92,7 +93,8 @@ class EditOrder extends Component
                 'title' => 'Thất bại',
                 'message' => 'Vui lòng chọn sản phẩm cho đơn hàng',
                 'type' => 'error',
-                'timeout' => 3000
+                'timeout' => 3000,
+                'action' => $action
             ]);
             return;
         }
@@ -139,12 +141,12 @@ class EditOrder extends Component
                 'note' => $order_product["note"],
             ])->save();
         }
-
         $this->dispatch('successOrder', [
             'title' => 'Thành công',
             'message' => '',
             'type' => 'success',
-            'timeout' => 3000
+            'timeout' => 3000,
+            'action' => $action
         ]);
     }
 
@@ -186,6 +188,7 @@ class EditOrder extends Component
     public function calTotalAmountDiscount()
     {
         if ($this->discount_percentage < 1 || $this->discount_percentage > 100) {
+            $this->discount_percentage = 0;
             $this->dispatch('successOrder', [
                 'title' => 'Thất bại',
                 'message' => 'Giảm giá % phải nằm trong khoảng từ 1 đến 100.',

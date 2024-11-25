@@ -307,9 +307,13 @@
                     btn.click(); 
                 }, 100);
                 if(event.detail[0].type == 'success'){
-                    setTimeout(() => {
-                        window.location.href = "{{route('admin.orders')}}";
-                    }, 1000);
+                    if(typeof event.detail[0].action == 'string' && event.detail[0].action == 'update'){
+                        window.location.href = window.location.href.replace('/edit/', '/view/');
+                    }else{
+                        setTimeout(() => {
+                            window.location.href = "{{route('admin.orders')}}";
+                        }, 1000);
+                    }
                 }
             })
         </script>
