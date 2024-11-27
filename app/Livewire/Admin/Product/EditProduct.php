@@ -109,7 +109,7 @@ class EditProduct extends Component
     public function storeProduct(){
         $this->validate([
             'product_code' => 'required|unique:products,code,' . $this->id,
-            'product_name' => 'required',
+            'product_name' => 'required|unique:products,name,' . $this->id,
             'product_retail_price' => 'required|numeric',
             'product_wholesale_price' => 'required|numeric',
             'product_uom' => 'required',
@@ -117,6 +117,7 @@ class EditProduct extends Component
             'product_code.required' => 'Mã sản phẩm là bắt buộc.',
             'product_code.unique' => 'Mã sản phẩm đã tồn tại.',
             'product_name.required' => 'Tên sản phẩm là bắt buộc.',
+            'product_name.unique' => 'Tên sản phẩm đã tồn tại.',
             'product_retail_price.required' => 'Giá bán lẻ là bắt buộc.',
             'product_retail_price.numeric' => 'Giá bán lẻ phải là số.',
             'product_wholesale_price.required' => 'Giá bán sỉ là bắt buộc.',
