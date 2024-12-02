@@ -27,6 +27,7 @@ class Cart extends Component
     public $slug;
     public $Carts;
     public $CartItems = [];
+    public $CartItems_detail = [];
     public $card_id;
     public $product_detail;
     public $product_size;
@@ -68,12 +69,18 @@ class Cart extends Component
                 $this->total_amount = $this->Carts->cart_item->sum("total_amount");
             }
             $this->CartItems = DB::select('
+            SELECT prd.retail_price,prd_dt.id as product_detail_id,crt.product_id,prd_dt.title as dt_name,crt.product_id as id,prd.slug,crt.cart_id, prd.name, crt.warehouse_id ,sum(crt.quantity) as qty ,SUM(crt.total_amount) as total FROM cart_item crt INNER JOIN product_detail prd_dt on crt.product_detail_id = prd_dt.id INNER JOIN products prd on prd_dt.product_id = prd.id 
+            WHERE crt.cart_id = '.$this->Carts->id.' 
+            GROUP BY prd.retail_price,prd_dt.id,crt.product_id,prd_dt.title,prd.slug,crt.cart_id, prd.name,crt.warehouse_id,prd_dt.title;');
+            
+            $this->CartItems_detail = DB::select('
             SELECT crt.size_id, crt.product_id,crt.product_detail_id,SUM(crt.total_amount) as total,prd_dt.title as dt_name,crt.product_id as id,prd.slug,crt.cart_id, prd.name,sum(crt.quantity) as qty,prd_dt.retail_price, crt.warehouse_id
             FROM cart_item crt
             INNER JOIN product_detail prd_dt on crt.product_detail_id = prd_dt.id
             INNER JOIN products prd on prd_dt.product_id = prd.id
             WHERE crt.cart_id = '.$this->Carts->id.'
             GROUP BY crt.size_id, crt.product_id,crt.product_detail_id,prd_dt.title,prd.slug,crt.cart_id, prd.name,prd_dt.retail_price,crt.warehouse_id ');
+
         }
         
 
@@ -110,49 +117,13 @@ class Cart extends Component
        
     }
 
-    public function addQTY($id,$method,$value){
-  
-        $cart_item = CartItem::where('id', $id)->first();
-        if($cart_item && $this->on_saving == false){
-            $this->on_saving = true;
-            $available_quantity = $cart_item->warehouse->totalProductAvailable($cart_item->product_id, $cart_item->product_detail_id, $cart_item->size_id);
-          
-            if($method == "plus"){
-                $cart_item->quantity += 1;
-            }elseif ($method == "minus"){
-                $cart_item->quantity -= 1;
-            }elseif ($method == "change"){
-               
-                if(is_numeric($value) == false){
-                    $this->dispatch('successPayment', [
-                        'title' => 'Thất bại',
-                        'message' => 'Vui lòng nhập chữ số',
-                        'type' => 'errorNum'
-                    ]);
-                    return;
-                }else{
-                    $cart_item->quantity =  $value;
-                }
-                
-            }
-            if($cart_item->quantity == 0){
-                $this->handleDetele($id);
-            }
-            if($cart_item->quantity > $available_quantity){
-                $this->dispatch('alertError', [$available_quantity]);
-                return;
-            }
-            
-            $cart_item->total_amount = $cart_item->unit_price_at_time * $cart_item->quantity;
-            $cart_item->save();
-            $this->updated();
-        }
-    }
+   
 
     public function submit(){
       
-        foreach($this->CartItems as $item){
+        foreach($this->CartItems_detail as $item){
             $available_quantity = Warehouse::find($item->warehouse_id)->totalProductAvailable($item->product_id, $item->product_detail_id, $item->size_id);
+       
             if($item->qty > $available_quantity){
                 $this->dispatch('alertError', [$available_quantity]);
                 return;

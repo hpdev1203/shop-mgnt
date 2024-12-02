@@ -39,6 +39,8 @@ class ModalAddProductToCart extends ModalComponent
             if($this->cart_id != ''){
                 $qnty = CartItem::where('cart_id',$this->cart_id)
                 ->where('size_id',$size->id)
+                ->where('product_id',$this->product_id)
+                ->where('product_detail_id',$this->product_detail_id)
                 ->first();
                 if(isset($qnty->quantity)){
                     $this->listProductAdded[$size->id] = $qnty->quantity;
