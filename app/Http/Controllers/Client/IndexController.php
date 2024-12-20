@@ -19,7 +19,7 @@ class IndexController extends Controller
     }
     public function index()
     {   
-        $new_products = Product::orderBy('id', 'desc')->limit(8)->get();
+        $new_products = Product::where('is_active', '=', '0')->orWhereNull('is_active')->orderBy('id', 'desc')->limit(8)->get();
         $best_seller_products = OrderDetail::select('product_id', DB::raw('SUM(quantity) as total_quantity'))->groupBy('product_id')->orderBy('total_quantity', 'desc')->limit(8)->get();
         $brands = Brand::orderBy('id', 'desc')->limit(8)->get();
         return view('client.index', ['new_products' => $new_products, 'best_seller_products' => $best_seller_products, 'brands' => $brands]);

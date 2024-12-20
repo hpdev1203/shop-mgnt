@@ -24,7 +24,7 @@ class Search extends Component
     {
         $product_search = "";
         if($this->input_search != ''){
-            $product_search =  Product::where('name', 'like', '%'.$this->input_search.'%')
+            $product_search =  Product::where('is_active', '=', '0')->orWhereNull('is_active')->where('name', 'like', '%'.$this->input_search.'%')
                 ->orWhere('code', 'like', '%'.$this->input_search.'%')
                 ->orderBy('name','asc')->get();
         }
