@@ -19,7 +19,7 @@ class Collection extends Component
     public function render()
     {
         $category = Category::where('slug', '=', $this->slug )->first();
-        $products = Product::where('is_active', '=', '0')->orWhereNull('is_active')->where('category_id', '=', $category->id)->paginate(8);
+        $products = Product::where('is_active', '=', '1')->orWhereNull('is_active')->where('category_id', '=', $category->id)->paginate(8);
         return view('livewire.client.collection', ['products' => $products,'category'=>$category]);
     }
 }
