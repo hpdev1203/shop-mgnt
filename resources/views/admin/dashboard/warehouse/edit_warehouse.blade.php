@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Sửa nhãn hàng')
+@section('title', 'Sửa Thể Loại')
 @section('menu', 'warehouses')
 
 @section('content')

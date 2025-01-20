@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Sửa nhãn hàng')
+@section('title', 'Sửa Thể Loại')
 @section('menu', 'payment_methods')
 
 @section('content')
     <div class="container mx-auto px-2 py-8 sm:px-6 md:px-8">
-        <h3 class="text-2xl text-gray-700 font-bold">SỬA NHÃN HÀNG</h3>
+        <h3 class="text-2xl text-gray-700 font-bold">SỬA Thể Loại</h3>
         <nav class="text-sm font-medium text-gray-500 py-4" aria-label="breadcrumb">
             <ol class="list-none p-0 inline-flex">
                 <li class="flex items-center">

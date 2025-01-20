@@ -4,7 +4,7 @@
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-6">
                     <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                        <label for="brand_code" class="block text-sm font-medium leading-6 text-gray-900">Mã nhãn hàng</label>
+                        <label for="brand_code" class="block text-sm font-medium leading-6 text-gray-900">Mã Thể Loại</label>
                         <div class="mt-2">
                             <input wire:model="brand_code" type="text" name="brand_code" id="brand_code" autocomplete="brand_code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </div>
@@ -13,7 +13,7 @@
                         @enderror
                     </div>
                     <div class="col-span-1 sm:col-span-2 md:col-span-2">
-                        <label for="brand_name" class="block text-sm font-medium leading-6 text-gray-900">Tên nhãn hàng</label>
+                        <label for="brand_name" class="block text-sm font-medium leading-6 text-gray-900">Tên Thể Loại</label>
                         <div class="mt-2">
                             <input wire:model="brand_name" type="text" name="brand_name" id="brand_name" autocomplete="brand_name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </div>

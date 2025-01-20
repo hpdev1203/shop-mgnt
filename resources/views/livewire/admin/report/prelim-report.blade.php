@@ -63,7 +63,7 @@
                     <div style="{{ $styleBrand }}" class="col-span-1 sm:col-span-2 md:col-span-1"></div>
                     
                     <div style="{{ $styleCategory }}" class="col-span-1 sm:col-span-2 md:col-span-1">
-                        <label for="brand_id" class="block text-sm font-medium leading-6 text-gray-900">Nhãn Hàng</label>
+                        <label for="brand_id" class="block text-sm font-medium leading-6 text-gray-900">Thể Loại</label>
                         <div class="mt-2">
                             <select wire:model="brand_id" id="brand_id" name="brand_id" autocomplete="brand_id" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                 <option value="">Tất cả</option>

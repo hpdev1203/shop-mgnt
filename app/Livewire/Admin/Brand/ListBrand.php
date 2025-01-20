@@ -39,7 +39,7 @@ class ListBrand extends Component
         $this->selected_index = [];
         if(count($list_has_product) > 0){
             $list_has_product = implode(', ', $list_has_product);
-            $this->dispatch('error', ['error' => 'Nhãn hàng <b>'.$list_has_product.'</b> đã có sản phẩm, vì vậy không thể xóa.']);
+            $this->dispatch('error', ['error' => 'Thể Loại <b>'.$list_has_product.'</b> đã có sản phẩm, vì vậy không thể xóa.']);
         }
         $this->render();
     }
@@ -48,7 +48,7 @@ class ListBrand extends Component
         $brand = Brand::find($id);
         $checkProduct = Product::where('brand_id','=',$id)->first();
         if($checkProduct != null){
-            $this->dispatch('error', ['error' => 'Nhãn hàng <b>'.$brand->name.'</b> đã có sản phẩm, vì vậy không thể xóa.']);
+            $this->dispatch('error', ['error' => 'Thể Loại <b>'.$brand->name.'</b> đã có sản phẩm, vì vậy không thể xóa.']);
             return;
         }else{
             $brand = Brand::find($id);

@@ -171,7 +171,7 @@
             if (countChecked == 0) {
                 const popupWarning = document.querySelector('[data-modal-target="popup-warning"]');
                 popupWarning.click();
-                parseInfoWarning('Bạn chưa chọn nhãn hàng nào để xóa');
+                parseInfoWarning('Bạn chưa chọn Thể Loại nào để xóa');
             } else {
                 const popupDeleteMultiple = document.querySelector('[data-modal-target="popup-delete-multiple-item"]');
                 popupDeleteMultiple.click();

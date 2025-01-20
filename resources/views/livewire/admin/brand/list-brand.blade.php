@@ -1,7 +1,7 @@
 <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
     <div class="px-4 py-6 md:px-6 xl:px-7.5">
         <div class="flex justify-between items-center">
-            <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH NHÃN HÀNG</h4>
+            <h4 class="text-xl font-bold text-black dark:text-white inline">DANH SÁCH Thể Loại</h4>
             <a href="{{route('admin.brands.add')}}" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
                 Thêm mới
             </a>
@@ -31,7 +31,7 @@
                     </th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-12 text-center">STT</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-20 text-center"></th>
-                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Nhãn Hàng</th>
+                    <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Tên Thể Loại</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Slug</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider text-left">Mô tả</th>
                     <th scope="col" class="px-2 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider w-36 text-center">Hành Động</th>
@@ -114,7 +114,7 @@
     </div>
     <div class="px-4 py-6 md:px-6 xl:px-7.5">
         <div class="text-red-500 text-sm mt-4">
-            Lưu ý: Những nhãn hàng không thể xóa bao gồm các nhãn hàng đã có sản phẩm. Điều này là để đảm bảo tính toàn vẹn dữ liệu.
+            Lưu ý: Những Thể Loại không thể xóa bao gồm các Thể Loại đã có sản phẩm. Điều này là để đảm bảo tính toàn vẹn dữ liệu.
         </div>
     </div>
     <div class="hidden" data-modal-target="popup-delete-multiple-item" data-modal-toggle="popup-delete-multiple-item"></div>
@@ -135,7 +135,7 @@
             if (countChecked == 0) {
                 const popupWarning = document.querySelector('[data-modal-target="popup-warning"]');
                 popupWarning.click();
-                parseInfoWarning('Bạn chưa chọn nhãn hàng nào để xóa');
+                parseInfoWarning('Bạn chưa chọn Thể Loại nào để xóa');
             } else {
                 const popupDeleteMultiple = document.querySelector('[data-modal-target="popup-delete-multiple-item"]');
                 popupDeleteMultiple.click();

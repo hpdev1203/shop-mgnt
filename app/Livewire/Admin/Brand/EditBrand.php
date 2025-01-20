@@ -26,10 +26,10 @@ class EditBrand extends Component
             'brand_code' => 'required|unique:brands,code,' . $this->id,
             'brand_name' => 'required|unique:brands,name,' . $this->id,
         ], [
-            'brand_code.required' => 'Mã nhãn hàng là bắt buộc.',
-            'brand_code.unique' => 'Mã nhãn hàng đã tồn tại.',
-            'brand_name.required' => 'Tên nhãn hàng là bắt buộc.',
-            'brand_name.unique' => 'Tên nhãn hàng đã tồn tại.',
+            'brand_code.required' => 'Mã Thể Loại là bắt buộc.',
+            'brand_code.unique' => 'Mã Thể Loại đã tồn tại.',
+            'brand_name.required' => 'Tên Thể Loại là bắt buộc.',
+            'brand_name.unique' => 'Tên Thể Loại đã tồn tại.',
         ]);
         if ($this->photo) {
             $this->validate([

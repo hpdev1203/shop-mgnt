@@ -1,6 +1,6 @@
 @if(count($brands) > 0)
     <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 sm:px-6 py-3 bg-cyan-800">
-        <h2 class="text-sm md:text-lg font-bold text-white">NHÃN HÀNG</h2>
+        <h2 class="text-sm md:text-lg font-bold text-white">Thể Loại</h2>
     </div>
     <div class="flex items-center flex-wrap bg-white">
         @foreach($brands as $brand)

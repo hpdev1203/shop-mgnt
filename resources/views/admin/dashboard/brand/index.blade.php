@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Quản lý nhãn hàng')
+@section('title', 'Quản lý Thể Loại')
 @section('menu', 'brands')
 
 @section('content')
     <div class="container mx-auto px-2 py-8 sm:px-6 md:px-8">
-        <h3 class="text-2xl text-gray-700 font-bold">NHÃN HÀNG</h3>
+        <h3 class="text-2xl text-gray-700 font-bold">Thể Loại</h3>
         <nav class="text-sm font-medium text-gray-500 py-4" aria-label="breadcrumb">
             <ol class="list-none p-0 inline-flex">
                 <li class="flex items-center">
@@ -13,7 +13,7 @@
                     &nbsp;/&nbsp;
                 </li>
                 <li class="flex items-center">
-                    <span class="text-gray-700">Nhãn hàng</span>
+                    <span class="text-gray-700">Thể Loại</span>
                 </li>
             </ol>
         </nav>
