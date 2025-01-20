@@ -150,7 +150,7 @@
                                             <path d="M10 15v-6h2a2 2 0 1 1 0 4h-2"></path>
                                             <path d="M14 15l-2 -2"></path>
                                         </svg>
-                                        Thể Loại
+                                        Nhãn hàng
                                     </a>
                                 </li>
                                 <li @if (in_array("TMDTSP", explode(',', $list_active_modules)) && in_array("TMDTSP", explode(',', $list_active_user))) @else style='display:none' @endif>
@@ -220,7 +220,8 @@
                             </ul>
                         </div>
                     </li>
-                    <li @if(in_array("CDTM", explode(',', $list_active_modules)) && in_array("CDTM", explode(',', $list_active_user))) @else style='display:none' @endif>
+
+                    <li @if(auth()->user()->is_super_admin != 1) style='display:none' @endif>
                         <a
                             class="group relative flex items-center gap-2 rounded-sm py-1 px-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                             href="#"

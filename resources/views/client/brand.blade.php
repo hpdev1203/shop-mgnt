@@ -1,6 +1,6 @@
 @extends('client.layouts.master')
 
-@section('title', 'Thể Loại')
+@section('title', 'Nhãn Hàng')
 
 @section('content')
     @livewire('client.brand-client', ["slug" => $brand->slug])
