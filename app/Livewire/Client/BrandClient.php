@@ -17,7 +17,7 @@ class BrandClient extends Component
     public function render()
     {
         $brand = Brand::where('slug',$this->slug)->first();
-        $products = Product::where('is_active', '=', '1')->orWhereNull('is_active')->where('brand_id',$brand->id)->orderBy('id', 'desc')->paginate(12);
+        $products = Product::where('brand_id',$brand->id)->orderBy('id', 'desc')->paginate(12);
         return view('livewire.client.brand-client', ['brand' => $brand, 'products' => $products]);
     }
 }
