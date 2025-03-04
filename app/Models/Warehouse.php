@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Support\Facades\DB;
 
 class Warehouse extends Model implements Auditable
 {
@@ -21,12 +22,23 @@ class Warehouse extends Model implements Auditable
     public function orderProducts()
     {
         return $this->hasMany(OrderDetail::class, 'warehouse_id', 'id')
-        ->leftJoin('order_status', 'order_detail.order_id', '=', 'order_status.order_id')
+            ->leftJoinSub(
+                DB::table('order_status')
+                    ->select('order_id', 'status')
+                    ->whereIn('id', function ($query) {
+                        $query->selectRaw('MAX(id)')
+                            ->from('order_status')
+                            ->groupBy('order_id');
+                    }),
+                'order_status',
+                'order_detail.order_id',
+                '=',
+                'order_status.order_id'
+            )
             ->where(function($query) {
                 $query->where('order_status.status', '!=', 'rejected')
                       ->orWhereNull('order_status.status');
-            })
-            ->select('*');
+            });
     }
 
     public function transferWarehouseFrom()
